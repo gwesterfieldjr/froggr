@@ -18,6 +18,7 @@ public class Platform extends MovingObject {
 
 	public Platform(int xPos, int yPos, int length, int direction) {
 		super(xPos, yPos, length, direction);
+
 	}
 
 	@Override
