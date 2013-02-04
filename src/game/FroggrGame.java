@@ -100,14 +100,14 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		for (int i = 0; i<3; i++) {
 			int y = 650;
 			roadLanes.add(new Lane(0, y));
-			y = y - 50;
+			y = y - LANE_HEIGHT;
 		}
 
 		// set water lanes
 		for (int i = 0; i<5; i++) {
 			int y = 50;
 			waterLanes.add(new Lane(0, y));
-			y = y + 50;
+			y = y + LANE_HEIGHT;
 		}
 	}
 
