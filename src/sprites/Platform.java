@@ -14,13 +14,19 @@ import game.Input;
  */
 public class Platform extends MovingObject {
 	
+	private int length;
+	private int platformType;
+	
 	public static final boolean SAFE = true;
+	public static final int LOG = 0;
+	public static final int LILY = 1;
+	public static final int TURTLE = 2;
 
 	public Platform(int xPos, int yPos, int length, int direction) {
 		super(xPos, yPos, length, direction);
 
 	}
-
+	
 	@Override
 	public void tick(Input input) {
 		Random r = new Random();
@@ -36,6 +42,34 @@ public class Platform extends MovingObject {
 			remove();
 		}
 		
+	}
+
+	/**
+	 * @return the type of platform
+	 */
+	public int getPlatformType() {
+		return platformType;
+	}
+
+	/**
+	 * @param platformType the type of platform (log, lily etc)
+	 */
+	public void setPlatformType(int platformType) {
+		this.platformType = platformType;
+	}
+
+	/**
+	 * @return the length
+	 */
+	public int getLength() {
+		return length;
+	}
+
+	/**
+	 * @param length the length to set (usually 1, 2 or 3)
+	 */
+	public void setLength(int length) {
+		this.length = length;
 	}
 
 }

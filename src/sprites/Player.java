@@ -41,7 +41,7 @@ public class Player extends Sprite {
 	}
 
 	/**
-	 * @param the number of lives the player will have remaining
+	 * @param lives the number of lives player will have remaining
 	 */
 	public void setLives(int lives) {
 		this.lives = lives;

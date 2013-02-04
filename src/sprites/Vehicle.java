@@ -19,25 +19,10 @@ public class Vehicle extends MovingObject {
 	
 	public static final int CAR = 0;
 	public static final int TRUCK = 1;
+	public static final boolean SAFE = false;
 	
 	public Vehicle(int xPos, int yPos, int length, int direction) {
 		super(xPos, yPos, length, direction);
-	}
-
-	@Override
-	public void tick(Input input) {
-		Random r = new Random();
-		if (r.nextInt()%2==0) {
-			setXPos(getXPos() + 1);
-		} else {
-			setXPos(getXPos() - 1);
-		}
-		
-		if (getXPos() > FroggrGame.WIDTH) {
-			remove();
-		} else if (getXPos() < 0) {
-			remove();
-		}
 	}
 	
 	public void setVehicleType(int vehicleType) {
