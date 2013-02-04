@@ -19,16 +19,38 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private Player player;
 	private Input input = new Input();
 
-	public static final int WIDTH = 500;
-	public static final int HEIGHT = 700;
+	public static final int GAME_WIDTH = 500;
+	public static final int GAME_HEIGHT = 700;
+	public static final int LANE_HEIGHT = 50;
 	public static final Color FOREGROUND_COLOR = Color.BLACK;
 
 	public FroggrGame() {
-		this.player = new Player(0, HEIGHT-50); 
 		addKeyListener(this);
 		setForeground(FOREGROUND_COLOR);
+		setSize(GAME_WIDTH, GAME_HEIGHT);
+		
 	}
 	
+	private void spawnPlayer() {
+		this.player = new Player(250, GAME_HEIGHT - LANE_HEIGHT); 
+	}
+	
+	private void generateVehicle() {
+		
+	}
+	
+	private void generateLog() {
+		
+	}
+	
+	private void generateLily() {
+		
+	}
+	
+	private void generateTurtle() {
+		
+	}
+
 	private void processPlayer(Graphics g) {
 		player.tick(input);
 		if (input.buttons[Input.UP] && !input.oldButtons[Input.UP]) {
@@ -77,7 +99,11 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		}
 	}
 
+	/**
+	 * This method starts the game loop and thread
+	 */
 	public void start() {
+		spawnPlayer();
 		new Thread(this).start();
 	}
 
