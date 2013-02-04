@@ -8,9 +8,12 @@ import game.Input;
  *
  */
 public class Player extends Sprite {
+	
+	private int lives;
 
-	public Player(int x, int y) {
+	public Player(int x, int y, int lives) {
 		super(x, y);
+		this.lives = lives;
 	}
 
 	@Override
@@ -28,5 +31,19 @@ public class Player extends Sprite {
 			setYPos(getYPos() + 1);
 		}
 
+	}
+
+	/**
+	 * @return the number of lives remaining
+	 */
+	public int getLives() {
+		return lives;
+	}
+
+	/**
+	 * @param the number of lives the player will have remaining
+	 */
+	public void setLives(int lives) {
+		this.lives = lives;
 	}
 }

@@ -8,15 +8,16 @@ import game.Input;
 /**
  * 
  * @author Raj
- * A platform is either a log, lilly pad or a turtle. Unlike vehicles, Froggr (the player)
+ * A platform is either a log, lily pad or a turtle. Unlike vehicles, Froggr (the player)
  * can stand on the platform which he will use to get to the win zone.
  *
  */
-public class Platform extends Sprite {
+public class Platform extends MovingObject {
+	
+	public static final boolean SAFE = true;
 
-	public Platform(int xPos, int yPos) {
-		super(xPos, yPos);
-		// TODO Auto-generated constructor stub
+	public Platform(int xPos, int yPos, int length, int direction) {
+		super(xPos, yPos, length, direction);
 	}
 
 	@Override
