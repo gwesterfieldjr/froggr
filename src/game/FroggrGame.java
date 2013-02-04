@@ -83,17 +83,18 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {
-		input.set(arg0.getKeyCode(), false);
+	public void keyReleased(KeyEvent e) {
+		input.set(e.getKeyCode(), false);
 	}
 
 	@Override
-	public void keyTyped(KeyEvent arg0) {
+	public void keyTyped(KeyEvent e) {
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		input.set(e.getKeyCode(), true);
+		
 	}
 
 }
