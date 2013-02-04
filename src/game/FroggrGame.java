@@ -6,7 +6,9 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 
+import sprites.Lane;
 import sprites.Player;
 
 /**
@@ -18,27 +20,29 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 	private Player player;
 	private Input input = new Input();
+	private ArrayList<Lane> roadLanes = new ArrayList<Lane>();
+	private ArrayList<Lane> waterLanes = new ArrayList<Lane>();
 
 	public static final int WIDTH = 500;
 	public static final int HEIGHT = 700;
 	public static final Color FOREGROUND_COLOR = Color.BLACK;
 
 	public FroggrGame() {
-		this.player = new Player(0, HEIGHT-50); 
+		this.player = new Player(0, HEIGHT - 50);
 		addKeyListener(this);
 		setForeground(FOREGROUND_COLOR);
 	}
-	
+
 	private void processPlayer(Graphics g) {
 		player.tick(input);
 		if (input.buttons[Input.UP] && !input.oldButtons[Input.UP]) {
-			
+
 		} else if (input.buttons[Input.DOWN] && !input.oldButtons[Input.DOWN]) {
-			
+
 		} else if (input.buttons[Input.LEFT] && !input.oldButtons[Input.LEFT]) {
-			
+
 		} else if (input.buttons[Input.RIGHT] && !input.oldButtons[Input.LEFT]) {
-			
+
 		}
 		g.drawRect(player.getXPos(), player.getYPos(), 50, 50);
 	}
@@ -70,6 +74,22 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		}
 	}
 
+	private void setLanes() {
+		// set road lanes
+		for (int i = 0; i<3; i++) {
+			int y = 650;
+			roadLanes.add(new Lane(0, y));
+			y = y - 50;
+		}
+
+		// set water lanes
+		for (int i = 0; i<5; i++) {
+			int y = 50;
+			roadLanes.add(new Lane(0, y));
+			y = y + 50;
+		}
+	}
+
 	@Override
 	public void run() {
 		while (true) {
@@ -93,7 +113,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		input.set(e.getKeyCode(), true);
-		
+
 	}
 
 }
