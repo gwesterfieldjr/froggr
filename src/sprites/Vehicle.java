@@ -13,11 +13,15 @@ import game.FroggrGame;
  * If Froggr touches a vehicle, he loses a life
  *
  */
-public class Vehicle extends Sprite {
-
-	public Vehicle(int xPos, int yPos) {
-		super(xPos, yPos);
-		// TODO Randomly make this either a car or a truck?
+public class Vehicle extends MovingObject {
+	
+	private int vehicleType;
+	
+	public static final int CAR = 0;
+	public static final int TRUCK = 1;
+	
+	public Vehicle(int xPos, int yPos, int length, int direction) {
+		super(xPos, yPos, length, direction);
 	}
 
 	@Override
@@ -34,7 +38,14 @@ public class Vehicle extends Sprite {
 		} else if (getXPos() < 0) {
 			remove();
 		}
-		
+	}
+	
+	public void setVehicleType(int vehicleType) {
+		this.vehicleType = vehicleType;
+	}
+	
+	public int vehicleType() {
+		return this.vehicleType;
 	}
 
 }
