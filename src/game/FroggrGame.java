@@ -28,7 +28,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	public static final Color FOREGROUND_COLOR = Color.BLACK;
 
 	public FroggrGame() {
-		this.player = new Player(0, HEIGHT - 50);
+		this.player = new Player(0, HEIGHT - 50, 3);
 		addKeyListener(this);
 		setForeground(FOREGROUND_COLOR);
 	}
