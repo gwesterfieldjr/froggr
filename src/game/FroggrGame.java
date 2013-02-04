@@ -95,7 +95,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		}
 	}
 
-	private void setLanes() {
+	private void createLanes() {
 		// set road lanes
 		for (int i = 0; i<3; i++) {
 			int y = 650;
@@ -106,7 +106,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		// set water lanes
 		for (int i = 0; i<5; i++) {
 			int y = 50;
-			roadLanes.add(new Lane(0, y));
+			waterLanes.add(new Lane(0, y));
 			y = y + 50;
 		}
 	}
@@ -122,6 +122,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 * This method starts the game loop and thread
 	 */
 	public void start() {
+		createLanes();
 		spawnPlayer();
 		new Thread(this).start();
 	}
