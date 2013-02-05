@@ -39,7 +39,7 @@ public class MovingObject extends Sprite {
 	}
 
 	/**
-	 * @param length the length of the spriate (usually 1,2 or 3)
+	 * @param length the length of the sprite (usually 1,2 or 3)
 	 */
 	public void setLength(int length) {
 		this.length = length;

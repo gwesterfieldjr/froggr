@@ -56,15 +56,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 	private void processPlayer(Graphics g) {
 		player.tick(input);
-		if (input.buttons[Input.UP] && !input.oldButtons[Input.UP]) {
-
-		} else if (input.buttons[Input.DOWN] && !input.oldButtons[Input.DOWN]) {
-
-		} else if (input.buttons[Input.LEFT] && !input.oldButtons[Input.LEFT]) {
-
-		} else if (input.buttons[Input.RIGHT] && !input.oldButtons[Input.LEFT]) {
-
-		}
+		
 		g.drawRect(player.getXPos(), player.getYPos(), 50, 50);
 	}
 
@@ -81,7 +73,6 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		Graphics g = bs.getDrawGraphics();
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.setColor(Color.RED);
-
 		processPlayer(g);
 
 		g.dispose();
