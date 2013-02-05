@@ -9,8 +9,7 @@ public class Lane extends Sprite {
 	}
 
 	@Override
-	public void tick(Input input) {
-		
+	public void tick(Input input) {	
 	}
 	
 	
