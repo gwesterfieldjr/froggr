@@ -15,26 +15,11 @@ import game.Input;
 public class Player extends Sprite {
 
 	private int lives;
-	Image image;
 
 	public Player(int x, int y, int lives) {
 		super(x, y);
 		this.lives = lives;
-	}
-
-	public void createImage(Canvas c) {
-		MediaTracker media = new MediaTracker(c);
-		image = Toolkit.getDefaultToolkit().getImage("res/sprites/player.png");
-		media.addImage(image, 0);
-		try {
-			media.waitForID(0);
-		} catch (Exception e) {
-			
-		}
-	}
-	
-	public Image getImage() {
-		return image;
+		setImageURL("res/sprites/player.png");
 	}
 
 	@Override

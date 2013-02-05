@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
+
 import java.util.Random;
 
 import sprites.Lane;
@@ -23,6 +24,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 	
 	private Player player;
+	private int startingLives = 3;
 	private Input input = new Input();
 	
 	private ArrayList<Lane> roadLanes = new ArrayList<Lane>();
@@ -47,8 +49,8 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		setSize(GAME_WIDTH, GAME_HEIGHT);
 	}
 
-	private void spawnPlayer() {
-		this.player = new Player(250, GAME_HEIGHT - LANE_HEIGHT, 3);
+	private void spawnPlayer(int lives) {
+		this.player = new Player(250, GAME_HEIGHT - LANE_HEIGHT, lives);
 		player.createImage(this);
 
 	}
@@ -91,7 +93,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 			Vehicle v = vehicles.get(i);
 			if (!v.isRemoved()) {
 				v.tick(input);
-				g.fillRect(v.getXPos(), v.getYPos(), 50, 50);
+				g.drawImage(v.getImage(), v.getXPos(), v.getYPos(), this);
 			}
 
 		}
@@ -163,7 +165,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 */
 	public void start() {
 		createLanes();
-		spawnPlayer();
+		spawnPlayer(startingLives);
 		new Thread(this).start();
 	}
 
