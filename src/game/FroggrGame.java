@@ -9,7 +9,9 @@ import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 
 import sprites.Lane;
+import sprites.MovingObject;
 import sprites.Player;
+import sprites.Vehicle;
 
 /**
  * 
@@ -22,7 +24,10 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private Input input = new Input();
 	private ArrayList<Lane> roadLanes = new ArrayList<Lane>();
 	private ArrayList<Lane> waterLanes = new ArrayList<Lane>();
-
+	private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
+	private final int REGENERATION = 500;
+	private int time = 0;
+	
 	public static final int GAME_WIDTH = 500;
 	public static final int GAME_HEIGHT = 700;
 	public static final int LANE_HEIGHT = 50;
@@ -38,8 +43,11 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		this.player = new Player(250, GAME_HEIGHT - LANE_HEIGHT, 3); 
 	}
 	
-	private void generateVehicle() {
-		
+	private void generateVehicle(Lane lane) {
+		if (time++ > REGENERATION) {
+			time = 0;
+			vehicles.add(new Vehicle(0, lane.getYPos(), 1, MovingObject.DIRECTION_RIGHT));
+		}
 	}
 	
 	private void generateLog() {
@@ -67,6 +75,18 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		}
 		g.drawRect(player.getXPos(), player.getYPos(), 50, 50);
 	}
+	
+	//process vehicle
+	private void processVehicles(Graphics g) {
+		for (int i = 0; i < vehicles.size(); i++) {
+			Vehicle v = vehicles.get(i);
+			if (!v.isRemoved()) {
+				v.tick(input);
+				g.fillRect(v.getXPos(), v.getYPos(), 50, 50);
+			}
+
+		}
+	}
 
 	// the main game loop
 	private void render() {
@@ -82,6 +102,11 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.setColor(Color.RED);
 
+		for (Lane l : roadLanes ){
+			generateVehicle(l);
+			}
+		
+		processVehicles(g);
 		processPlayer(g);
 
 		g.dispose();
@@ -96,18 +121,18 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	}
 
 	private void createLanes() {
+		int roadY = 450;
+		int waterY = 50;
 		// set road lanes
-		for (int i = 0; i<3; i++) {
-			int y = 650;
-			roadLanes.add(new Lane(0, y));
-			y = y - LANE_HEIGHT;
+		for (int i = 0; i<4; i++) {
+			roadLanes.add(new Lane(0, roadY));
+			roadY = roadY + LANE_HEIGHT;
 		}
 
 		// set water lanes
-		for (int i = 0; i<5; i++) {
-			int y = 50;
-			waterLanes.add(new Lane(0, y));
-			y = y + LANE_HEIGHT;
+		for (int i = 0; i<6; i++) {
+			waterLanes.add(new Lane(0, waterY));
+			waterY = waterY + LANE_HEIGHT;
 		}
 	}
 
