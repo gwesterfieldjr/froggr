@@ -7,6 +7,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
+import java.util.Iterator;
+
+import javax.swing.SwingUtilities;
 
 import sprites.Lane;
 import sprites.MovingObject;
@@ -25,13 +28,15 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private ArrayList<Lane> roadLanes = new ArrayList<Lane>();
 	private ArrayList<Lane> waterLanes = new ArrayList<Lane>();
 	private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
-	private final int REGENERATION = 500;
+	private final int REGENERATION = 8000;
 	private int time = 0;
 	
 	public static final int GAME_WIDTH = 500;
 	public static final int GAME_HEIGHT = 700;
 	public static final int LANE_HEIGHT = 50;
 	public static final Color FOREGROUND_COLOR = Color.BLACK;
+	public static final int NUMBER_OF_ROAD_LANES = 4;
+	public static final int NUMBER_OF_WATER_LANES = 6;
 
 	public FroggrGame() {
 		addKeyListener(this);
@@ -40,7 +45,8 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	}
 	
 	private void spawnPlayer() {
-		this.player = new Player(250, GAME_HEIGHT - LANE_HEIGHT, 3); 
+		this.player = new Player(250, GAME_HEIGHT - LANE_HEIGHT, 3);
+		player.createImage(this);
 	}
 	
 	private void generateVehicle(Lane lane) {
@@ -64,8 +70,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 	private void processPlayer(Graphics g) {
 		player.tick(input);
-		
-		g.drawRect(player.getXPos(), player.getYPos(), 50, 50);
+		g.drawImage(player.getImage(), player.getXPos(), player.getYPos(), this);
 	}
 	
 	//process vehicle
@@ -93,10 +98,10 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		Graphics g = bs.getDrawGraphics();
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.setColor(Color.RED);
-
+		
 		for (Lane l : roadLanes ){
 			generateVehicle(l);
-			}
+		}
 		
 		processVehicles(g);
 		processPlayer(g);
@@ -116,13 +121,13 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		int roadY = 450;
 		int waterY = 50;
 		// set road lanes
-		for (int i = 0; i<4; i++) {
+		for (int i = 0; i<NUMBER_OF_ROAD_LANES; i++) {
 			roadLanes.add(new Lane(0, roadY));
 			roadY = roadY + LANE_HEIGHT;
 		}
 
 		// set water lanes
-		for (int i = 0; i<6; i++) {
+		for (int i = 0; i<NUMBER_OF_WATER_LANES; i++) {
 			waterLanes.add(new Lane(0, waterY));
 			waterY = waterY + LANE_HEIGHT;
 		}
