@@ -47,9 +47,9 @@ public class MovingObject extends Sprite {
 
 	@Override
 	public void tick(Input input) {
-		if (getDirection() == MovingObject.DIRECTION_LEFT) {
+		if (getDirection() == DIRECTION_LEFT) {
 			setXPos(getXPos() - 1);
-		} else if (getDirection() == MovingObject.DIRECTION_RIGHT) {
+		} else if (getDirection() == DIRECTION_RIGHT) {
 			setXPos(getXPos() + 1);
 		}
 		

@@ -1,5 +1,10 @@
 package sprites;
 
+import java.awt.Canvas;
+import java.awt.Image;
+import java.awt.MediaTracker;
+import java.awt.Toolkit;
+
 import game.Input;
 
 /**
@@ -12,11 +17,24 @@ public abstract class Sprite {
 	private int xPos;
 	private int yPos;
 	private boolean removed;
+	private Image image;
+	private String imageURL;
 
 	public Sprite(int xPos, int yPos) {
 		this.xPos = xPos;
 		this.yPos = yPos;
 		removed = false;
+	}
+	
+	public void createImage(Canvas c) {
+		MediaTracker media = new MediaTracker(c);
+		image = Toolkit.getDefaultToolkit().getImage(imageURL);
+		media.addImage(image, 0);
+		try {
+			media.waitForID(0);
+		} catch (Exception e) {
+			
+		}
 	}
 
 	public int getXPos() {
@@ -58,4 +76,23 @@ public abstract class Sprite {
 	 * Each sprite will change its state in every "tick"
 	 */
 	public abstract void tick(Input input);
+
+	/**
+	 * @return the location of the image
+	 */
+	public String getImageURL() {
+		return imageURL;
+	}
+
+	/**
+	 * @param imageURL the location of the image you want to use
+	 */
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
+	
+	public Image getImage() {
+		return image;
+	}
+	
 }

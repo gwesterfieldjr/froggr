@@ -27,8 +27,17 @@ public class Vehicle extends MovingObject {
 	
 	public void setVehicleType(int vehicleType) {
 		this.vehicleType = vehicleType;
+		setImageURLForVehicle();
 	}
 	
+	private void setImageURLForVehicle() {
+		if (vehicleType == CAR) {
+			setImageURL("res/sprites/car.png");
+		} else if (vehicleType == TRUCK) {
+			setImageURL("res/sprites/truck.png");
+		}
+	}
+
 	public int vehicleType() {
 		return this.vehicleType;
 	}

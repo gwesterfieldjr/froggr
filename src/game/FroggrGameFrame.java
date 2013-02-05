@@ -9,7 +9,7 @@ public class FroggrGameFrame {
 		JFrame frame = new JFrame("Froggr");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		FroggrGame game = new FroggrGame();
-		frame.setSize(game.GAME_WIDTH + 9, game.GAME_HEIGHT + 30);
+		frame.setSize(FroggrGame.GAME_WIDTH + 9, FroggrGame.GAME_HEIGHT + 30);
 		frame.setLayout(new BorderLayout());
 		frame.add(game, BorderLayout.CENTER);
 		frame.setVisible(true);
