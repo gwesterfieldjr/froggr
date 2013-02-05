@@ -7,13 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
-
-import java.util.Collection;
-
-import java.util.Iterator;
-
-import javax.swing.SwingUtilities;
-
+import java.util.Random;
 
 import sprites.Lane;
 import sprites.MovingObject;
@@ -34,6 +28,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private ArrayList<Lane> roadLanes = new ArrayList<Lane>();
 	private ArrayList<Lane> waterLanes = new ArrayList<Lane>();
 	private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
+	private Random r = new Random();
 
 	private final int REGENERATION = 5;
 	private int time = 0;
@@ -58,11 +53,18 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 	}
 
-	private void generateVehicle(Lane lane) {
+	private void generateVehicle(Lane lane, int startPosition) {
 		if (time++ > REGENERATION) {
 			time = 0;
-			vehicles.add(new Vehicle(0, lane.getYPos(), 1,
-					MovingObject.DIRECTION_RIGHT));
+			if (startPosition == 500){
+			Vehicle v = new Vehicle(startPosition, lane.getYPos(), 1, MovingObject.DIRECTION_LEFT);
+			v.setVehicleType(r.nextInt(1));
+			vehicles.add(v);
+			} else {
+			Vehicle v = new Vehicle(startPosition, lane.getYPos(), 1, MovingObject.DIRECTION_RIGHT);
+			v.setVehicleType(r.nextInt(1));
+			vehicles.add(v);
+			}
 		}
 	}
 
@@ -110,11 +112,15 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		g.setColor(Color.RED);
 
 
-		for (Lane l : roadLanes) {
-			generateVehicle(l);
-			processVehicles(g);
+		for (int i=0; i<roadLanes.size(); i++){
+			if (i%2 ==0){
+			generateVehicle(roadLanes.get(i), -7);
+			} else {
+			generateVehicle(roadLanes.get(i), 500);
+			}
 		}
-	
+		
+		processVehicles(g);
 		processPlayer(g);
 
 		g.dispose();
@@ -122,7 +128,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 		// game is too fast without this delay
 		try {
-			Thread.sleep(500);
+			Thread.sleep(1);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
