@@ -22,16 +22,20 @@ public class Player extends Sprite {
 	@Override
 	public void tick(Input input) {
 		if (input.buttons[Input.LEFT]) {
-			setXPos(getXPos() - 2);
+			setXPos(getXPos() - 50);
+			input.buttons[Input.LEFT] = false;
 		}
 		if (input.buttons[Input.RIGHT]) {
-			setXPos(getXPos() + 2);
+			setXPos(getXPos() + 50);
+			input.buttons[Input.RIGHT] = false;
 		}
 		if (input.buttons[Input.UP]) {
-			setYPos(getYPos() - 2);
+			setYPos(getYPos() - 50);
+			input.buttons[Input.UP] = false;
 		}
 		if (input.buttons[Input.DOWN]) {
-			setYPos(getYPos() + 2);
+			setYPos(getYPos() + 50);
+			input.buttons[Input.DOWN] = false;
 		}
 
 	}
