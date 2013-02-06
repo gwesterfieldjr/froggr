@@ -6,7 +6,6 @@ public class MovingObject extends Sprite {
 	
 	private int direction;
 
-	public static final boolean SAFE = false;
 	public static final int DIRECTION_LEFT = 0;
 	public static final int DIRECTION_RIGHT = 1;
 
