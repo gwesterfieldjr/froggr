@@ -1,5 +1,6 @@
 package sprites;
 
+import game.FroggrGame;
 import game.Input;
 
 /**
@@ -22,20 +23,28 @@ public class Player extends Sprite {
 	@Override
 	public void tick(Input input) {
 		if (input.buttons[Input.LEFT]) {
+			if (getXPos() - 50 != -50){
 			setXPos(getXPos() - 50);
 			input.buttons[Input.LEFT] = false;
+			}
 		}
 		if (input.buttons[Input.RIGHT]) {
+			if (getXPos() + 50 != FroggrGame.GAME_WIDTH){
 			setXPos(getXPos() + 50);
 			input.buttons[Input.RIGHT] = false;
+			}
 		}
 		if (input.buttons[Input.UP]) {
+			if (getYPos() - 50 != -50){
 			setYPos(getYPos() - 50);
 			input.buttons[Input.UP] = false;
+			}
 		}
 		if (input.buttons[Input.DOWN]) {
+			if (getYPos() + 50 != FroggrGame.GAME_HEIGHT){
 			setYPos(getYPos() + 50);
 			input.buttons[Input.DOWN] = false;
+			}
 		}
 
 	}
