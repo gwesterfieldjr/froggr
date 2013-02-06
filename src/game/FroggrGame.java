@@ -32,6 +32,10 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private ArrayList<Platform> platforms = new ArrayList<Platform>();
 	private Random r = new Random();
 
+
+	private final int START_LEFT = -50;
+	private final int START_RIGHT = 500;
+
 	private final int REGENERATION = 225;
 	private int time = 0;
 
@@ -65,7 +69,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	}
 
 	private void spawnPlayer(int lives) {
-		this.player = new Player(250, GAME_HEIGHT - LANE_HEIGHT, lives);
+		this.player = new Player(250, GAME_HEIGHT - (2*LANE_HEIGHT), lives);
 		player.createImage(this);
 
 	}
@@ -132,10 +136,9 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		}*/
 
 		processPlatform(g);
-		processVehicles(g);
 		processPlayer(g);
+		processVehicles(g);
 		
-
 		g.dispose();
 		bs.show();
 
