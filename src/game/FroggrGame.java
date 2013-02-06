@@ -134,6 +134,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		processPlatform(g);
 		processVehicles(g);
 		processPlayer(g);
+		
 
 		g.dispose();
 		bs.show();
