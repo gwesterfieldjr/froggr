@@ -19,7 +19,6 @@ public class Vehicle extends MovingObject {
 	
 	public static final int CAR = 0;
 	public static final int TRUCK = 1;
-	public static final boolean SAFE = false;
 	
 	public Vehicle(int xPos, int yPos, int length, int direction) {
 		super(xPos, yPos, length, direction);

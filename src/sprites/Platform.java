@@ -17,7 +17,6 @@ public class Platform extends MovingObject {
 	private int length;
 	private int platformType;
 	
-	public static final boolean SAFE = true;
 	public static final int LOG = 0;
 	public static final int LILY = 1;
 	public static final int TURTLE = 2;
