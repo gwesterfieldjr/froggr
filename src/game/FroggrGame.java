@@ -140,7 +140,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 			generateVehicle(roadLanes.get(i), START_RIGHT);
 			}
 		}
-		
+
 		for (int i=0; i<waterLanes.size(); i++){
 			if (i%2 ==0){
 			generateVehicle(waterLanes.get(i), START_LEFT);

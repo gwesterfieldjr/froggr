@@ -1,10 +1,5 @@
 package sprites;
 
-import java.awt.Canvas;
-import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.Toolkit;
-
 import game.Input;
 
 /**
@@ -20,6 +15,8 @@ public class Player extends Sprite {
 		super(x, y);
 		this.lives = lives;
 		setImageURL("res/sprites/player.png");
+		setLength(1);
+		setHeight(1);
 	}
 
 	@Override

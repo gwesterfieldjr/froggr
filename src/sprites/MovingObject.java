@@ -5,7 +5,6 @@ import game.Input;
 public class MovingObject extends Sprite {
 	
 	private int direction;
-	private int length;
 
 	public static final boolean SAFE = false;
 	public static final int DIRECTION_LEFT = 0;
@@ -13,8 +12,9 @@ public class MovingObject extends Sprite {
 
 	public MovingObject(int xPos, int yPos, int length, int direction) {
 		super(xPos, yPos);
-		this.setLength(length);
-		this.setDirection(direction);
+		setLength(length);
+		setHeight(1);
+		this.direction = direction;
 	}
 
 	/**
@@ -29,20 +29,6 @@ public class MovingObject extends Sprite {
 	 */
 	public void setDirection(int direction) {
 		this.direction = direction;
-	}
-
-	/**
-	 * @return the length of the sprite (1,2 or 3)
-	 */
-	public int getLength() {
-		return length;
-	}
-
-	/**
-	 * @param length the length of the sprite (usually 1,2 or 3)
-	 */
-	public void setLength(int length) {
-		this.length = length;
 	}
 
 	@Override
@@ -60,14 +46,10 @@ public class MovingObject extends Sprite {
 	
 	private int getOffScreenXPosition() {
 		if (getDirection() == MovingObject.DIRECTION_LEFT) {
-			return 0 - getPixelLength();
+			return 0 - calculatePixelWidth();
 		} else {
 			return 500;
 		}
-	}
-
-	public int getPixelLength() {
-		return getLength() * 50;
 	}
 
 }
