@@ -81,6 +81,23 @@ public class FroggrGameApplication extends JFrame implements ActionListener, Mou
 		pnlDirectionScreen.setPreferredSize(new Dimension(
 				FroggrGame.GAME_WIDTH + 9, FroggrGame.GAME_HEIGHT + 30));
 		pnlDirectionScreen.setBackground(Color.BLACK);
+		
+		try {
+		
+			BufferedImage backToTitleScreen = ImageIO.read(new File(
+					"res/sprites/player.png"));
+			btnBackToTitleScreen = new JButton(new ImageIcon(backToTitleScreen));
+
+		} catch (IOException e) {
+			System.err.println("Errrr!");
+		}
+		
+		btnBackToTitleScreen.addActionListener(this);
+		btnBackToTitleScreen.setBorder(BorderFactory.createEmptyBorder());
+		btnBackToTitleScreen.setContentAreaFilled(false);
+		btnBackToTitleScreen.setBounds(250, 400, 50, 50);
+		
+		pnlDirectionScreen.add(btnBackToTitleScreen);
 
 	}
 	/**
