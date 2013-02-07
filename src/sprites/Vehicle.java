@@ -31,7 +31,8 @@ public class Vehicle extends MovingObject {
 	
 	private void setImageURLForVehicle() {
 		if (vehicleType == CAR) {
-			setImageURL("res/sprites/car" + MovingObject.DIRECTION_LEFT + getLength() + ".png");
+			//setImageURL("res/sprites/car" + MovingObject.DIRECTION_LEFT + getLength() + ".png");
+			setImageURL("res/sprites/CarSprite.gif");
 		} else if (vehicleType == TRUCK) {
 			setImageURL("res/sprites/truck.png");
 		}
