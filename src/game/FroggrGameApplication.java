@@ -13,25 +13,31 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
-
-public class FroggrGameApplication extends JFrame implements ActionListener, MouseListener {
+public class FroggrGameApplication extends JFrame implements ActionListener {
 
 	// Froggr game driver class
 	private FroggrGame game;
 
 	// Application Panels
-	private JPanel pnlTitleScreen, pnlGameScreen, pnlDirectionScreen;
+	public static final JPanel pnlTitleScreen = new JPanel();
+	public static final JPanel pnlGameScreen = new JPanel();
+	public static final JPanel pnlDirectionScreen = new JPanel();
 
-	// Start Screen Buttons
+	// Panel Background Color
+	public static final Color BACKGROUND_COLOR = Color.BLACK;
+
+	// Title Screen Buttons
 	private JButton btnStartGame, btnDirections;
 
-	// Start Screen Froggr Graphic Label
+	// Title Screen Froggr Graphic Label
 	private JLabel lblTitleScreenGraphic;
 
 	// Direction Screen Buttons
@@ -58,17 +64,21 @@ public class FroggrGameApplication extends JFrame implements ActionListener, Mou
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
-	
+
 	/**
 	 * Creates the screen in which the game driver class FroggrGame will run in.
 	 */
+
 	private void createGameScreen() {
-		pnlGameScreen = new JPanel();
+		// Set Panel information
 		pnlGameScreen.setLayout(null);
-		pnlGameScreen.setPreferredSize(new Dimension(FroggrGame.GAME_WIDTH + 9,
-				FroggrGame.GAME_HEIGHT + 30));
-		pnlGameScreen.setBackground(Color.BLACK);
+		pnlGameScreen.setPreferredSize(new Dimension(FroggrGame.GAME_WIDTH + 9, FroggrGame.GAME_HEIGHT + 30));
+		pnlGameScreen.setBackground(BACKGROUND_COLOR);
+		
+		// Initialize the Froggr Game Driver Class
 		game = new FroggrGame();
+		
+		// Add Game component to the panel
 		pnlGameScreen.add(game);
 	}
 
@@ -76,71 +86,57 @@ public class FroggrGameApplication extends JFrame implements ActionListener, Mou
 	 * Creates game directions screen.
 	 */
 	private void createDirectionScreen() {
-		pnlDirectionScreen = new JPanel();
+		// Set panel infromation
 		pnlDirectionScreen.setLayout(null);
-		pnlDirectionScreen.setPreferredSize(new Dimension(
-				FroggrGame.GAME_WIDTH + 9, FroggrGame.GAME_HEIGHT + 30));
-		pnlDirectionScreen.setBackground(Color.BLACK);
-		
-		try {
-		
-			BufferedImage backToTitleScreen = ImageIO.read(new File(
-					"res/sprites/player.png"));
-			btnBackToTitleScreen = new JButton(new ImageIcon(backToTitleScreen));
+		pnlDirectionScreen.setPreferredSize(new Dimension(FroggrGame.GAME_WIDTH + 9, FroggrGame.GAME_HEIGHT + 30));
+		pnlDirectionScreen.setBackground(BACKGROUND_COLOR);
 
-		} catch (IOException e) {
-			System.err.println("Errrr!");
-		}
-		
+		// Set the back to the title screen button
+		btnBackToTitleScreen = new JButton(new ImageIcon("res/sprites/player.png")); // Temporary images
+		btnBackToTitleScreen.setRolloverEnabled(true);
+		btnBackToTitleScreen.setRolloverIcon(new ImageIcon("res/sprites/car.png"));
 		btnBackToTitleScreen.addActionListener(this);
 		btnBackToTitleScreen.setBorder(BorderFactory.createEmptyBorder());
 		btnBackToTitleScreen.setContentAreaFilled(false);
 		btnBackToTitleScreen.setBounds(250, 400, 50, 50);
-		
-		pnlDirectionScreen.add(btnBackToTitleScreen);
 
+		// Adds components to the panel
+		pnlDirectionScreen.add(btnBackToTitleScreen);
 	}
+
 	/**
-	 * Creates the title screen. 
+	 * Creates the title screen.
 	 */
 	private void createTitleScreen() {
-		pnlTitleScreen = new JPanel();
+		// Set panel information
 		pnlTitleScreen.setLayout(null);
-		pnlTitleScreen.setPreferredSize(new Dimension(
-				FroggrGame.GAME_WIDTH + 9, FroggrGame.GAME_HEIGHT + 30));
-		pnlTitleScreen.setBackground(Color.BLACK);
+		pnlTitleScreen.setPreferredSize(new Dimension(FroggrGame.GAME_WIDTH + 9, FroggrGame.GAME_HEIGHT + 30));
+		pnlTitleScreen.setBackground(BACKGROUND_COLOR);
 
-		try {
-			BufferedImage titleScreenGraphic = ImageIO.read(new File(
-					"res/images/title-screen.png"));
-			lblTitleScreenGraphic = new JLabel(
-					new ImageIcon(titleScreenGraphic));
-
-			BufferedImage startGameButton = ImageIO.read(new File(
-					"res/sprites/player.png"));
-			btnStartGame = new JButton(new ImageIcon(startGameButton));
-
-			BufferedImage directionsButton = ImageIO.read(new File(
-					"res/sprites/player.png"));
-			btnDirections = new JButton(new ImageIcon(directionsButton));
-
-		} catch (IOException e) {
-			System.err.println("Errrr!");
-		}
-
+		// Set Title Screen Graphic
+		lblTitleScreenGraphic = new JLabel(new ImageIcon("res/images/title-screen.png"));
 		lblTitleScreenGraphic.setBorder(BorderFactory.createEmptyBorder());
 		lblTitleScreenGraphic.setBounds(0, 75, 500, 307);
 
+		// Set Start Game Button
+		btnStartGame = new JButton(new ImageIcon("res/sprites/player.png")); // Temporary images
+		btnStartGame.setRolloverEnabled(true);
+		btnStartGame.setRolloverIcon(new ImageIcon("res/sprites/car.png"));
 		btnStartGame.addActionListener(this);
 		btnStartGame.setBorder(BorderFactory.createEmptyBorder());
 		btnStartGame.setContentAreaFilled(false);
 		btnStartGame.setBounds(250, 400, 50, 50);
 
+		// Set Directions Button
+		btnDirections = new JButton(new ImageIcon("res/sprites/player.png"));
+		btnDirections.setRolloverEnabled(true);
+		btnDirections.setRolloverIcon(new ImageIcon("res/sprites/car.png"));
 		btnDirections.addActionListener(this);
 		btnDirections.setBorder(BorderFactory.createEmptyBorder());
 		btnDirections.setContentAreaFilled(false);
 		btnDirections.setBounds(350, 400, 50, 50);
 
+		// Add components to the panel
 		pnlTitleScreen.add(lblTitleScreenGraphic);
 		pnlTitleScreen.add(btnStartGame);
 		pnlTitleScreen.add(btnDirections);
@@ -149,73 +145,41 @@ public class FroggrGameApplication extends JFrame implements ActionListener, Mou
 
 	/*
 	 * 
-	 * 	This sections contains the methods for the ActionListener.
-	 * 
+	 * This sections contains the methods for the ActionListener.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnStartGame){
+		if (e.getSource() == btnStartGame) {
 			startGame();
 			showGameScreen();
 		}
-		if (e.getSource() == btnDirections){
+		if (e.getSource() == btnDirections) {
 			showDirectionsScreen();
 		}
-		if (e.getSource() == btnBackToTitleScreen){
+		if (e.getSource() == btnBackToTitleScreen) {
 			showTitleScreen();
 		}
 	}
 
 	private void showTitleScreen() {
-		programLayout.show(this.getContentPane(), "Title Screen" );
+		programLayout.show(this.getContentPane(), "Title Screen");
 	}
 
 	private void showDirectionsScreen() {
-		programLayout.show(this.getContentPane(), "Direction's Screen" );
+		programLayout.show(this.getContentPane(), "Direction's Screen");
 	}
 
 	private void showGameScreen() {
-		programLayout.show(this.getContentPane(), "Game Screen" );
+		programLayout.show(this.getContentPane(), "Game Screen");
 	}
 
 	private void startGame() {
 		game.start();
 	}
-	
-	/*
-	 * 
-	 *  This section contains the methods for the MouseListener.
-	 *  
-	 */
-	
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO change pictures of buttons
-	}
 
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO change picture back to original
-	}
-	
-	// Ignore These implemented methods from the MouseListener
-	@Override
-	public void mousePressed(MouseEvent e) {}
-	@Override
-	public void mouseReleased(MouseEvent e) {}
-	@Override
-	public void mouseClicked(MouseEvent e) {}
-
-	// MAIN 
+	// MAIN
 	public static void main(String[] args) {
 		FroggrGameApplication froggr = new FroggrGameApplication();
 	}
-
-
-
-
-
-
-
 
 }
