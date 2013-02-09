@@ -3,23 +3,17 @@ package game;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.JTextArea;
 
 public class FroggrGameApplication extends JFrame implements ActionListener {
 
@@ -29,7 +23,7 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 	// Application Panels
 	public static final JPanel pnlTitleScreen = new JPanel();
 	public static final JPanel pnlGameScreen = new JPanel();
-	public static final JPanel pnlDirectionScreen = new JPanel();
+	public static final JPanel pnlDirectionsScreen = new JPanel();
 
 	// Panel Background Color
 	public static final Color BACKGROUND_COLOR = Color.BLACK;
@@ -37,10 +31,17 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 	// Title Screen Buttons
 	private JButton btnStartGame, btnDirections;
 
-	// Title Screen Froggr Graphic Label
+	// Label graphics
 	private JLabel lblTitleScreenGraphic;
+	private JLabel lblArrowKeysGraphic;
+	
+	// Directions Screen Header
+	private JLabel lblDirectionsHeader;
+	
+	// Directions Screen TextArea
+	private JTextArea txtAreaDirections;
 
-	// Direction Screen Buttons
+	// Directions Screen Buttons
 	private JButton btnBackToTitleScreen;
 
 	// Program Layout
@@ -60,7 +61,7 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 		setLayout(programLayout);
 		add(pnlTitleScreen, "Title Screen");
 		add(pnlGameScreen, "Game Screen");
-		add(pnlDirectionScreen, "Direction's Screen");
+		add(pnlDirectionsScreen, "Direction's Screen");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
@@ -86,11 +87,46 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 	 * Creates game directions screen.
 	 */
 	private void createDirectionScreen() {
-		// Set panel infromation
-		pnlDirectionScreen.setLayout(null);
-		pnlDirectionScreen.setPreferredSize(new Dimension(FroggrGame.GAME_WIDTH + 9, FroggrGame.GAME_HEIGHT + 30));
-		pnlDirectionScreen.setBackground(BACKGROUND_COLOR);
+		// Set panel information
+		pnlDirectionsScreen.setLayout(null);
+		pnlDirectionsScreen.setPreferredSize(new Dimension(FroggrGame.GAME_WIDTH + 9, FroggrGame.GAME_HEIGHT + 30));
+		pnlDirectionsScreen.setBackground(BACKGROUND_COLOR);
 
+		// Set Directions Header label
+		lblDirectionsHeader = new JLabel("DIRECTIONS", JLabel.CENTER);
+		lblDirectionsHeader.setFont(new Font("Arial", Font.BOLD, 50));
+		lblDirectionsHeader.setForeground(Color.RED);
+		lblDirectionsHeader.setBounds(0, 25, 500, 50);
+		
+		// Set Directions label
+		txtAreaDirections = new JTextArea("     The player starts with three frogs (lives). The player’s goal is to guide the frog from\n" +
+				" the bottom of the screen into one of the four winning zones where flies wait to be eaten\n" +
+				" as lunch.\n\n" + 
+				"     The lower half of the screen contains a road with motor vehicles, which include\n" +
+				" different sized cars and trucks speeding along it horizontally. The middle of the screen,\n" +
+				" after the road, contains a median where the player must prepare to navigate the river.\n" +
+				" The upper half of the screen consists of a river with logs, turtles, and lilies all moving\n" +
+				" horizontally across the screen. The very top of the screen contains four frog homes\n" +
+				" which are the destinations for each frog. To beat the game the player must fill each of\n" +
+				" the four frog homes with a frog. The player has three lives to do this.\n\n" +
+				"     There are many different ways to lose a life in this game, including:\n\n " +
+				"        1) Being hit by a road vehicle.\n" +
+				"         2) Jumping into the river's water.\n" +
+				"         3) Staying on top of a diving turtle until it has completely submerged.\n" +
+				"         4) Jumping into a home already occupied by a frog.\n" +
+				"         5) Jumping into the side of a frog home.\n\n" +
+				"     The only player controls are the arrow keys on the keyboard. The player must use\n" +
+				" them to navigate the frog through oncoming traffic and moving logs, turtles, and lilies.");
+		txtAreaDirections.setFont(new Font("Arial", Font.BOLD, 12));
+		txtAreaDirections.setBackground(Color.BLACK);
+		txtAreaDirections.setForeground(Color.WHITE);
+		txtAreaDirections.setBounds(0, 85, 500, 335);
+		
+		// Set Arrow Keys Graphic
+		lblArrowKeysGraphic = new JLabel(new ImageIcon("res/images/arrowkeys.png"));
+		lblArrowKeysGraphic.setBorder(BorderFactory.createEmptyBorder());
+		lblArrowKeysGraphic.setBounds(75, 425, 356, 287);
+		
 		// Set the back to the title screen button
 		btnBackToTitleScreen = new JButton(new ImageIcon("res/sprites/player.png")); // Temporary images
 		btnBackToTitleScreen.setRolloverEnabled(true);
@@ -98,10 +134,13 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 		btnBackToTitleScreen.addActionListener(this);
 		btnBackToTitleScreen.setBorder(BorderFactory.createEmptyBorder());
 		btnBackToTitleScreen.setContentAreaFilled(false);
-		btnBackToTitleScreen.setBounds(250, 400, 50, 50);
+		btnBackToTitleScreen.setBounds(360, 450, 50, 50);
 
 		// Adds components to the panel
-		pnlDirectionScreen.add(btnBackToTitleScreen);
+		pnlDirectionsScreen.add(lblDirectionsHeader);
+		pnlDirectionsScreen.add(txtAreaDirections);
+		pnlDirectionsScreen.add(lblArrowKeysGraphic);
+		pnlDirectionsScreen.add(btnBackToTitleScreen);
 	}
 
 	/**
