@@ -113,14 +113,14 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		if (time++ > REGENERATION) {
 			time = 0;
 			int startPosition = (direction==MovingObject.DIRECTION_LEFT) ? GAME_WIDTH : 0 - (length * 50);
-			Vehicle v = new Vehicle(startPosition, lane.getYPos(), 1, direction);
+			Vehicle v = new Vehicle(startPosition, lane.getYPos(), length, direction);
 			v.setVehicleType(Vehicle.CAR);
 			v.createImage(this);
 			vehicles.add(v);
 		}
 	}
 
-	private void generatePlatform(Lane lane, int startPosition) {
+	private void generatePlatform(Lane lane, int length, int direction) {
 
 	}
 
@@ -161,10 +161,9 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		g.setColor(Color.RED);
 		
 		processLanes(g);
-		addVehiclesToLanes();
-		processPlatform(g);
-		processPlayer(g);
 		processVehicles(g);
+		processPlayer(g);
+		processPlatform(g);
 		
 		g.dispose();
 		bs.show();
@@ -179,8 +178,8 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 	private void addVehiclesToLanes() {
 		generateVehicle(lanes.get(LANE_ROAD_FIRST), 1, MovingObject.DIRECTION_LEFT);
-		generateVehicle(lanes.get(LANE_ROAD_SECOND), 1, MovingObject.DIRECTION_RIGHT);
-		generateVehicle(lanes.get(LANE_ROAD_THIRD), 1, MovingObject.DIRECTION_LEFT);
+		generateVehicle(lanes.get(LANE_ROAD_SECOND), 2, MovingObject.DIRECTION_RIGHT);
+		generateVehicle(lanes.get(LANE_ROAD_THIRD), 3, MovingObject.DIRECTION_LEFT);
 		generateVehicle(lanes.get(LANE_ROAD_FOURTH), 1, MovingObject.DIRECTION_RIGHT);
 	}
 
@@ -196,6 +195,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 */
 	public void start() {
 		createLanes();
+		addVehiclesToLanes();
 		spawnPlayer(startingLives);
 		new Thread(this).start();
 	}

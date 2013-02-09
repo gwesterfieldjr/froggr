@@ -41,7 +41,7 @@ public class Player extends Sprite {
 			}
 		}
 		if (input.buttons[Input.DOWN]) {
-			if (getYPos() + 50 != FroggrGame.GAME_HEIGHT){
+			if (getYPos() + 50 != FroggrGame.GAME_HEIGHT - 50){
 			setYPos(getYPos() + 50);
 			input.buttons[Input.DOWN] = false;
 			}

@@ -2,9 +2,6 @@ package sprites;
 
 import java.util.Random;
 
-import game.Input;
-import game.FroggrGame;
-
 /**
  * 
  * @author Raj Ramsaroop
@@ -31,10 +28,11 @@ public class Vehicle extends MovingObject {
 	
 	private void setImageURLForVehicle() {
 		if (vehicleType == CAR) {
-			//setImageURL("res/sprites/car" + MovingObject.DIRECTION_LEFT + getLength() + ".png");
-			setImageURL("res/sprites/CarSprite.gif");
+			Random r = new Random();
+			String color = (r.nextInt()%2==0) ? "red" : "blue";
+			setImageURL("res/sprites/vehicle/car-" + color + "-" + getDirection() + "-" + getLength() + ".gif");
 		} else if (vehicleType == TRUCK) {
-			setImageURL("res/sprites/truck.png");
+			setImageURL("res/sprites/vehicle/truck-0-2.gif");
 		}
 	}
 
