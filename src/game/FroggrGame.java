@@ -26,21 +26,32 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private int startingLives = 3;
 	private Input input = new Input();
 
-	private ArrayList<Lane> roadLanes = new ArrayList<Lane>();
-	private ArrayList<Lane> waterLanes = new ArrayList<Lane>();
+	private ArrayList<Lane> lanes = new ArrayList<Lane>();
 	private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
 	private ArrayList<Platform> platforms = new ArrayList<Platform>();
-	private Random r = new Random();
 
 	private final int REGENERATION = 225;
 	private int time = 0;
 
-	private static final int NUMBER_OF_ROAD_LANES = 4;
-	private static final int NUMBER_OF_WATER_LANES = 5;
 	public static final int GAME_WIDTH = 500;
 	public static final int GAME_HEIGHT = 700;
 	public static final int LANE_HEIGHT = 50;
 	public static final Color FOREGROUND_COLOR = Color.BLACK;
+	
+	// Constants for each lane index
+	public static final int LANE_WIN = 0;
+	public static final int LANE_WATER_FIFTH = 1;
+	public static final int LANE_WATER_FOURTH = 2;
+	public static final int LANE_WATER_THIRD = 3;
+	public static final int LANE_WATER_SECOND = 4;
+	public static final int LANE_WATER_FIRST = 5;
+	public static final int LANE_GRASS_FIRST = 6;
+	public static final int LANE_GRASS_SECOND = 7;
+	public static final int LANE_ROAD_FOURTH = 8;
+	public static final int LANE_ROAD_THIRD = 9;
+	public static final int LANE_ROAD_SECOND = 10;
+	public static final int LANE_ROAD_FIRST = 11;
+	public static final int LANE_START = 12;
 
 	public FroggrGame() {
 		addKeyListener(this);
@@ -49,18 +60,46 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	}
 
 	private void createLanes() {
-		int roadY = 400;
-		int waterY = 50;
-		// set road lanes
-		for (int i = 0; i < NUMBER_OF_ROAD_LANES; i++) {
-			roadLanes.add(new Lane(0, roadY));
-			roadY = roadY + LANE_HEIGHT;
+		// Create our 13 game lanes
+		for (int i=0;i<13;i++) {
+			lanes.add(new Lane(0,i*50));
 		}
+		
+		// Add the image for each lane
+		lanes.get(LANE_WIN).setImageURL("res/sprites/lane/win.png");
 
-		// set water lanes
-		for (int i = 0; i < NUMBER_OF_WATER_LANES; i++) {
-			waterLanes.add(new Lane(0, waterY));
-			waterY = waterY + LANE_HEIGHT;
+		// Use alternating images randomly for water lanes
+		for (int i = LANE_WATER_FIFTH;i <= LANE_WATER_FIRST;i++) {
+			Random r = new Random();
+			if (r.nextInt()%2==0) {
+				lanes.get(i).setImageURL("res/sprites/lane/water-0.png");
+			} else {
+				lanes.get(i).setImageURL("res/sprites/lane/water-1.png");
+			}
+		}
+		
+		// Safe area before water
+		lanes.get(LANE_GRASS_FIRST).setImageURL("res/sprites/lane/grass.png");
+		lanes.get(LANE_GRASS_SECOND).setImageURL("res/sprites/lane/grass.png");
+		
+		// Road lanes
+		lanes.get(LANE_ROAD_FOURTH).setImageURL("res/sprites/lane/road-top.png");
+		lanes.get(LANE_ROAD_THIRD).setImageURL("res/sprites/lane/road-middle.png");
+		lanes.get(LANE_ROAD_SECOND).setImageURL("res/sprites/lane/road-middle.png");
+		lanes.get(LANE_ROAD_FIRST).setImageURL("res/sprites/lane/road-bottom.png");
+		
+		// Start lane
+		lanes.get(LANE_START).setImageURL("res/sprites/lane/grass.png");
+		
+		// Create Image object for all lanes
+		for(Lane l : lanes) {
+			l.createImage(this);
+		}
+	}
+
+	private void processLanes(Graphics g) {
+		for (Lane l : lanes) {
+			g.drawImage(l.getImage(), l.getXPos(), l.getYPos(), this);
 		}
 	}
 
@@ -121,16 +160,8 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.setColor(Color.RED);
 		
+		processLanes(g);
 		addVehiclesToLanes();
-
-		/*for (int i = 0; i < waterLanes.size(); i++) {
-			if (i % 2 == 0) {
-				generateVehicle(waterLanes.get(i), START_LEFT);
-			} else {
-				generateVehicle(waterLanes.get(i), START_RIGHT);
-			}
-		}*/
-
 		processPlatform(g);
 		processPlayer(g);
 		processVehicles(g);
@@ -140,17 +171,17 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 		// game is too fast without this delay
 		try {
-			Thread.sleep(1);
+			Thread.sleep(10);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 
 	private void addVehiclesToLanes() {
-		generateVehicle(roadLanes.get(0), 1, MovingObject.DIRECTION_LEFT);
-		generateVehicle(roadLanes.get(1), 1, MovingObject.DIRECTION_RIGHT);
-		generateVehicle(roadLanes.get(2), 1, MovingObject.DIRECTION_LEFT);
-		generateVehicle(roadLanes.get(3), 1, MovingObject.DIRECTION_RIGHT);
+		generateVehicle(lanes.get(LANE_ROAD_FIRST), 1, MovingObject.DIRECTION_LEFT);
+		generateVehicle(lanes.get(LANE_ROAD_SECOND), 1, MovingObject.DIRECTION_RIGHT);
+		generateVehicle(lanes.get(LANE_ROAD_THIRD), 1, MovingObject.DIRECTION_LEFT);
+		generateVehicle(lanes.get(LANE_ROAD_FOURTH), 1, MovingObject.DIRECTION_RIGHT);
 	}
 
 	@Override
