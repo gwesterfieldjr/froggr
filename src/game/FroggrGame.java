@@ -131,13 +131,11 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 	// process vehicle
 	private void processVehicles(Graphics g) {
-		for (int i = 0; i < vehicles.size(); i++) {
-			Vehicle v = vehicles.get(i);
+		for (Vehicle v : vehicles) {
 			if (!v.isRemoved()) {
 				v.tick(input);
 				g.drawImage(v.getImage(), v.getXPos(), v.getYPos(), this);
 			}
-
 		}
 	}
 
