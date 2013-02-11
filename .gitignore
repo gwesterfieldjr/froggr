@@ -4,3 +4,10 @@
 *.jar
 *.war
 *.ear
+
+# Image thing
+Thumbs.db
+
+# Eclipse files
+.classpath
+.project
