@@ -308,8 +308,6 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		}
 
 		Graphics g = bs.getDrawGraphics();
-		g.fillRect(0, 0, getWidth(), getHeight());
-		g.setColor(Color.RED);
 
 		/*
 		 * Show the sprites here. Make sure the method to add vehicles and
@@ -366,7 +364,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		generateVehicle(lanes.get(LANE_ROAD_FOURTH), 2,
 				MovingObject.DIRECTION_LEFT, Vehicle.TRUCK);
 	}
-
+	
 	@Override
 	public void run() {
 		while (true) {
