@@ -158,9 +158,11 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.setColor(Color.RED);
 		
+		addVehiclesToLanes();	// this has to be in the render loop otherwise it won't display
 		processLanes(g);
-		processVehicles(g);
 		processPlayer(g);
+		processVehicles(g);
+		
 		processPlatform(g);
 		
 		g.dispose();
@@ -193,7 +195,6 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 */
 	public void start() {
 		createLanes();
-		addVehiclesToLanes();
 		spawnPlayer(startingLives);
 		new Thread(this).start();
 	}
