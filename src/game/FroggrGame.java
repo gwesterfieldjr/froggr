@@ -106,7 +106,6 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private void spawnPlayer(int lives) {
 		this.player = new Player(250, GAME_HEIGHT - (2*LANE_HEIGHT), lives);
 		player.createImage(this);
-
 	}
 
 	private void generateVehicle(Lane lane, int length, int direction, int vehicleType) {
