@@ -109,12 +109,12 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 	}
 
-	private void generateVehicle(Lane lane, int length, int direction) {
+	private void generateVehicle(Lane lane, int length, int direction, int vehicleType) {
 		if (time++ > REGENERATION) {
 			time = 0;
 			int startPosition = (direction==MovingObject.DIRECTION_LEFT) ? GAME_WIDTH : 0 - (length * 50);
 			Vehicle v = new Vehicle(startPosition, lane.getYPos(), length, direction);
-			v.setVehicleType(Vehicle.CAR);
+			v.setVehicleType(vehicleType);
 			v.createImage(this);
 			vehicles.add(v);
 		}
@@ -139,7 +139,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		}
 	}
 
-	private void processPlatform(Graphics g) {
+	private void processPlatforms(Graphics g) {
 		// TODO Auto-generated method stub
 
 	}
@@ -158,12 +158,15 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.setColor(Color.RED);
 		
-		addVehiclesToLanes();	// this has to be in the render loop otherwise it won't display
+		/*
+		 * Show the sprites here. Make sure the method to add vehicles and platforms are displayed
+		 * here otherwise it won't display.
+		 */
+		addVehiclesToLanes();
 		processLanes(g);
 		processPlayer(g);
 		processVehicles(g);
-		
-		processPlatform(g);
+		processPlatforms(g);
 		
 		g.dispose();
 		bs.show();
@@ -175,12 +178,16 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * Determines what vehicles, length and direction to add to the lanes. Trucks are always length 2.
+	 * Other vehicles can be of length 1, 2 or 3.
+	 */
 	private void addVehiclesToLanes() {
-		generateVehicle(lanes.get(LANE_ROAD_FIRST), 1, MovingObject.DIRECTION_LEFT);
-		generateVehicle(lanes.get(LANE_ROAD_SECOND), 2, MovingObject.DIRECTION_RIGHT);
-		generateVehicle(lanes.get(LANE_ROAD_THIRD), 3, MovingObject.DIRECTION_LEFT);
-		generateVehicle(lanes.get(LANE_ROAD_FOURTH), 1, MovingObject.DIRECTION_RIGHT);
+		generateVehicle(lanes.get(LANE_ROAD_FIRST), 1, MovingObject.DIRECTION_RIGHT, Vehicle.CAR);
+		generateVehicle(lanes.get(LANE_ROAD_SECOND), 2, MovingObject.DIRECTION_LEFT, Vehicle.CAR);
+		generateVehicle(lanes.get(LANE_ROAD_THIRD), 3, MovingObject.DIRECTION_RIGHT, Vehicle.CAR);
+		generateVehicle(lanes.get(LANE_ROAD_FOURTH), 2, MovingObject.DIRECTION_LEFT, Vehicle.TRUCK);
 	}
 
 	@Override
