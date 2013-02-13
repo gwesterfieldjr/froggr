@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -23,25 +24,25 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 	// Application Panels
 	public static final JPanel pnlTitleScreen = new JPanel();
 	public static final JPanel pnlGameScreen = new JPanel();
-	public static final JPanel pnlDirectionsScreen = new JPanel();
+	public static final JPanel pnlInstructionsScreen = new JPanel();
 
 	// Panel Background Color
 	public static final Color BACKGROUND_COLOR = Color.BLACK;
 
 	// Title Screen Buttons
-	private JButton btnStartGame, btnDirections;
+	private JButton btnStartGame, btnInstructions, btnCredits;
 
 	// Label graphics
 	private JLabel lblTitleScreenGraphic;
 	private JLabel lblArrowKeysGraphic;
 	
-	// Directions Screen Header
-	private JLabel lblDirectionsHeader;
+	// Instructions Screen Header
+	private JLabel lblInstructionsHeader;
 	
-	// Directions Screen TextArea
-	private JTextArea txtAreaDirections;
+	// Instructions Screen TextArea
+	private JTextArea txtAreaInstructions;
 
-	// Directions Screen Buttons
+	// Instructions Screen Buttons
 	private JButton btnBackToTitleScreen;
 
 	// Program Layout
@@ -52,7 +53,7 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 	 */
 	public FroggrGameApplication() {
 		createTitleScreen();
-		createDirectionScreen();
+		createInstructionScreen();
 		createGameScreen();
 		setTitle("Froggr");
 		setSize(FroggrGame.GAME_WIDTH + 6, FroggrGame.GAME_HEIGHT + 30);
@@ -61,7 +62,7 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 		setLayout(programLayout);
 		add(pnlTitleScreen, "Title Screen");
 		add(pnlGameScreen, "Game Screen");
-		add(pnlDirectionsScreen, "Direction's Screen");
+		add(pnlInstructionsScreen, "Direction's Screen");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
@@ -86,20 +87,20 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 	/**
 	 * Creates game directions screen.
 	 */
-	private void createDirectionScreen() {
+	private void createInstructionScreen() {
 		// Set panel information
-		pnlDirectionsScreen.setLayout(null);
-		pnlDirectionsScreen.setPreferredSize(new Dimension(FroggrGame.GAME_WIDTH + 9, FroggrGame.GAME_HEIGHT + 30));
-		pnlDirectionsScreen.setBackground(BACKGROUND_COLOR);
+		pnlInstructionsScreen.setLayout(null);
+		pnlInstructionsScreen.setPreferredSize(new Dimension(FroggrGame.GAME_WIDTH + 9, FroggrGame.GAME_HEIGHT + 30));
+		pnlInstructionsScreen.setBackground(BACKGROUND_COLOR);
 
-		// Set Directions Header label
-		lblDirectionsHeader = new JLabel("DIRECTIONS", JLabel.CENTER);
-		lblDirectionsHeader.setFont(new Font("Arial", Font.BOLD, 50));
-		lblDirectionsHeader.setForeground(Color.RED);
-		lblDirectionsHeader.setBounds(0, 25, 500, 50);
+		// Set Instructions Header label
+		lblInstructionsHeader = new JLabel("INSTRUCTIONS", JLabel.CENTER);
+		lblInstructionsHeader.setFont(new Font("Arial", Font.BOLD, 50));
+		lblInstructionsHeader.setForeground(Color.RED);
+		lblInstructionsHeader.setBounds(0, 25, 500, 50);
 		
-		// Set Directions label
-		txtAreaDirections = new JTextArea("     The player starts with three frogs (lives). The player’s goal is to guide the frog from\n" +
+		// Set Instructions label
+		txtAreaInstructions = new JTextArea("     The player starts with three frogs (lives). The player’s goal is to guide the frog from\n" +
 				" the bottom of the screen into one of the four winning zones where flies wait to be eaten\n" +
 				" as lunch.\n\n" + 
 				"     The lower half of the screen contains a road with motor vehicles, which include\n" +
@@ -117,10 +118,10 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 				"         5) Jumping into the side of a frog home.\n\n" +
 				"     The only player controls are the arrow keys on the keyboard. The player must use\n" +
 				" them to navigate the frog through oncoming traffic and moving logs, turtles, and lilies.");
-		txtAreaDirections.setFont(new Font("Arial", Font.BOLD, 12));
-		txtAreaDirections.setBackground(Color.BLACK);
-		txtAreaDirections.setForeground(Color.WHITE);
-		txtAreaDirections.setBounds(0, 85, 500, 335);
+		txtAreaInstructions.setFont(new Font("Arial", Font.BOLD, 12));
+		txtAreaInstructions.setBackground(Color.BLACK);
+		txtAreaInstructions.setForeground(Color.WHITE);
+		txtAreaInstructions.setBounds(0, 85, 500, 335);
 		
 		// Set Arrow Keys Graphic
 		lblArrowKeysGraphic = new JLabel(new ImageIcon("res/images/arrowkeys.png"));
@@ -128,19 +129,19 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 		lblArrowKeysGraphic.setBounds(75, 425, 356, 287);
 		
 		// Set the back to the title screen button
-		btnBackToTitleScreen = new JButton(new ImageIcon("res/sprites/player.png")); // Temporary images
+		btnBackToTitleScreen = new JButton(new ImageIcon("res/images/menu/back.png")); // Temporary images
 		btnBackToTitleScreen.setRolloverEnabled(true);
-		btnBackToTitleScreen.setRolloverIcon(new ImageIcon("res/sprites/car.png"));
+		btnBackToTitleScreen.setRolloverIcon(new ImageIcon("res/images/menu/back-hover.png"));
 		btnBackToTitleScreen.addActionListener(this);
 		btnBackToTitleScreen.setBorder(BorderFactory.createEmptyBorder());
 		btnBackToTitleScreen.setContentAreaFilled(false);
-		btnBackToTitleScreen.setBounds(360, 450, 50, 50);
+		btnBackToTitleScreen.setBounds(300, 450, 200, 50);
 
 		// Adds components to the panel
-		pnlDirectionsScreen.add(lblDirectionsHeader);
-		pnlDirectionsScreen.add(txtAreaDirections);
-		pnlDirectionsScreen.add(lblArrowKeysGraphic);
-		pnlDirectionsScreen.add(btnBackToTitleScreen);
+		pnlInstructionsScreen.add(lblInstructionsHeader);
+		pnlInstructionsScreen.add(txtAreaInstructions);
+		pnlInstructionsScreen.add(lblArrowKeysGraphic);
+		pnlInstructionsScreen.add(btnBackToTitleScreen);
 	}
 
 	/**
@@ -158,27 +159,37 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 		lblTitleScreenGraphic.setBounds(0, 75, 500, 307);
 
 		// Set Start Game Button
-		btnStartGame = new JButton(new ImageIcon("res/sprites/player.png")); // Temporary images
+		btnStartGame = new JButton(new ImageIcon("res/images/menu/start.png")); // Temporary images
 		btnStartGame.setRolloverEnabled(true);
-		btnStartGame.setRolloverIcon(new ImageIcon("res/sprites/car.png"));
+		btnStartGame.setRolloverIcon(new ImageIcon("res/images/menu/start-hover.png"));
 		btnStartGame.addActionListener(this);
 		btnStartGame.setBorder(BorderFactory.createEmptyBorder());
 		btnStartGame.setContentAreaFilled(false);
-		btnStartGame.setBounds(250, 400, 50, 50);
+		btnStartGame.setBounds(150, 400, 200, 50);
 
 		// Set Directions Button
-		btnDirections = new JButton(new ImageIcon("res/sprites/player.png"));
-		btnDirections.setRolloverEnabled(true);
-		btnDirections.setRolloverIcon(new ImageIcon("res/sprites/car.png"));
-		btnDirections.addActionListener(this);
-		btnDirections.setBorder(BorderFactory.createEmptyBorder());
-		btnDirections.setContentAreaFilled(false);
-		btnDirections.setBounds(350, 400, 50, 50);
+		btnInstructions = new JButton(new ImageIcon("res/images/menu/instructions.png"));
+		btnInstructions.setRolloverEnabled(true);
+		btnInstructions.setRolloverIcon(new ImageIcon("res/images/menu/instructions-hover.png"));
+		btnInstructions.addActionListener(this);
+		btnInstructions.setBorder(BorderFactory.createEmptyBorder());
+		btnInstructions.setContentAreaFilled(false);
+		btnInstructions.setBounds(150, 450, 200, 50);
+		
+		// Set Credits Button
+		btnCredits = new JButton(new ImageIcon("res/images/menu/credits.png"));
+		btnCredits.setRolloverEnabled(true);
+		btnCredits.setRolloverIcon(new ImageIcon("res/images/menu/credits-hover.png"));
+		btnCredits.addActionListener(this);
+		btnCredits.setBorder(BorderFactory.createEmptyBorder());
+		btnCredits.setContentAreaFilled(false);
+		btnCredits.setBounds(150,500, 200, 50);
 
 		// Add components to the panel
 		pnlTitleScreen.add(lblTitleScreenGraphic);
 		pnlTitleScreen.add(btnStartGame);
-		pnlTitleScreen.add(btnDirections);
+		pnlTitleScreen.add(btnInstructions);
+		pnlTitleScreen.add(btnCredits);
 
 	}
 
@@ -192,13 +203,22 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 			startGame();
 			showGameScreen();
 		}
-		if (e.getSource() == btnDirections) {
+		if (e.getSource() == btnInstructions) {
 			showDirectionsScreen();
+		}
+		if (e.getSource() == btnCredits) {
+			launchCredits();
 		}
 		if (e.getSource() == btnBackToTitleScreen) {
 			showTitleScreen();
 		}
 	}
+
+	private void launchCredits() {
+		JOptionPane.showMessageDialog(null,"Version:  0.1\n\nAuthors:  Raj Ramsaroop\n" +
+				"                 Greg Westerfield, Jr.",
+				"Credits", 1);
+		}
 
 	private void showTitleScreen() {
 		programLayout.show(this.getContentPane(), "Title Screen");
