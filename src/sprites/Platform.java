@@ -55,13 +55,7 @@ public class Platform extends MovingObject {
 	 */
 	public void setPlatformType(int platformType) {
 		this.platformType = platformType;
-		if (platformType == LOG) {
-			setImageURL("res/sprites/platform/log.gif");
-		} else if (platformType == LILY) {
-			setImageURL("res/sprites/platform/lily-" + getDirection() + "-3.gif");
-		} else if (platformType == TURTLE) {
-			setImageURL("res/sprites/platform/turtle-" + getDirection() + "-" + getLength() + ".gif");
-		}
+		setImageURL("res/sprites/platform/log.gif");
 	}
 
 	/**

@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Iterator;
 
 import sprites.Lane;
 import sprites.MovingObject;
@@ -31,7 +31,8 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private ArrayList<Platform> platforms = new ArrayList<Platform>();
 
 	private final int REGENERATION = 225;
-	private int time = 0;
+	private int vehicleTime = 0;
+	private int platformTime = 0;
 
 	/**
 	 * Width of the game canvas in pixels.
@@ -211,8 +212,8 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 */
 	private void generateVehicle(Lane lane, int length, int direction,
 			int vehicleType) {
-		if (time++ > REGENERATION) {
-			time = 0;
+		if (vehicleTime++ > REGENERATION) {
+			vehicleTime = 0;
 			int startPosition = (direction == MovingObject.DIRECTION_LEFT) ? GAME_WIDTH
 					: 0 - (length * 50);
 			Vehicle v = new Vehicle(startPosition, lane.getYPos(), length,
@@ -235,14 +236,12 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 * @param platformType
 	 *            The type of platform to generate.
 	 */
-	private void generatePlatform(Lane lane, int length, int direction,
-			int platformType) {
-		if (time++ > REGENERATION) {
-			time = 0;
+	private void generatePlatform(Lane lane, int length, int direction, int platformType) {
+		if (platformTime++ > REGENERATION) {
+			platformTime = 0;
 			int startPosition = (direction == MovingObject.DIRECTION_LEFT) ? GAME_WIDTH
 					: 0 - (length * 50);
-			Platform p = new Platform(startPosition, lane.getYPos(), length,
-					direction);
+			Platform p = new Platform(startPosition, lane.getYPos(), length, direction);
 			p.setPlatformType(platformType);
 			p.createImage(this);
 			platforms.add(p);
@@ -311,8 +310,8 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		 * layers. For example, the player will be before the vehicles, so that
 		 * it gives the appearance that vehicles run over Froggr.
 		 */
-		addVehiclesToLanes();
 		addPlatformsToLanes();
+		addVehiclesToLanes();
 		processLanes(g);
 		processPlatforms(g);
 		processPlayer(g);
@@ -320,6 +319,10 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 		g.dispose();
 		bs.show();
+		
+		removeSpritesFromLists();
+		
+		System.out.println(platforms.size());
 
 		// game is too fast without this delay
 		try {
@@ -329,20 +332,31 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		}
 	}
 
+	private void removeSpritesFromLists() {
+		Iterator<Vehicle> vehicleIterator = vehicles.iterator();
+		while (vehicleIterator.hasNext()) {
+			Vehicle v = vehicleIterator.next();
+			if (v.isRemoved()) {
+				vehicleIterator.remove();
+			}
+		}
+		
+		Iterator<Platform> platformIterator = platforms.iterator();
+		while (platformIterator.hasNext()) {
+			Platform p = platformIterator.next();
+			if (p.isRemoved()) {
+				platformIterator.remove();
+			}
+		}
+	}
+
 	/**
 	 * 
 	 */
 	private void addPlatformsToLanes() {
-		generatePlatform(lanes.get(LANE_WATER_FIRST), 3,
-				MovingObject.DIRECTION_LEFT, Platform.LILY);
-		generatePlatform(lanes.get(LANE_WATER_SECOND), 3,
-				MovingObject.DIRECTION_RIGHT, Platform.TURTLE);
-		generatePlatform(lanes.get(LANE_WATER_THIRD), 2,
-				MovingObject.DIRECTION_LEFT, Platform.TURTLE);
-		generatePlatform(lanes.get(LANE_WATER_FOURTH), 3,
-				MovingObject.DIRECTION_RIGHT, Platform.LOG);
-		generatePlatform(lanes.get(LANE_WATER_FIFTH), 3,
-				MovingObject.DIRECTION_LEFT, Platform.LOG);
+		for (int i=LANE_WATER_FIFTH; i<=LANE_WATER_FIRST;i++) {
+			generatePlatform(lanes.get(i), 3, MovingObject.DIRECTION_LEFT, Platform.LOG);
+		}
 	}
 
 	/**
