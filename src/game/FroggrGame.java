@@ -160,17 +160,21 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.setColor(Color.RED);
 		
+		
 		processLanes(g);
-		processVehicles(g);
-		processPlayer(g);
 		processPlatform(g);
+		processPlayer(g);
+		addVehiclesToLanes();
+		processVehicles(g);
+		
+
 		
 		g.dispose();
 		bs.show();
 
 		// game is too fast without this delay
 		try {
-			Thread.sleep(10);
+			Thread.sleep(1);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -195,7 +199,6 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 */
 	public void start() {
 		createLanes();
-		addVehiclesToLanes();
 		spawnPlayer(startingLives);
 		new Thread(this).start();
 	}
