@@ -375,7 +375,6 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 */
 	public void start() {
 		createLanes();
-		
 		spawnPlayer(startingLives);
 		new Thread(this).start();
 	}
