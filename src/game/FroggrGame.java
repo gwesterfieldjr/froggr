@@ -146,12 +146,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 		// Use alternating images randomly for water lanes
 		for (int i = LANE_WATER_FIFTH; i <= LANE_WATER_FIRST; i++) {
-			Random r = new Random();
-			if (r.nextInt() % 2 == 0) {
-				lanes.get(i).setImageURL("res/sprites/lane/water-0.png");
-			} else {
-				lanes.get(i).setImageURL("res/sprites/lane/water-1.png");
-			}
+			lanes.get(i).setImageURL("res/sprites/lane/water.gif");
 		}
 
 		// Safe area before water
