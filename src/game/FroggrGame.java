@@ -322,8 +322,6 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		
 		removeSpritesFromLists();
 		
-		System.out.println(platforms.size());
-
 		// game is too fast without this delay
 		try {
 			Thread.sleep(20);
