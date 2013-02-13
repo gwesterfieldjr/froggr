@@ -22,6 +22,7 @@ public abstract class Sprite {
 	private int length;
 	private int height;
 	private int pixelUnitSize;
+	private Canvas canvas;
 
 	public Sprite(int xPos, int yPos) {
 		this.xPos = xPos;
@@ -31,6 +32,7 @@ public abstract class Sprite {
 	}
 
 	public void createImage(Canvas c) {
+		this.canvas = c;
 		MediaTracker media = new MediaTracker(c);
 		image = Toolkit.getDefaultToolkit().getImage(imageURL);
 		media.addImage(image, 0);
@@ -153,6 +155,20 @@ public abstract class Sprite {
 
 	public int getPixelUnitSize() {
 		return pixelUnitSize;
+	}
+
+	/**
+	 * @return the canvas
+	 */
+	public Canvas getCanvas() {
+		return canvas;
+	}
+
+	/**
+	 * @param canvas the canvas to set
+	 */
+	public void setCanvas(Canvas canvas) {
+		this.canvas = canvas;
 	}
 
 }
