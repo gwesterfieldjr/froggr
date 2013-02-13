@@ -326,7 +326,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 		// game is too fast without this delay
 		try {
-			Thread.sleep(10);
+			Thread.sleep(20);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
