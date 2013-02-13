@@ -238,7 +238,7 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 
 	// MAIN
 	public static void main(String[] args) {
-		FroggrGameApplication froggr = new FroggrGameApplication();
+		new FroggrGameApplication();
 	}
 
 }
