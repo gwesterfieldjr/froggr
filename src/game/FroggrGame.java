@@ -354,9 +354,11 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 * 
 	 */
 	private void addPlatformsToLanes() {
-		for (int i=LANE_WATER_FIFTH; i<=LANE_WATER_FIRST;i++) {
-			generatePlatform(lanes.get(i), 3, MovingObject.DIRECTION_LEFT, Platform.LOG);
-		}
+		generatePlatform(lanes.get(LANE_WATER_FIFTH), 3, MovingObject.DIRECTION_LEFT, Platform.LOG);
+		generatePlatform(lanes.get(LANE_WATER_FOURTH), 2, MovingObject.DIRECTION_RIGHT, Platform.TURTLE);
+		generatePlatform(lanes.get(LANE_WATER_THIRD), 3, MovingObject.DIRECTION_LEFT, Platform.LOG);
+		generatePlatform(lanes.get(LANE_WATER_SECOND), 2, MovingObject.DIRECTION_RIGHT, Platform.TURTLE);
+		generatePlatform(lanes.get(LANE_WATER_FIRST), 3, MovingObject.DIRECTION_LEFT, Platform.LILY);
 	}
 
 	/**

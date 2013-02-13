@@ -26,23 +26,6 @@ public class Platform extends MovingObject {
 
 	}
 	
-	@Override
-	public void tick(Input input) {
-		Random r = new Random();
-		if (r.nextInt()%2==0) {
-			setXPos(getXPos() + 1);
-		} else {
-			setXPos(getXPos() - 1);
-		}
-		
-		if (getXPos() > FroggrGame.WIDTH) {
-			remove();
-		} else if (getXPos() < 0) {
-			remove();
-		}
-		
-	}
-
 	/**
 	 * @return the type of platform
 	 */
@@ -55,7 +38,13 @@ public class Platform extends MovingObject {
 	 */
 	public void setPlatformType(int platformType) {
 		this.platformType = platformType;
-		setImageURL("res/sprites/platform/log.gif");
+		if (platformType == LOG) {
+			setImageURL("res/sprites/platform/log.gif");
+		} else if (platformType == LILY) {
+			setImageURL("res/sprites/platform/lily-" + getDirection() + "-" + getLength() + ".gif");
+		} else if (platformType == TURTLE) {
+			setImageURL("res/sprites/platform/turtle-" + getDirection() + "-" +getLength() + ".gif");
+		}
 	}
 
 	/**
