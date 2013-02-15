@@ -1,6 +1,10 @@
 package sprites;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 /**
  * 
@@ -30,9 +34,21 @@ public class Vehicle extends MovingObject {
 		if (vehicleType == CAR) {
 			Random r = new Random();
 			String color = (r.nextInt()%2==0) ? "red" : "blue";
-			setImageURL("res/sprites/vehicle/car-" + color + "-" + getDirection() + "-" + getLength() + ".gif");
+			try {
+				BufferedImage image = ImageIO.read(Vehicle.class.getClassLoader().getResource(
+						"res/sprites/vehicle/car-" + color + "-" + getDirection() + "-" + getLength() + ".gif"));
+				setImage(image);
+			} catch (IOException e) {
+				System.out.println("ERROR: Could not load car sprite image.");
+			}
 		} else if (vehicleType == TRUCK) {
-			setImageURL("res/sprites/vehicle/truck-0-2.gif");
+			try {
+				BufferedImage image = ImageIO.read(Vehicle.class.getClassLoader().getResource(
+						"res/sprites/vehicle/truck-0-2.gif"));
+				setImage(image);
+			} catch (IOException e) {
+				System.out.println("ERROR: Could not load truck sprite image.");
+			}
 		}
 	}
 
