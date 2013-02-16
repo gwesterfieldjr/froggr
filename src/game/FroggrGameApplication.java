@@ -62,7 +62,7 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 		setLayout(programLayout);
 		add(pnlTitleScreen, "Title Screen");
 		add(pnlGameScreen, "Game Screen");
-		add(pnlInstructionsScreen, "Direction's Screen");
+		add(pnlInstructionsScreen, "Instruction's Screen");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
@@ -204,7 +204,7 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 			showGameScreen();
 		}
 		if (e.getSource() == btnInstructions) {
-			showDirectionsScreen();
+			showInstructionsScreen();
 		}
 		if (e.getSource() == btnCredits) {
 			launchCredits();
@@ -214,24 +214,39 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 		}
 	}
 
+	/**
+	 * Launches a pop up that displays the games version and authors.
+	 */
 	private void launchCredits() {
-		JOptionPane.showMessageDialog(null,"Version:  0.1\n\nAuthors:  Raj Ramsaroop\n" +
-				"                 Greg Westerfield, Jr.",
+		JOptionPane.showMessageDialog(null,"Version:  0.1\n\nAuthors:  Raj Ramsaroop (Programmer)\n" +
+				"                  Greg Westerfield, Jr. (Programmer)\n                  James Fox (Graphics)",
 				"Credits", 1);
 		}
 
+	/**
+	 * Displays the title screen
+	 */
 	private void showTitleScreen() {
 		programLayout.show(this.getContentPane(), "Title Screen");
 	}
 
-	private void showDirectionsScreen() {
-		programLayout.show(this.getContentPane(), "Direction's Screen");
+	/**
+	 * Displays the Instructions Screen
+	 */
+	private void showInstructionsScreen() {
+		programLayout.show(this.getContentPane(), "Instruction's Screen");
 	}
 
+	/**
+	 * Displays the Game screen
+	 */
 	private void showGameScreen() {
 		programLayout.show(this.getContentPane(), "Game Screen");
 	}
 
+	/**
+	 * Starts the game on the Game screen panel.
+	 */
 	private void startGame() {
 		game.start();
 	}
