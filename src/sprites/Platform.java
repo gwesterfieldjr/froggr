@@ -14,7 +14,6 @@ import game.Input;
  */
 public class Platform extends MovingObject {
 	
-	private int length;
 	private int platformType;
 	
 	public static final int LOG = 0;
@@ -45,20 +44,6 @@ public class Platform extends MovingObject {
 		} else if (platformType == TURTLE) {
 			setImageURL("res/sprites/platform/turtle-" + getDirection() + "-" +getLength() + ".gif");
 		}
-	}
-
-	/**
-	 * @return the length
-	 */
-	public int getLength() {
-		return length;
-	}
-
-	/**
-	 * @param length the length to set (usually 1, 2 or 3)
-	 */
-	public void setLength(int length) {
-		this.length = length;
 	}
 
 }
