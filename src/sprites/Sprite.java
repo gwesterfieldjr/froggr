@@ -18,7 +18,7 @@ public abstract class Sprite {
 	private int xPos;
 	private int yPos;
 	private boolean removed;
-	private BufferedImage image;
+	private Image image;
 	private int length;
 	private int height;
 	private int pixelUnitSize;
