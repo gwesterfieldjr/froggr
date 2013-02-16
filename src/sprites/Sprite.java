@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 
 import game.Input;
 
@@ -18,7 +19,6 @@ public abstract class Sprite {
 	private int yPos;
 	private boolean removed;
 	private Image image;
-	private String imageURL;
 	private int length;
 	private int height;
 	private int pixelUnitSize;
@@ -29,18 +29,6 @@ public abstract class Sprite {
 		this.yPos = yPos;
 		removed = false;
 		pixelUnitSize = 50;
-	}
-
-	public void createImage(Canvas c) {
-		this.canvas = c;
-		MediaTracker media = new MediaTracker(c);
-		image = Toolkit.getDefaultToolkit().getImage(imageURL);
-		media.addImage(image, 0);
-		try {
-			media.waitForID(0);
-		} catch (Exception e) {
-			System.out.println("ERROR: Could not load " + imageURL + ".");
-		}
 	}
 
 	public int getXPos() {
@@ -91,20 +79,9 @@ public abstract class Sprite {
 	 * Each sprite will change its state in every "tick"
 	 */
 	public abstract void tick(Input input);
-
-	/**
-	 * @return the location of the image
-	 */
-	public String getImageURL() {
-		return imageURL;
-	}
-
-	/**
-	 * @param imageURL
-	 *            the location of the image you want to use
-	 */
-	public void setImageURL(String imageURL) {
-		this.imageURL = imageURL;
+	
+	public void setImage(BufferedImage image) {
+		this.image = image;
 	}
 
 	public Image getImage() {

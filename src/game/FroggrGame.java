@@ -3,11 +3,19 @@ package game;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 
 import sprites.Lane;
 import sprites.MovingObject;
@@ -143,33 +151,80 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		}
 
 		// Add the image for each lane
-		lanes.get(LANE_WIN).setImageURL("res/sprites/lane/win.png");
+		try {
+			BufferedImage image = ImageIO.read(FroggrGame.class
+					.getClassLoader().getResource("res/sprites/lane/win.png"));
+			lanes.get(LANE_WIN).setImage(image);
+		} catch (IOException e) {
+			System.out.println("ERROR: Could not load win lane sprite image.");
+		}
 
 		// Use alternating images randomly for water lanes
 		for (int i = LANE_WATER_FIFTH; i <= LANE_WATER_FIRST; i++) {
-			lanes.get(i).setImageURL("res/sprites/lane/water.gif");
+			try {
+				BufferedImage image = ImageIO.read(FroggrGame.class
+						.getClassLoader().getResource(
+								"res/sprites/lane/water.gif"));
+				lanes.get(i).setImage(image);
+			} catch (IOException e) {
+				System.out
+						.println("ERROR: Could not load water lane sprite images.");
+			}
 		}
 
 		// Safe area before water
-		lanes.get(LANE_GRASS_FIRST).setImageURL("res/sprites/lane/grass.png");
-		lanes.get(LANE_GRASS_SECOND).setImageURL("res/sprites/lane/grass.png");
+		try {
+			BufferedImage image = ImageIO
+					.read(FroggrGame.class.getClassLoader().getResource(
+							"res/sprites/lane/grass.png"));
+			lanes.get(LANE_GRASS_FIRST).setImage(image);
+			lanes.get(LANE_GRASS_SECOND).setImage(image);
+		} catch (IOException e) {
+			System.out
+					.println("ERROR: Could not load grass lane sprite image.");
+		}
 
 		// Road lanes
-		lanes.get(LANE_ROAD_FOURTH)
-				.setImageURL("res/sprites/lane/road-top.png");
-		lanes.get(LANE_ROAD_THIRD).setImageURL(
-				"res/sprites/lane/road-middle.png");
-		lanes.get(LANE_ROAD_SECOND).setImageURL(
-				"res/sprites/lane/road-middle.png");
-		lanes.get(LANE_ROAD_FIRST).setImageURL(
-				"res/sprites/lane/road-bottom.png");
+		try {
+			BufferedImage image = ImageIO.read(FroggrGame.class
+					.getClassLoader().getResource(
+							"res/sprites/lane/road-top.png"));
+			lanes.get(LANE_ROAD_FOURTH).setImage(image);
+		} catch (IOException e) {
+			System.out
+					.println("ERROR: Could not load fourth road sprite image.");
+		}
+
+		try {
+			BufferedImage image = ImageIO.read(FroggrGame.class
+					.getClassLoader().getResource(
+							"res/sprites/lane/road-middle.png"));
+			lanes.get(LANE_ROAD_THIRD).setImage(image);
+			lanes.get(LANE_ROAD_SECOND).setImage(image);
+		} catch (IOException e) {
+			System.out
+					.println("ERROR: Could not load middle road sprite image.");
+		}
+
+		try {
+			BufferedImage image = ImageIO.read(FroggrGame.class
+					.getClassLoader().getResource(
+							"res/sprites/lane/road-bottom.png"));
+			lanes.get(LANE_ROAD_FIRST).setImage(image);
+		} catch (IOException e) {
+			System.out
+					.println("ERROR: Could not load first road sprite image.");
+		}
 
 		// Start lane
-		lanes.get(LANE_START).setImageURL("res/sprites/lane/grass.png");
-
-		// Create Image object for all lanes
-		for (Lane l : lanes) {
-			l.createImage(this);
+		try {
+			BufferedImage image = ImageIO
+					.read(FroggrGame.class.getClassLoader().getResource(
+							"res/sprites/lane/grass.png"));
+			lanes.get(LANE_START).setImage(image);
+		} catch (IOException e) {
+			System.out
+					.println("ERROR: Could not load start lane sprite image.");
 		}
 	}
 
@@ -195,7 +250,6 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 */
 	private void spawnPlayer(int lives) {
 		this.player = new Player(250, GAME_HEIGHT - (2 * LANE_HEIGHT), lives);
-		player.createImage(this);
 	}
 
 	/**
@@ -219,7 +273,6 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 			Vehicle v = new Vehicle(startPosition, lane.getYPos(), length,
 					direction);
 			v.setVehicleType(vehicleType);
-			v.createImage(this);
 			vehicles.add(v);
 		}
 	}
@@ -236,14 +289,15 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 * @param platformType
 	 *            The type of platform to generate.
 	 */
-	private void generatePlatform(Lane lane, int length, int direction, int platformType) {
+	private void generatePlatform(Lane lane, int length, int direction,
+			int platformType) {
 		if (platformTime++ > REGENERATION) {
 			platformTime = 0;
 			int startPosition = (direction == MovingObject.DIRECTION_LEFT) ? GAME_WIDTH
 					: 0 - (length * 50);
-			Platform p = new Platform(startPosition, lane.getYPos(), length, direction);
+			Platform p = new Platform(startPosition, lane.getYPos(), length,
+					direction);
 			p.setPlatformType(platformType);
-			p.createImage(this);
 			platforms.add(p);
 		}
 	}
@@ -322,9 +376,9 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 		g.dispose();
 		bs.show();
-		
+
 		removeSpritesFromLists();
-		
+
 		// game is too fast without this delay
 		try {
 			Thread.sleep(20);
@@ -342,7 +396,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 				vehicleIterator.remove();
 			}
 		}
-		
+
 		Iterator<Platform> platformIterator = platforms.iterator();
 		while (platformIterator.hasNext()) {
 			Platform p = platformIterator.next();
@@ -356,11 +410,16 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 * 
 	 */
 	private void addPlatformsToLanes() {
-		generatePlatform(lanes.get(LANE_WATER_FIFTH), 3, MovingObject.DIRECTION_LEFT, Platform.LOG);
-		generatePlatform(lanes.get(LANE_WATER_FOURTH), 2, MovingObject.DIRECTION_RIGHT, Platform.TURTLE);
-		generatePlatform(lanes.get(LANE_WATER_THIRD), 3, MovingObject.DIRECTION_LEFT, Platform.LOG);
-		generatePlatform(lanes.get(LANE_WATER_SECOND), 2, MovingObject.DIRECTION_RIGHT, Platform.TURTLE);
-		generatePlatform(lanes.get(LANE_WATER_FIRST), 3, MovingObject.DIRECTION_LEFT, Platform.LILY);
+		generatePlatform(lanes.get(LANE_WATER_FIFTH), 3,
+				MovingObject.DIRECTION_LEFT, Platform.LOG);
+		generatePlatform(lanes.get(LANE_WATER_FOURTH), 2,
+				MovingObject.DIRECTION_RIGHT, Platform.TURTLE);
+		generatePlatform(lanes.get(LANE_WATER_THIRD), 3,
+				MovingObject.DIRECTION_LEFT, Platform.LOG);
+		generatePlatform(lanes.get(LANE_WATER_SECOND), 3,
+				MovingObject.DIRECTION_RIGHT, Platform.TURTLE);
+		generatePlatform(lanes.get(LANE_WATER_FIRST), 3,
+				MovingObject.DIRECTION_LEFT, Platform.LILY);
 	}
 
 	/**
@@ -377,7 +436,15 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		generateVehicle(lanes.get(LANE_ROAD_FOURTH), 2,
 				MovingObject.DIRECTION_LEFT, Vehicle.TRUCK);
 	}
-	
+
+	@Override
+	public boolean imageUpdate(Image img, int flags, int x, int y, int w, int h) {
+		System.out.println("Flags: " + flags + " x: " + x + " y: " + y + " w: "
+				+ w + " h: " + h);
+		repaint();
+		return true;
+	}
+
 	@Override
 	public void run() {
 		while (true) {
