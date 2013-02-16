@@ -7,6 +7,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.print.attribute.standard.Media;
+
+import util.SoundEffect;
+import util.SoundPlayer;
 
 /**
  * 
@@ -38,12 +42,20 @@ public class Player extends Sprite {
 				setXPos(getXPos() - 50);
 				input.buttons[Input.LEFT] = false;
 				try {
+					Thread t = new Thread(new Runnable() {
+						
+						@Override
+						public void run() {
+							SoundEffect.MOVE.play();
+							
+						}
+					});t.start();
 					BufferedImage image = ImageIO.read(Player.class.getClassLoader().getResource(
 							"res/sprites/player/player-left.gif"));
 					setImage(image);
 				} catch (IOException e) {
 					System.out.println("ERROR: Could not load left player sprite image.");
-				}
+				} 
 			}
 		}
 		if (input.buttons[Input.RIGHT]) {

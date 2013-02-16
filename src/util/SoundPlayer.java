@@ -3,7 +3,6 @@ package util;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
-
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
@@ -15,15 +14,19 @@ import javax.sound.sampled.Clip;
 public class SoundPlayer {
 	
 	public static void playSound(String soundURL) throws InterruptedException {
-		while (true)
+		
+	}
+	
+/*
+	private static Clip loadSound(String name) {
+		
+			while (true)
 		{
 			Clip clip = loadSound(soundURL);
 			clip.start();
 			Thread.sleep(10000);
 		}
-	}
-	
-	private static Clip loadSound(String name) {
+		
 		try {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			DataInputStream dis = new DataInputStream(SoundPlayer.class.getResourceAsStream(name));
@@ -42,6 +45,7 @@ public class SoundPlayer {
 			return null;
 		}
 	}
+	*/
 
 
 }

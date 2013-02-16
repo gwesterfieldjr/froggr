@@ -22,6 +22,7 @@ import sprites.MovingObject;
 import sprites.Platform;
 import sprites.Player;
 import sprites.Vehicle;
+import util.SoundPlayer;
 
 /**
  * 

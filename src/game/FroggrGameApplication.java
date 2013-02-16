@@ -6,7 +6,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,11 +19,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import sprites.Player;
+import util.SoundEffect;
+
 public class FroggrGameApplication extends JFrame implements ActionListener {
 
 	// Froggr game driver class
 	private FroggrGame game;
-//this is a chneg
+
 	// Application Panels
 	public static final JPanel pnlTitleScreen = new JPanel();
 	public static final JPanel pnlGameScreen = new JPanel();
@@ -52,9 +58,11 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 	 * The Constructor of the FroggrGameApplication Class
 	 */
 	public FroggrGameApplication() {
+		
 		createTitleScreen();
 		createInstructionScreen();
 		createGameScreen();
+		setFrameIcon();
 		setTitle("Froggr");
 		setSize(FroggrGame.GAME_WIDTH + 6, FroggrGame.GAME_HEIGHT + 30);
 		setResizable(false);
@@ -65,6 +73,19 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 		add(pnlInstructionsScreen, "Instruction's Screen");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+	}
+
+	/**
+	 * Set the Frame Icon to Froggr
+	 */
+	private void setFrameIcon() {
+		try {
+			BufferedImage image = ImageIO.read(Player.class.getClassLoader().getResource( 
+					"res/sprites/player/player-idle.gif"));
+			setIconImage(image);
+		} catch (IOException e) {
+			System.out.println("ERROR: Could not load idle player sprite image.");
+		} 		
 	}
 
 	/**
