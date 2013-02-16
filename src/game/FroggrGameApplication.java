@@ -20,7 +20,7 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 
 	// Froggr game driver class
 	private FroggrGame game;
-
+//this is a chneg
 	// Application Panels
 	public static final JPanel pnlTitleScreen = new JPanel();
 	public static final JPanel pnlGameScreen = new JPanel();
