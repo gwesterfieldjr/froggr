@@ -20,13 +20,7 @@ public class Player extends Sprite {
 	public Player(int x, int y, int lives) {
 		super(x, y);
 		this.lives = lives;
-		try {
-			BufferedImage image = ImageIO.read(Player.class.getClassLoader().getResource( 
-					"res/sprites/player/player-idle.gif"));
-			setImage(image);
-		} catch (IOException e) {
-			System.out.println("ERROR: Could not load idle player sprite image.");
-		} 
+		setImage("res/sprites/player/player-idle.gif");
 		setLength(1);
 		setHeight(1);
 	}
@@ -37,52 +31,28 @@ public class Player extends Sprite {
 			if (getXPos() - 50 != -50) {
 				setXPos(getXPos() - 50);
 				input.buttons[Input.LEFT] = false;
-				try {
-					BufferedImage image = ImageIO.read(Player.class.getClassLoader().getResource(
-							"res/sprites/player/player-left.gif"));
-					setImage(image);
-				} catch (IOException e) {
-					System.out.println("ERROR: Could not load left player sprite image.");
-				}
+				setImage("res/sprites/player/player-left.gif");
 			}
 		}
 		if (input.buttons[Input.RIGHT]) {
 			if (getXPos() + 50 != FroggrGame.GAME_WIDTH) {
 				setXPos(getXPos() + 50);
 				input.buttons[Input.RIGHT] = false;
-				try {
-					BufferedImage image = ImageIO.read(Player.class.getClassLoader().getResource(
-							"res/sprites/player/player-right.gif"));
-					setImage(image);
-				} catch (IOException e) {
-					System.out.println("ERROR: Could not load right player sprite image.");
-				}
+				setImage("res/sprites/player/player-right.gif");
 			}
 		}
 		if (input.buttons[Input.UP]) {
 			if (getYPos() - 50 != -50) {
 				setYPos(getYPos() - 50);
 				input.buttons[Input.UP] = false;
-				try {
-					BufferedImage image = ImageIO.read(Player.class.getClassLoader().getResource(
-							"res/sprites/player/player-forward.gif"));
-					setImage(image);
-				} catch (IOException e) {
-					System.out.println("ERROR: Could not load forward player sprite image.");
-				}
+				setImage("res/sprites/player/player-forward.gif");
 			}
 		}
 		if (input.buttons[Input.DOWN]) {
 			if (getYPos() + 50 != FroggrGame.GAME_HEIGHT - 50) {
 				setYPos(getYPos() + 50);
 				input.buttons[Input.DOWN] = false;
-				try {
-					BufferedImage image = ImageIO.read(Player.class.getClassLoader().getResource(
-							"res/sprites/player/player-back.gif"));
-					setImage(image);
-				} catch (IOException e) {
-					System.out.println("ERROR: Could not load back player sprite image.");
-				}
+				setImage("res/sprites/player/player-back.gif");
 			}
 		}
 

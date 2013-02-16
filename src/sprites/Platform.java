@@ -11,15 +11,15 @@ import game.Input;
 
 /**
  * 
- * @author Raj
- * A platform is either a log, lily pad or a turtle. Unlike vehicles, Froggr (the player)
- * can stand on the platform which he will use to get to the win zone.
- *
+ * @author Raj A platform is either a log, lily pad or a turtle. Unlike
+ *         vehicles, Froggr (the player) can stand on the platform which he will
+ *         use to get to the win zone.
+ * 
  */
 public class Platform extends MovingObject {
-	
+
 	private int platformType;
-	
+
 	public static final int LOG = 0;
 	public static final int LILY = 1;
 	public static final int TURTLE = 2;
@@ -28,7 +28,7 @@ public class Platform extends MovingObject {
 		super(xPos, yPos, length, direction);
 
 	}
-	
+
 	/**
 	 * @return the type of platform
 	 */
@@ -37,34 +37,19 @@ public class Platform extends MovingObject {
 	}
 
 	/**
-	 * @param platformType the type of platform (log, lily etc)
+	 * @param platformType
+	 *            the type of platform (log, lily etc)
 	 */
 	public void setPlatformType(int platformType) {
 		this.platformType = platformType;
 		if (platformType == LOG) {
-			try {
-				BufferedImage image = ImageIO.read(Platform.class.getClassLoader().getResource(
-						"res/sprites/platform/log.gif"));
-				setImage(image);
-			} catch (IOException e) {
-				System.out.println("ERROR: Coud not load log sprite image.");
-			}
+			setImage("res/sprites/platform/log.gif");
 		} else if (platformType == LILY) {
-			try {
-				BufferedImage image = ImageIO.read(Platform.class.getClassLoader().getResource(
-						"res/sprites/platform/lily-" + getDirection() + "-" + getLength() + ".gif"));
-				setImage(image);
-			} catch (IOException e) {
-				System.out.println("ERROR: Could not load lily sprite image.");
-			}
+			setImage("res/sprites/platform/lily-" + getDirection() + "-"
+					+ getLength() + ".gif");
 		} else if (platformType == TURTLE) {
-			try {
-				BufferedImage image = ImageIO.read(Platform.class.getClassLoader().getResource(
-						"res/sprites/platform/turtle-" + getDirection() + "-" +getLength() + ".gif"));
-				setImage(image);
-			} catch (IOException e) {
-				System.out.println("ERROR: Could not load turtle sprite image.");
-			}
+			setImage("res/sprites/platform/turtle-" + getDirection() + "-"
+					+ getLength() + ".gif");
 		}
 	}
 

@@ -151,81 +151,26 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		}
 
 		// Add the image for each lane
-		try {
-			BufferedImage image = ImageIO.read(FroggrGame.class
-					.getClassLoader().getResource("res/sprites/lane/win.png"));
-			lanes.get(LANE_WIN).setImage(image);
-		} catch (IOException e) {
-			System.out.println("ERROR: Could not load win lane sprite image.");
-		}
+		lanes.get(LANE_WIN).setImage("res/sprites/lane/win.png");
 
 		// Use alternating images randomly for water lanes
 		for (int i = LANE_WATER_FIFTH; i <= LANE_WATER_FIRST; i++) {
-			try {
-				BufferedImage image = ImageIO.read(FroggrGame.class
-						.getClassLoader().getResource(
-								"res/sprites/lane/water.gif"));
-				lanes.get(i).setImage(image);
-			} catch (IOException e) {
-				System.out
-						.println("ERROR: Could not load water lane sprite images.");
-			}
+			lanes.get(i).setImage("res/sprites/lane/water.gif");
 		}
 
 		// Safe area before water
-		try {
-			BufferedImage image = ImageIO
-					.read(FroggrGame.class.getClassLoader().getResource(
-							"res/sprites/lane/grass.png"));
-			lanes.get(LANE_GRASS_FIRST).setImage(image);
-			lanes.get(LANE_GRASS_SECOND).setImage(image);
-		} catch (IOException e) {
-			System.out
-					.println("ERROR: Could not load grass lane sprite image.");
-		}
+		lanes.get(LANE_GRASS_FIRST).setImage("res/sprites/lane/grass.png");
+		lanes.get(LANE_GRASS_SECOND).setImage("res/sprites/lane/grass.png");
 
 		// Road lanes
-		try {
-			BufferedImage image = ImageIO.read(FroggrGame.class
-					.getClassLoader().getResource(
-							"res/sprites/lane/road-top.png"));
-			lanes.get(LANE_ROAD_FOURTH).setImage(image);
-		} catch (IOException e) {
-			System.out
-					.println("ERROR: Could not load fourth road sprite image.");
-		}
-
-		try {
-			BufferedImage image = ImageIO.read(FroggrGame.class
-					.getClassLoader().getResource(
-							"res/sprites/lane/road-middle.png"));
-			lanes.get(LANE_ROAD_THIRD).setImage(image);
-			lanes.get(LANE_ROAD_SECOND).setImage(image);
-		} catch (IOException e) {
-			System.out
-					.println("ERROR: Could not load middle road sprite image.");
-		}
-
-		try {
-			BufferedImage image = ImageIO.read(FroggrGame.class
-					.getClassLoader().getResource(
-							"res/sprites/lane/road-bottom.png"));
-			lanes.get(LANE_ROAD_FIRST).setImage(image);
-		} catch (IOException e) {
-			System.out
-					.println("ERROR: Could not load first road sprite image.");
-		}
+		lanes.get(LANE_ROAD_FOURTH).setImage("res/sprites/lane/road-top.png");
+		lanes.get(LANE_ROAD_THIRD).setImage("res/sprites/lane/road-middle.png");
+		lanes.get(LANE_ROAD_SECOND)
+				.setImage("res/sprites/lane/road-middle.png");
+		lanes.get(LANE_ROAD_FIRST).setImage("res/sprites/lane/road-bottom.png");
 
 		// Start lane
-		try {
-			BufferedImage image = ImageIO
-					.read(FroggrGame.class.getClassLoader().getResource(
-							"res/sprites/lane/grass.png"));
-			lanes.get(LANE_START).setImage(image);
-		} catch (IOException e) {
-			System.out
-					.println("ERROR: Could not load start lane sprite image.");
-		}
+		lanes.get(LANE_START).setImage("res/sprites/lane/grass.png");
 	}
 
 	/**

@@ -5,7 +5,11 @@ import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+
+import game.FroggrGame;
 import game.Input;
 
 /**
@@ -19,10 +23,12 @@ public abstract class Sprite {
 	private int yPos;
 	private boolean removed;
 	private Image image;
+	private String imageLocation;
 	private int length;
 	private int height;
 	private int pixelUnitSize;
 	private Canvas canvas;
+	private boolean animated = false;
 
 	public Sprite(int xPos, int yPos) {
 		this.xPos = xPos;
@@ -80,9 +86,17 @@ public abstract class Sprite {
 	 */
 	public abstract void tick(Input input);
 	
-	public void setImage(BufferedImage image) {
-		this.image = image;
+	public void setImage(String imageLocation) {
+		try {
+			image = (BufferedImage) ImageIO
+					.read(Sprite.class.getClassLoader().getResource(
+							imageLocation));
+			this.imageLocation = imageLocation;
+		} catch (IOException e) {
+			System.err.println("Could not load " + imageLocation);
+		}
 	}
+	
 
 	public Image getImage() {
 		return image;
@@ -148,4 +162,24 @@ public abstract class Sprite {
 		this.canvas = canvas;
 	}
 
+	/**
+	 * @return the imageLocation
+	 */
+	public String getImageLocation() {
+		return imageLocation;
+	}
+
+	/**
+	 * @return the animated
+	 */
+	public boolean isAnimated() {
+		return animated;
+	}
+
+	/**
+	 * @param animated the animated to set
+	 */
+	public void setAnimated(boolean animated) {
+		this.animated = animated;
+	}
 }
