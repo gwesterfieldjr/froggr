@@ -20,8 +20,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import sprites.Player;
-import util.SoundEffect;
 
+/**
+ * 
+ * @author Raj Ramsaroop
+ * 		   Greg Westerfield, Jr.
+ * 
+ */
 public class FroggrGameApplication extends JFrame implements ActionListener {
 
 	// Froggr game driver class
@@ -58,7 +63,6 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 	 * The Constructor of the FroggrGameApplication Class
 	 */
 	public FroggrGameApplication() {
-		
 		createTitleScreen();
 		createInstructionScreen();
 		createGameScreen();
@@ -215,7 +219,6 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 	}
 
 	/*
-	 * 
 	 * This sections contains the methods for the ActionListener.
 	 */
 	@Override

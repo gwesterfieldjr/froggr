@@ -11,7 +11,8 @@ import game.Input;
 
 /**
  * 
- * @author Raj
+ * @author Raj Ramsaroop
+ * 		   Greg Westerfield, Jr.
  * A platform is either a log, lily pad or a turtle. Unlike vehicles, Froggr (the player)
  * can stand on the platform which he will use to get to the win zone.
  *

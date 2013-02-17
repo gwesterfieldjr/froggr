@@ -10,7 +10,6 @@ import javax.imageio.ImageIO;
 import javax.print.attribute.standard.Media;
 
 import util.SoundEffect;
-import util.SoundPlayer;
 
 /**
  * 
@@ -41,15 +40,8 @@ public class Player extends Sprite {
 			if (getXPos() - 50 != -50) {
 				setXPos(getXPos() - 50);
 				input.buttons[Input.LEFT] = false;
+				SoundEffect.play(SoundEffect.MOVE);
 				try {
-					Thread t = new Thread(new Runnable() {
-						
-						@Override
-						public void run() {
-							SoundEffect.MOVE.play();
-							
-						}
-					});t.start();
 					BufferedImage image = ImageIO.read(Player.class.getClassLoader().getResource(
 							"res/sprites/player/player-left.gif"));
 					setImage(image);
@@ -62,6 +54,7 @@ public class Player extends Sprite {
 			if (getXPos() + 50 != FroggrGame.GAME_WIDTH) {
 				setXPos(getXPos() + 50);
 				input.buttons[Input.RIGHT] = false;
+				SoundEffect.play(SoundEffect.MOVE);
 				try {
 					BufferedImage image = ImageIO.read(Player.class.getClassLoader().getResource(
 							"res/sprites/player/player-right.gif"));
@@ -75,6 +68,7 @@ public class Player extends Sprite {
 			if (getYPos() - 50 != -50) {
 				setYPos(getYPos() - 50);
 				input.buttons[Input.UP] = false;
+				SoundEffect.play(SoundEffect.MOVE);
 				try {
 					BufferedImage image = ImageIO.read(Player.class.getClassLoader().getResource(
 							"res/sprites/player/player-forward.gif"));
@@ -88,6 +82,7 @@ public class Player extends Sprite {
 			if (getYPos() + 50 != FroggrGame.GAME_HEIGHT - 50) {
 				setYPos(getYPos() + 50);
 				input.buttons[Input.DOWN] = false;
+				SoundEffect.play(SoundEffect.MOVE);
 				try {
 					BufferedImage image = ImageIO.read(Player.class.getClassLoader().getResource(
 							"res/sprites/player/player-back.gif"));

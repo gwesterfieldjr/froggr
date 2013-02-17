@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 /**
  * 
  * @author Raj Ramsaroop
+ *         Greg Westerfield, Jr.
  * This is for the vehicle sprite. Can either be a car or truck. Cars be be length 1, 2 or 3
  * Cars of length >=2 are just multiple cars in a row
  * If Froggr touches a vehicle, he loses a life
