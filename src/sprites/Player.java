@@ -3,6 +3,7 @@ package sprites;
 import game.FroggrGame;
 import game.Input;
 
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -19,10 +20,14 @@ import util.SoundEffect;
 public class Player extends Sprite {
 
 	private int lives;
+	public static final boolean ALIVE = false;
+	public static final boolean DEAD = true;
+	private boolean lifeState;
 
 	public Player(int x, int y, int lives) {
 		super(x, y);
 		this.lives = lives;
+		this.lifeState = Player.ALIVE;
 		try {
 			BufferedImage image = ImageIO.read(Player.class.getClassLoader().getResource( 
 					"res/sprites/player/player-idle.gif"));
@@ -36,7 +41,7 @@ public class Player extends Sprite {
 
 	@Override
 	public void tick(Input input) {
-		if (input.buttons[Input.LEFT]) {
+		if (input.buttons[Input.LEFT] && checkLifeState() == Player.ALIVE) {
 			if (getXPos() - 50 != -50) {
 				setXPos(getXPos() - 50);
 				input.buttons[Input.LEFT] = false;
@@ -50,7 +55,7 @@ public class Player extends Sprite {
 				} 
 			}
 		}
-		if (input.buttons[Input.RIGHT]) {
+		if (input.buttons[Input.RIGHT] && checkLifeState() == Player.ALIVE) {
 			if (getXPos() + 50 != FroggrGame.GAME_WIDTH) {
 				setXPos(getXPos() + 50);
 				input.buttons[Input.RIGHT] = false;
@@ -64,7 +69,7 @@ public class Player extends Sprite {
 				}
 			}
 		}
-		if (input.buttons[Input.UP]) {
+		if (input.buttons[Input.UP] && checkLifeState() == Player.ALIVE) {
 			if (getYPos() - 50 != -50) {
 				setYPos(getYPos() - 50);
 				input.buttons[Input.UP] = false;
@@ -78,7 +83,7 @@ public class Player extends Sprite {
 				}
 			}
 		}
-		if (input.buttons[Input.DOWN]) {
+		if (input.buttons[Input.DOWN] && checkLifeState() == Player.ALIVE) {
 			if (getYPos() + 50 != FroggrGame.GAME_HEIGHT - 50) {
 				setYPos(getYPos() + 50);
 				input.buttons[Input.DOWN] = false;
@@ -108,6 +113,45 @@ public class Player extends Sprite {
 	 */
 	public void setLives(int lives) {
 		this.lives = lives;
+	}
+
+	/**
+	 * @return lifeState
+	 * 			  checks if the player is living.
+	 */
+	public boolean checkLifeState() {
+		return lifeState;
+	}
+
+	/**
+	 * @param lifeState 
+	 * 			  set whether the player is dead or alive.
+	 */
+	public void setLifeState(boolean lifeState) {
+		this.lifeState = lifeState;
+	}
+
+	/**
+	 *  Kills the player
+	 */
+	public void killPlayer() {
+		try {
+			BufferedImage image = ImageIO.read(Player.class.getClassLoader().getResource(
+					"res/sprites/player/player-death.gif"));
+			setImage(image);
+		} catch (IOException e) {
+			System.out.println("ERROR: Could not load dead player sprite image.");
+		}
+		
+		if (checkLifeState() == Player.ALIVE){
+			SoundEffect.play(SoundEffect.COLLISION);
+			setLives(getLives() - 1);
+			setLifeState(Player.DEAD);
+		}
+		
+			
+
+		
 	}
 
 }

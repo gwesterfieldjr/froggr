@@ -68,8 +68,7 @@ public abstract class Sprite {
 		int yMin = getYPos();
 		int yMax = getYPos() + calculatePixelHeight();
 
-		if (sprite.getXPos() >= xMin && sprite.getXPos() <= xMax
-				&& sprite.getYPos() >= yMin && sprite.getYPos() <= yMax) {
+		if ( (sprite.getXPos() >= xMin && sprite.getXPos() <= xMax) && (sprite.getYPos() >= yMin && sprite.getYPos() <= yMax) ) {
 			return true;
 		} else {
 			return false;

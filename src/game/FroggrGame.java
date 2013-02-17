@@ -4,22 +4,27 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
-
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import sprites.Lane;
 import sprites.MovingObject;
 import sprites.Platform;
 import sprites.Player;
 import sprites.Vehicle;
+import util.SoundEffect;
 
 /**
  * 
@@ -339,6 +344,49 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private void processPlayer(Graphics g) {
 		player.tick(input);
 		g.drawImage(player.getImage(), player.getXPos(), player.getYPos(), this);
+		
+		for (int i = 0; i<vehicles.size(); i++ ){
+			if ( player.hasCollidedWith(vehicles.get(i)) ){
+				player.killPlayer();
+				g.drawImage(player.getImage(), player.getXPos(), player.getYPos(), this);
+				break;
+			}
+			
+		}
+		
+	}
+
+	private void processGameplay(Graphics g) {
+		if ( player.getLives() == 0  ){
+			g.setColor(Color.RED);
+			g.drawString("GAME OVER", 225, GAME_HEIGHT - 25);
+		} 
+		
+		if (player.checkLifeState() == Player.DEAD && player.getLives() > 0){
+			spawnPlayer(player.getLives());	
+		}
+	}
+
+	private void processPlayerLives(Graphics g) {
+		BufferedImage playerImage = null;
+		try {
+			playerImage = ImageIO.read(new File("res/sprites/player/player-idle.gif"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		if (player.getLives()==3){
+			g.drawImage(playerImage, 0, GAME_HEIGHT - 50, this);
+			g.drawImage(playerImage, 50, GAME_HEIGHT - 50, this);
+			g.drawImage(playerImage, 100, GAME_HEIGHT - 50, this);
+		}
+		if (player.getLives()==2){
+			g.drawImage(playerImage, 0, GAME_HEIGHT - 50, this);
+			g.drawImage(playerImage, 50, GAME_HEIGHT - 50, this);
+		}
+		if (player.getLives()==1){
+			g.drawImage(playerImage, 0, GAME_HEIGHT - 50, this);
+		}
 	}
 
 	/**
@@ -444,7 +492,9 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		processPlatforms(g);
 		processPlayer(g);
 		processVehicles(g);
-
+		processGameplay(g);
+		processPlayerLives(g);
+		
 		g.dispose();
 		bs.show();
 
@@ -453,10 +503,10 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		// game is too fast without this delay
 		try {
 			Thread.sleep(15);
-
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 	@Override
