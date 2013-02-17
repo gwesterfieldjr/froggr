@@ -7,6 +7,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.print.attribute.standard.Media;
+
+import util.SoundEffect;
 
 /**
  * 
@@ -32,6 +35,7 @@ public class Player extends Sprite {
 				setXPos(getXPos() - 50);
 				input.buttons[Input.LEFT] = false;
 				setImage("res/sprites/player/player-left.gif");
+				SoundEffect.play(SoundEffect.MOVE);
 			}
 		}
 		if (input.buttons[Input.RIGHT]) {
@@ -39,6 +43,7 @@ public class Player extends Sprite {
 				setXPos(getXPos() + 50);
 				input.buttons[Input.RIGHT] = false;
 				setImage("res/sprites/player/player-right.gif");
+				SoundEffect.play(SoundEffect.MOVE);
 			}
 		}
 		if (input.buttons[Input.UP]) {
@@ -46,6 +51,7 @@ public class Player extends Sprite {
 				setYPos(getYPos() - 50);
 				input.buttons[Input.UP] = false;
 				setImage("res/sprites/player/player-forward.gif");
+				SoundEffect.play(SoundEffect.MOVE);
 			}
 		}
 		if (input.buttons[Input.DOWN]) {
@@ -53,6 +59,7 @@ public class Player extends Sprite {
 				setYPos(getYPos() + 50);
 				input.buttons[Input.DOWN] = false;
 				setImage("res/sprites/player/player-back.gif");
+				SoundEffect.play(SoundEffect.MOVE);
 			}
 		}
 

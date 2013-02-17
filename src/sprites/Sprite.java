@@ -14,7 +14,8 @@ import game.Input;
 
 /**
  * 
- * @author Raj
+ * @author Raj Ramsaroop
+ * 		   Greg Westerfield, Jr.
  * 
  */
 public abstract class Sprite {

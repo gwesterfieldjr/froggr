@@ -8,14 +8,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
+
 
 import sprites.Lane;
 import sprites.MovingObject;
@@ -25,7 +23,8 @@ import sprites.Vehicle;
 
 /**
  * 
- * @author Raj
+ * @author Raj Ramsaroop
+ * 		   Greg Westerfield, Jr.
  * 
  */
 public class FroggrGame extends Canvas implements Runnable, KeyListener {
@@ -34,14 +33,30 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private int startingLives = 3;
 	private Input input = new Input();
 
+	/**
+	 * Lists of lanes, vehicles, and platforms.
+	 */
 	private ArrayList<Lane> lanes = new ArrayList<Lane>();
 	private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
 	private ArrayList<Platform> platforms = new ArrayList<Platform>();
 
-	private final int REGENERATION = 225;
-	private int vehicleTime = 0;
-	private int platformTime = 0;
-
+	/**
+	 * Initial regeneration rates for water lanes
+	 */
+	private final int FIRST_WATER_LANE_REGENERATION = 225;
+	private final int SECOND_WATER_LANE_REGENERATION = 225;
+	private final int THIRD_WATER_LANE_REGENERATION = 225;
+	private final int FOURTH_WATER_LANE_REGENERATION = 225;
+	private final int FIFTH_WATER_LANE_REGENERATION = 225;
+	
+	/**
+	 * Initial regeneration rates for road lanes
+	 */
+	private final int FIRST_ROAD_LANE_REGENERATION = 175;
+	private final int SECOND_ROAD_LANE_REGENERATION = 225;
+	private final int THIRD_ROAD_LANE_REGENERATION = 350;
+	private final int FOURTH_ROAD_LANE_REGENERATION = 250;
+	
 	/**
 	 * Width of the game canvas in pixels.
 	 */
@@ -157,6 +172,13 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		for (int i = LANE_WATER_FIFTH; i <= LANE_WATER_FIRST; i++) {
 			lanes.get(i).setImage("res/sprites/lane/water.gif");
 		}
+		
+		// set water lane regeneration times
+		lanes.get(LANE_WATER_FIRST).setRegeneration(FIRST_WATER_LANE_REGENERATION);
+		lanes.get(LANE_WATER_SECOND).setRegeneration(SECOND_WATER_LANE_REGENERATION);
+		lanes.get(LANE_WATER_THIRD).setRegeneration(THIRD_WATER_LANE_REGENERATION);
+		lanes.get(LANE_WATER_FOURTH).setRegeneration(FOURTH_WATER_LANE_REGENERATION);
+		lanes.get(LANE_WATER_FIFTH).setRegeneration(FIFTH_WATER_LANE_REGENERATION);
 
 		// Safe area before water
 		lanes.get(LANE_GRASS_FIRST).setImage("res/sprites/lane/grass.png");
@@ -168,6 +190,12 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		lanes.get(LANE_ROAD_SECOND)
 				.setImage("res/sprites/lane/road-middle.png");
 		lanes.get(LANE_ROAD_FIRST).setImage("res/sprites/lane/road-bottom.png");
+		
+		// Set regeneration time for road lanes
+		lanes.get(LANE_ROAD_FIRST).setRegeneration(FIRST_ROAD_LANE_REGENERATION);
+		lanes.get(LANE_ROAD_SECOND).setRegeneration(SECOND_ROAD_LANE_REGENERATION);
+		lanes.get(LANE_ROAD_THIRD).setRegeneration(THIRD_ROAD_LANE_REGENERATION);
+		lanes.get(LANE_ROAD_FOURTH).setRegeneration(FOURTH_ROAD_LANE_REGENERATION);
 
 		// Start lane
 		lanes.get(LANE_START).setImage("res/sprites/lane/grass.png");
@@ -209,10 +237,10 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 * @param vehicleType
 	 *            The type of vehicle to generate.
 	 */
-	private void generateVehicle(Lane lane, int length, int direction,
-			int vehicleType) {
-		if (vehicleTime++ > REGENERATION) {
-			vehicleTime = 0;
+	private void generateVehicle(Lane lane, int length, int direction, int vehicleType) {
+		lane.setTime( lane.getTime() + 1 );
+		if (lane.getTime() > lane.getRegeneration()) {
+			lane.setTime(0);
 			int startPosition = (direction == MovingObject.DIRECTION_LEFT) ? GAME_WIDTH
 					: 0 - (length * 50);
 			Vehicle v = new Vehicle(startPosition, lane.getYPos(), length,
@@ -221,7 +249,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 			vehicles.add(v);
 		}
 	}
-
+	
 	/**
 	 * Generates the platforms for the water lanes.
 	 * 
@@ -234,10 +262,10 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 * @param platformType
 	 *            The type of platform to generate.
 	 */
-	private void generatePlatform(Lane lane, int length, int direction,
-			int platformType) {
-		if (platformTime++ > REGENERATION) {
-			platformTime = 0;
+	private void generatePlatform(Lane lane, int length, int direction, int platformType) {
+		lane.setTime( lane.getTime() + 1 );
+		if (lane.getTime() > lane.getRegeneration()) {
+			lane.setTime(0);
 			int startPosition = (direction == MovingObject.DIRECTION_LEFT) ? GAME_WIDTH
 					: 0 - (length * 50);
 			Platform p = new Platform(startPosition, lane.getYPos(), length,
@@ -287,48 +315,10 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 			}
 		}
 	}
-
+	
 	/**
-	 * The main game loop.
+	 * Removes all sprite's from their corresponding lists.
 	 */
-	private void render() {
-
-		BufferStrategy bs = getBufferStrategy();
-		if (bs == null) {
-			createBufferStrategy(2);
-			requestFocus();
-			return;
-		}
-
-		Graphics g = bs.getDrawGraphics();
-
-		/*
-		 * Show the sprites here. Make sure the method to add vehicles and
-		 * platforms are displayed here otherwise it won't display. They must
-		 * also be placed in the order that they are displayed in terms of
-		 * layers. For example, the player will be before the vehicles, so that
-		 * it gives the appearance that vehicles run over Froggr.
-		 */
-		addPlatformsToLanes();
-		addVehiclesToLanes();
-		processLanes(g);
-		processPlatforms(g);
-		processPlayer(g);
-		processVehicles(g);
-
-		g.dispose();
-		bs.show();
-
-		removeSpritesFromLists();
-
-		// game is too fast without this delay
-		try {
-			Thread.sleep(20);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-
 	private void removeSpritesFromLists() {
 		Iterator<Vehicle> vehicleIterator = vehicles.iterator();
 		while (vehicleIterator.hasNext()) {
@@ -348,34 +338,70 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	}
 
 	/**
-	 * 
+	 * Determines what platforms, length, direction, and regeneration rate to add to which lane.
 	 */
 	private void addPlatformsToLanes() {
-		generatePlatform(lanes.get(LANE_WATER_FIFTH), 3,
-				MovingObject.DIRECTION_LEFT, Platform.LOG);
-		generatePlatform(lanes.get(LANE_WATER_FOURTH), 2,
-				MovingObject.DIRECTION_RIGHT, Platform.TURTLE);
-		generatePlatform(lanes.get(LANE_WATER_THIRD), 3,
-				MovingObject.DIRECTION_LEFT, Platform.LOG);
-		generatePlatform(lanes.get(LANE_WATER_SECOND), 3,
-				MovingObject.DIRECTION_RIGHT, Platform.TURTLE);
-		generatePlatform(lanes.get(LANE_WATER_FIRST), 3,
-				MovingObject.DIRECTION_LEFT, Platform.LILY);
+		generatePlatform(lanes.get(LANE_WATER_FIFTH), 3, MovingObject.DIRECTION_LEFT, Platform.LOG);
+		generatePlatform(lanes.get(LANE_WATER_FOURTH), 2, MovingObject.DIRECTION_RIGHT, Platform.TURTLE);
+		generatePlatform(lanes.get(LANE_WATER_THIRD), 3, MovingObject.DIRECTION_LEFT, Platform.LOG);
+		generatePlatform(lanes.get(LANE_WATER_SECOND), 3, MovingObject.DIRECTION_RIGHT, Platform.TURTLE);
+		generatePlatform(lanes.get(LANE_WATER_FIRST), 3, MovingObject.DIRECTION_LEFT, Platform.LILY);
 	}
 
 	/**
-	 * Determines what vehicles, length and direction to add to the lanes.
+	 * Determines what vehicles, length, direction and regeneration rate to add to the lanes.
 	 * Trucks are always length 2. Other vehicles can be of length 1, 2 or 3.
 	 */
 	private void addVehiclesToLanes() {
-		generateVehicle(lanes.get(LANE_ROAD_FIRST), 1,
-				MovingObject.DIRECTION_RIGHT, Vehicle.CAR);
-		generateVehicle(lanes.get(LANE_ROAD_SECOND), 2,
-				MovingObject.DIRECTION_LEFT, Vehicle.CAR);
-		generateVehicle(lanes.get(LANE_ROAD_THIRD), 3,
-				MovingObject.DIRECTION_RIGHT, Vehicle.CAR);
-		generateVehicle(lanes.get(LANE_ROAD_FOURTH), 2,
-				MovingObject.DIRECTION_LEFT, Vehicle.TRUCK);
+		generateVehicle(lanes.get(LANE_ROAD_FIRST), 1,MovingObject.DIRECTION_RIGHT, Vehicle.CAR);
+		generateVehicle(lanes.get(LANE_ROAD_SECOND), 2,MovingObject.DIRECTION_LEFT, Vehicle.CAR);
+		generateVehicle(lanes.get(LANE_ROAD_THIRD), 3,MovingObject.DIRECTION_RIGHT, Vehicle.CAR);
+		generateVehicle(lanes.get(LANE_ROAD_FOURTH), 2,MovingObject.DIRECTION_LEFT, Vehicle.TRUCK);
+	}
+
+	/**
+	 * The main game loop.
+	 */
+	private void render() {
+
+		BufferStrategy bs = getBufferStrategy();
+		if (bs == null) {
+			createBufferStrategy(2);
+			requestFocus();
+			return;
+		}
+
+		Graphics g = bs.getDrawGraphics();
+		g.fillRect(0, 0, getWidth(), getHeight());
+		g.setColor(Color.RED);
+		
+		
+		/*
+		 * Show the sprite's here. Make sure the method to add vehicles and
+		 * platforms are displayed here otherwise it won't display. They must
+		 * also be placed in the order that they are displayed in terms of
+		 * layers. For example, the player will be before the vehicles, so that
+		 * it gives the appearance that vehicles run over Froggr.
+		 */
+		addPlatformsToLanes();
+		addVehiclesToLanes();
+		processLanes(g);
+		processPlatforms(g);
+		processPlayer(g);
+		processVehicles(g);
+
+		g.dispose();
+		bs.show();
+
+		removeSpritesFromLists();
+
+		// game is too fast without this delay
+		try {
+			Thread.sleep(15);
+
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

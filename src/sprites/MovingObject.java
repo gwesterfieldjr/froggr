@@ -2,6 +2,12 @@ package sprites;
 
 import game.Input;
 
+/**
+ * 
+ * @author Raj Ramsaroop
+ * 		   Greg Westerfield, Jr.
+ * 
+ */
 public class MovingObject extends Sprite {
 	
 	private int direction;

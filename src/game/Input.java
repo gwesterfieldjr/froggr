@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 
 /**
  * 
- * @author Raj Ramsaroop, Greg Westerfield Jr.
+ * @author Raj Ramsaroop, Greg Westerfield, Jr.
  *
  */
 public class Input {
