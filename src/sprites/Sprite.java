@@ -2,20 +2,16 @@ package sprites;
 
 import java.awt.Canvas;
 import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import game.FroggrGame;
 import game.Input;
 
 /**
  * 
- * @author Raj Ramsaroop
- * 		   Greg Westerfield, Jr.
+ * @author Raj Ramsaroop Greg Westerfield, Jr.
  * 
  */
 public abstract class Sprite {
@@ -66,6 +62,7 @@ public abstract class Sprite {
 	 * Checks if another sprite has collided with this sprite
 	 * 
 	 * @param sprite
+	 *            the other sprite to check against
 	 * @return true if collided, false otherwise
 	 */
 	public boolean hasCollidedWith(Sprite sprite) {
@@ -86,18 +83,16 @@ public abstract class Sprite {
 	 * Each sprite will change its state in every "tick"
 	 */
 	public abstract void tick(Input input);
-	
+
 	public void setImage(String imageLocation) {
 		try {
-			image = (BufferedImage) ImageIO
-					.read(Sprite.class.getClassLoader().getResource(
-							imageLocation));
+			image = (BufferedImage) ImageIO.read(Sprite.class.getClassLoader()
+					.getResource(imageLocation));
 			this.imageLocation = imageLocation;
 		} catch (IOException e) {
 			System.err.println("Could not load " + imageLocation);
 		}
 	}
-	
 
 	public Image getImage() {
 		return image;
@@ -157,7 +152,8 @@ public abstract class Sprite {
 	}
 
 	/**
-	 * @param canvas the canvas to set
+	 * @param canvas
+	 *            the canvas to set
 	 */
 	public void setCanvas(Canvas canvas) {
 		this.canvas = canvas;
@@ -178,7 +174,8 @@ public abstract class Sprite {
 	}
 
 	/**
-	 * @param animated the animated to set
+	 * @param animated
+	 *            the animated to set
 	 */
 	public void setAnimated(boolean animated) {
 		this.animated = animated;
