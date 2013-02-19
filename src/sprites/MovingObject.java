@@ -49,7 +49,7 @@ public class MovingObject extends Sprite {
 		}
 	}
 	
-	private int getOffScreenXPosition() {
+	public int getOffScreenXPosition() {
 		if (getDirection() == MovingObject.DIRECTION_LEFT) {
 			return 0 - calculatePixelWidth();
 		} else {

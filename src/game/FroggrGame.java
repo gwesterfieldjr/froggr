@@ -48,10 +48,10 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	/**
 	 * Initial regeneration rates for water lanes
 	 */
-	private final int FIRST_WATER_LANE_REGENERATION = 225;
+	private final int FIRST_WATER_LANE_REGENERATION = 325;
 	private final int SECOND_WATER_LANE_REGENERATION = 225;
 	private final int THIRD_WATER_LANE_REGENERATION = 225;
-	private final int FOURTH_WATER_LANE_REGENERATION = 225;
+	private final int FOURTH_WATER_LANE_REGENERATION = 325;
 	private final int FIFTH_WATER_LANE_REGENERATION = 225;
 	
 	/**
@@ -344,7 +344,8 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private void processPlayer(Graphics g) {
 		player.tick(input);
 		g.drawImage(player.getImage(), player.getXPos(), player.getYPos(), this);
-		
+
+		if ( player.getYPos() > lanes.get(LANE_ROAD_FOURTH).getYPos()){
 		for (int i = 0; i<vehicles.size(); i++ ){
 			if ( player.hasCollidedWith(vehicles.get(i)) ){
 				player.killPlayer();
@@ -353,13 +354,37 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 			}
 			
 		}
+		}
+		
+		if ( player.getYPos() < lanes.get(LANE_WATER_FIRST + 1).getYPos()){
+			for (int i = 0; i<platforms.size(); i++ ){
+				if ( player.hasCollidedWith(platforms.get(i)) ){
+					player.setOnPlatform(true);
+					player.sail(input, platforms.get(i));
+					break;
+				} else {
+					player.setOnPlatform(false);
+			}
+		}
+		
+			if (!player.isOnPlatform()){
+			player.killPlayer();
+			}
+		}
+		
+		// TODO check if player is in victory spaces
 		
 	}
 
+	/**
+	 * This method processes the game and the graphics that display game status.
+	 */
 	private void processGameplay(Graphics g) {
 		if ( player.getLives() == 0  ){
 			g.setColor(Color.RED);
 			g.drawString("GAME OVER", 225, GAME_HEIGHT - 25);
+			// TODO i need a way to prompt the user to quit, play again, or return to title screen 
+				// JOPTIONPANE???
 		} 
 		
 		if (player.checkLifeState() == Player.DEAD && player.getLives() > 0){
@@ -367,6 +392,11 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		}
 	}
 
+	/**
+	 * This method processes the images in the lower left hand corner of the screen. They are used
+	 * as counts so the user knows how many lives he or she has remaining.
+	 * @param g
+	 */
 	private void processPlayerLives(Graphics g) {
 		BufferedImage playerImage = null;
 		try {
@@ -374,18 +404,9 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		if (player.getLives()==3){
-			g.drawImage(playerImage, 0, GAME_HEIGHT - 50, this);
-			g.drawImage(playerImage, 50, GAME_HEIGHT - 50, this);
-			g.drawImage(playerImage, 100, GAME_HEIGHT - 50, this);
-		}
-		if (player.getLives()==2){
-			g.drawImage(playerImage, 0, GAME_HEIGHT - 50, this);
-			g.drawImage(playerImage, 50, GAME_HEIGHT - 50, this);
-		}
-		if (player.getLives()==1){
-			g.drawImage(playerImage, 0, GAME_HEIGHT - 50, this);
+
+		for (int i = 0; i<player.getLives(); i++){
+			g.drawImage(playerImage, 50*i, GAME_HEIGHT - 50, this);
 		}
 	}
 
@@ -502,7 +523,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 		// game is too fast without this delay
 		try {
-			Thread.sleep(15);
+			Thread.sleep(5);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

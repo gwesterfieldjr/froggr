@@ -56,5 +56,5 @@ public class Vehicle extends MovingObject {
 	public int vehicleType() {
 		return this.vehicleType;
 	}
-
+	
 }

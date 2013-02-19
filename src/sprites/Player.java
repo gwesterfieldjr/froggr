@@ -23,11 +23,13 @@ public class Player extends Sprite {
 	public static final boolean ALIVE = false;
 	public static final boolean DEAD = true;
 	private boolean lifeState;
+	private boolean isOnPlatform;
 
 	public Player(int x, int y, int lives) {
 		super(x, y);
 		this.lives = lives;
 		this.lifeState = Player.ALIVE;
+		this.isOnPlatform = false;
 		try {
 			BufferedImage image = ImageIO.read(Player.class.getClassLoader().getResource( 
 					"res/sprites/player/player-idle.gif"));
@@ -132,6 +134,20 @@ public class Player extends Sprite {
 	}
 
 	/**
+	 * @return the isOnPlatform
+	 */
+	public boolean isOnPlatform() {
+		return isOnPlatform;
+	}
+
+	/**
+	 * @param isOnPlatform the isOnPlatform to set
+	 */
+	public void setOnPlatform(boolean isOnPlatform) {
+		this.isOnPlatform = isOnPlatform;
+	}
+
+	/**
 	 *  Kills the player
 	 */
 	public void killPlayer() {
@@ -152,6 +168,24 @@ public class Player extends Sprite {
 			
 
 		
+	}
+
+	/**
+	 * Sails the frog on whichever platform he jumps on.
+	 * @param input
+	 * @param platform
+	 */
+	public void sail(Input input, Platform platform) {
+		if (platform.getDirection() == MovingObject.DIRECTION_LEFT) {
+			setXPos(getXPos() - 1);
+		} else if (platform.getDirection() == MovingObject.DIRECTION_RIGHT) {
+			setXPos(getXPos() + 1);
+		}
+		
+		if (getXPos() == platform.getOffScreenXPosition()) {
+			killPlayer();
+			remove();
+		}
 	}
 
 }
