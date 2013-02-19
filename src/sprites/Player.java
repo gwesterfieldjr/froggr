@@ -136,7 +136,7 @@ public class Player extends Sprite {
 	 * @return the isOnPlatform
 	 */
 	public boolean isOnPlatform(Platform platform) {
-		int buffer = 12; // Roughly a quarter of the player.
+		int buffer = 25; // Half of the player.
 		if ( getXPos() >= platform.getXPos() - buffer && getXPos() + calculatePixelWidth() <= platform.getXPos() + platform.calculatePixelWidth() + buffer ){
 			return true;
 		} else {
