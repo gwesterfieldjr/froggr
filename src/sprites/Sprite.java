@@ -66,13 +66,14 @@ public abstract class Sprite {
 	 * @return true if collided, false otherwise
 	 */
 	public boolean hasCollidedWith(Sprite sprite) {
+		int buffer = 10;
 		int xMin = getXPos();
 		int xMax = getXPos() + calculatePixelWidth();
 		int yMin = getYPos();
 		int yMax = getYPos() + calculatePixelHeight();
 
-		if (sprite.getXPos() >= xMin && sprite.getXPos() <= xMax
-				&& sprite.getYPos() >= yMin && sprite.getYPos() <= yMax) {
+		if ( (xMax > sprite.getXPos() && xMin < sprite.getXPos() + buffer && yMin == sprite.getYPos() )
+				|| (xMax > sprite.getXPos() && xMin < (sprite.getXPos() + sprite.calculatePixelWidth() ) && yMin == sprite.getYPos()) ){
 			return true;
 		} else {
 			return false;
