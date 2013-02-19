@@ -346,14 +346,14 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		g.drawImage(player.getImage(), player.getXPos(), player.getYPos(), this);
 
 		if ( player.getYPos() > lanes.get(LANE_ROAD_FOURTH).getYPos()){
-		for (int i = 0; i<vehicles.size(); i++ ){
-			if ( player.hasCollidedWith(vehicles.get(i)) ){
-				player.killPlayer();
-				g.drawImage(player.getImage(), player.getXPos(), player.getYPos(), this);
-				break;
-			}
+			for (int i = 0; i<vehicles.size(); i++ ){
+				if ( player.hasCollidedWith(vehicles.get(i)) ){
+					player.killPlayer();
+					g.drawImage(player.getImage(), player.getXPos(), player.getYPos(), this);
+					break;
+				}
 			
-		}
+			}
 		}
 		
 		if ( player.getYPos() < lanes.get(LANE_WATER_FIRST + 1).getYPos()){
