@@ -23,13 +23,12 @@ public class Player extends Sprite {
 	public static final boolean ALIVE = false;
 	public static final boolean DEAD = true;
 	private boolean lifeState;
-	private boolean isOnPlatform;
 
 	public Player(int x, int y, int lives) {
 		super(x, y);
 		this.lives = lives;
 		this.lifeState = Player.ALIVE;
-		this.isOnPlatform = false;
+
 		try {
 			BufferedImage image = ImageIO.read(Player.class.getClassLoader().getResource( 
 					"res/sprites/player/player-idle.gif"));
@@ -136,15 +135,15 @@ public class Player extends Sprite {
 	/**
 	 * @return the isOnPlatform
 	 */
-	public boolean isOnPlatform() {
-		return isOnPlatform;
-	}
-
-	/**
-	 * @param isOnPlatform the isOnPlatform to set
-	 */
-	public void setOnPlatform(boolean isOnPlatform) {
-		this.isOnPlatform = isOnPlatform;
+	public boolean isOnPlatform(Platform platform) {
+		int buffer = 12; // Roughly a quarter of the player.
+		if ( getXPos() >= platform.getXPos() - buffer && getXPos() + calculatePixelWidth() <= platform.getXPos() + platform.calculatePixelWidth() + buffer ){
+			return true;
+		} else {
+			return false;
+		}
+		
+		//return isOnPlatform;
 	}
 
 	/**

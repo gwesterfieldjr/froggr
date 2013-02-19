@@ -345,6 +345,9 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		player.tick(input);
 		g.drawImage(player.getImage(), player.getXPos(), player.getYPos(), this);
 
+		/*
+		 * Only runs if player is in the road lanes
+		 */
 		if ( player.getYPos() > lanes.get(LANE_ROAD_FOURTH).getYPos()){
 			for (int i = 0; i<vehicles.size(); i++ ){
 				if ( player.hasCollidedWith(vehicles.get(i)) ){
@@ -356,19 +359,21 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 			}
 		}
 		
+		/*
+		 * Only runs if the player has entered into the water lanes. 
+		 */
 		if ( player.getYPos() < lanes.get(LANE_WATER_FIRST + 1).getYPos()){
+			int currentPlatform = 0;
 			for (int i = 0; i<platforms.size(); i++ ){
 				if ( player.hasCollidedWith(platforms.get(i)) ){
-					player.setOnPlatform(true);
 					player.sail(input, platforms.get(i));
+					currentPlatform = i;
 					break;
-				} else {
-					player.setOnPlatform(false);
-			}
+				} 
 		}
 		
-			if (!player.isOnPlatform()){
-			player.killPlayer();
+			if (!player.isOnPlatform(platforms.get(currentPlatform))){
+				player.killPlayer();
 			}
 		}
 		
