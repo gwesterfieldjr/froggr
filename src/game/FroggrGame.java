@@ -3,18 +3,12 @@ package game;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
-
-import java.awt.image.ImageObserver;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -25,7 +19,6 @@ import sprites.MovingObject;
 import sprites.Platform;
 import sprites.Player;
 import sprites.Vehicle;
-
 
 /**
  * 
@@ -225,11 +218,6 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private void processLanes(Graphics g) {
 		for (Lane l : lanes) {
 			g.drawImage(l.getImage(), l.getXPos(), l.getYPos(), this);
-			imageUpdate(l.getImage(), 
-					ImageObserver.FRAMEBITS, 
-					l.getXPos(), l.getYPos(), 
-					l.getLength() * l.getPixelUnitSize(), 
-					l.getHeight() * l.getPixelUnitSize());
 		}
 	}
 
@@ -309,70 +297,75 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		/*
 		 * Only runs if player is in the road lanes
 		 */
-		if ( player.getYPos() > lanes.get(LANE_ROAD_FOURTH-1).getYPos()){
-			for (int i = 0; i<vehicles.size(); i++ ){
-				if ( player.hasCollidedWith(vehicles.get(i)) ){
+		if (player.getYPos() > lanes.get(LANE_ROAD_FOURTH - 1).getYPos()) {
+			for (int i = 0; i < vehicles.size(); i++) {
+				if (player.hasCollidedWith(vehicles.get(i))) {
 					player.killPlayer();
-					g.drawImage(player.getImage(), player.getXPos(), player.getYPos(), this);
+					g.drawImage(player.getImage(), player.getXPos(),
+							player.getYPos(), this);
 					break;
 				}
-			
+
 			}
 		}
-		
+
 		/*
-		 * Only runs if the player has entered into the water lanes. 
+		 * Only runs if the player has entered into the water lanes.
 		 */
-		if ( player.getYPos() < lanes.get(LANE_WATER_FIRST+1).getYPos()){
+		if (player.getYPos() < lanes.get(LANE_WATER_FIRST + 1).getYPos()) {
 			int currentPlatform = 0;
-			for (int i = 0; i<platforms.size(); i++ ){
-				if ( player.hasCollidedWith(platforms.get(i)) ){
+			for (int i = 0; i < platforms.size(); i++) {
+				if (player.hasCollidedWith(platforms.get(i))) {
 					player.sail(input, platforms.get(i));
 					currentPlatform = i;
 					break;
-				} 
-		}
-		
-			if (!player.isOnPlatform(platforms.get(currentPlatform))){
+				}
+			}
+
+			if (!player.isOnPlatform(platforms.get(currentPlatform))) {
 				player.killPlayer();
 			}
 		}
-		
+
 		// TODO check if player is in victory spaces
-		
+
 	}
 
 	/**
 	 * This method processes the game and the graphics that display game status.
 	 */
 	private void processGameplay(Graphics g) {
-		if ( player.getLives() == 0  ){
+		if (player.getLives() == 0) {
 			g.setColor(Color.RED);
 			g.drawString("GAME OVER", 225, GAME_HEIGHT - 25);
-			// TODO i need a way to prompt the user to quit, play again, or return to title screen 
-				// JOPTIONPANE???
-		} 
-		
-		if (player.checkLifeState() == Player.DEAD && player.getLives() > 0){
-			spawnPlayer(player.getLives());	
+			// TODO i need a way to prompt the user to quit, play again, or
+			// return to title screen
+			// JOPTIONPANE???
+		}
+
+		if (player.checkLifeState() == Player.DEAD && player.getLives() > 0) {
+			spawnPlayer(player.getLives());
 		}
 	}
 
 	/**
-	 * This method processes the images in the lower left hand corner of the screen. They are used
-	 * as counts so the user knows how many lives he or she has remaining.
+	 * This method processes the images in the lower left hand corner of the
+	 * screen. They are used as counts so the user knows how many lives he or
+	 * she has remaining.
+	 * 
 	 * @param g
 	 */
 	private void processPlayerLives(Graphics g) {
 		BufferedImage playerImage = null;
 		try {
-			playerImage = ImageIO.read(new File("res/sprites/player/player-idle.gif"));
+			playerImage = ImageIO.read(new File(
+					"res/sprites/player/player-idle.gif"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		for (int i = 0; i<player.getLives(); i++){
-			g.drawImage(playerImage, 50*i, GAME_HEIGHT - 50, this);
+		for (int i = 0; i < player.getLives(); i++) {
+			g.drawImage(playerImage, 50 * i, GAME_HEIGHT - 50, this);
 		}
 	}
 
@@ -491,7 +484,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		processVehicles(g);
 		processGameplay(g);
 		processPlayerLives(g);
-		
+
 		g.dispose();
 		bs.show();
 
@@ -503,7 +496,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
@@ -511,12 +504,6 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		while (true) {
 			render();
 		}
-	}
-
-	@Override
-	public boolean imageUpdate(Image img, int infoflags, int x, int y, int w,
-			int h) {
-		return true;
 	}
 
 	/**
