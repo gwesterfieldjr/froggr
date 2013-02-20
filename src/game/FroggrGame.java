@@ -340,7 +340,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 			// JOPTIONPANE???
 		}
 
-		if (player.checkLifeState() == Player.DEAD && player.getLives() > 0) {
+		if (!player.isAlive() && player.getLives() > 0) {
 			spawnPlayer(player.getLives());
 		}
 	}
