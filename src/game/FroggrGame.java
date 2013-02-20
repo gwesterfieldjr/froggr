@@ -310,7 +310,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		 * Only runs if the player has entered into the water lanes.
 		 */
 		if (player.getYPos() < lanes.get(LANE_WATER_FIRST + 1).getYPos()) {
-			int currentPlatform = 0;
+			int currentPlatform = -1;
 			for (int i = 0; i < platforms.size(); i++) {
 				if (player.hasCollidedWith(platforms.get(i))) {
 					player.sail(input, platforms.get(i));
@@ -319,8 +319,10 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 				}
 			}
 
+			if ( currentPlatform != -1 ){
 			if (!player.isOnPlatform(platforms.get(currentPlatform))) {
 				player.kill();
+			}
 			}
 		}
 
