@@ -323,6 +323,8 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 			if (!player.isOnPlatform(platforms.get(currentPlatform))) {
 				player.kill();
 			}
+			} else {
+				player.kill();
 			}
 		}
 
