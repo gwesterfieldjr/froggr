@@ -299,7 +299,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		 */
 		for (int i = 0; i < vehicles.size(); i++) {
 			if (player.hasCollidedWith(vehicles.get(i))) {
-				player.killPlayer();
+				player.kill();
 				g.drawImage(player.getImage(), player.getXPos(),
 						player.getYPos(), this);
 				break;
@@ -320,7 +320,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 			}
 
 			if (!player.isOnPlatform(platforms.get(currentPlatform))) {
-				player.killPlayer();
+				player.kill();
 			}
 		}
 

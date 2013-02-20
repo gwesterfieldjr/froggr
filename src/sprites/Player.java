@@ -107,8 +107,9 @@ public class Player extends Sprite {
 	/**
 	 * Kills the player
 	 */
-	public void killPlayer() {
+	public void kill() {
 		if (isAlive()) {
+			remove();
 			setImage("res/sprites/player/player-death.gif");
 			//SoundEffect.play(SoundEffect.COLLISION);
 			setLives(getLives() - 1);
@@ -130,8 +131,7 @@ public class Player extends Sprite {
 		}
 
 		if (getXPos() == platform.getOffScreenXPosition()) {
-			killPlayer();
-			remove();
+			kill();
 		}
 	}
 
