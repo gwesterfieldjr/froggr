@@ -37,6 +37,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private ArrayList<Lane> lanes = new ArrayList<Lane>();
 	private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
 	private ArrayList<Platform> platforms = new ArrayList<Platform>();
+	private boolean[] food = new boolean[4];
 
 	/**
 	 * Initial regeneration rates for water lanes
@@ -54,6 +55,15 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private final int SECOND_ROAD_LANE_REGENERATION = 225;
 	private final int THIRD_ROAD_LANE_REGENERATION = 350;
 	private final int FOURTH_ROAD_LANE_REGENERATION = 250;
+	
+	/**
+	 * Eating Zones
+	 */
+	public final static int FIRST_EATING_ZONE = 0;
+	public final static int SECOND_EATING_ZONE = 150;
+	public final static int THIRD_EATING_ZONE = 300;
+	public final static int FOURTH_EATING_ZONE = 450;
+	
 
 	/**
 	 * Width of the game canvas in pixels.
@@ -324,12 +334,25 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 				player.kill();
 			}
 			} else {
-				player.kill();
+				if ( player.isEating()){
+					BufferedImage playerImage = null;
+					try {
+						playerImage = ImageIO.read(new File(
+								"res/sprites/player/player-idle.gif"));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					g.drawImage(playerImage, Player.lunchLocation, 0, this);
+					spawnPlayer(player.getLives());
+				} else {
+					player.kill();
+				}
 			}
 		}
 
-		// TODO check if player is in victory spaces
+		
 
+		
 	}
 
 	/**
@@ -399,7 +422,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 			}
 		}
 	}
-
+	
 	/**
 	 * Removes all sprite's from their corresponding lists.
 	 */
