@@ -112,7 +112,7 @@ public class Player extends Sprite {
 		if (isAlive()) {
 			remove();
 			setImage("res/sprites/player/player-death.gif");
-			//SoundEffect.play(SoundEffect.COLLISION);
+			SoundEffect.play(SoundEffect.COLLISION);
 			setLives(getLives() - 1);
 			setAlive(false);
 		}
@@ -151,38 +151,4 @@ public class Player extends Sprite {
 		this.alive = alive;
 	}
 	
-	public boolean isEating(){
-		int buffer = 15;
-		int position = getXPos();
-		boolean eating = false;
-
-		if ( ( Math.abs(FroggrGame.FIRST_EATING_ZONE - position) <= buffer ) && getYPos() == 0  && snack == false ){
-			eating = true;
-			snack = true;
-			lunchLocation = FroggrGame.FIRST_EATING_ZONE;
-
-		} 
-		if ( ( Math.abs(FroggrGame.SECOND_EATING_ZONE - position) <= buffer ) && getYPos() == 0 && breakfast == false  ){
-			eating = true;
-			breakfast = true;
-			lunchLocation = FroggrGame.FIRST_EATING_ZONE;
-
-		}
-		if ( ( Math.abs(FroggrGame.THIRD_EATING_ZONE - position) <= buffer ) && getYPos() == 0 && lunch == false  ){
-			eating = true;
-			lunch = true;
-			lunchLocation = FroggrGame.FIRST_EATING_ZONE;
-
-		} 
-		if ( ( Math.abs(FroggrGame.FOURTH_EATING_ZONE - position) <= buffer ) && getYPos() == 0 && dinner == false ){
-			eating = true;
-			dinner = true;
-			lunchLocation = FroggrGame.FIRST_EATING_ZONE;
-
-		}
-		
-		return eating;
-	}
-	
-
 }

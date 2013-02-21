@@ -19,6 +19,7 @@ import sprites.MovingObject;
 import sprites.Platform;
 import sprites.Player;
 import sprites.Vehicle;
+import sprites.Win;
 
 /**
  * 
@@ -32,12 +33,12 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private Input input = new Input();
 
 	/**
-	 * Lists of lanes, vehicles, and platforms.
+	 * Lists of lanes, vehicles, wins, and platforms.
 	 */
 	private ArrayList<Lane> lanes = new ArrayList<Lane>();
 	private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
 	private ArrayList<Platform> platforms = new ArrayList<Platform>();
-	private boolean[] food = new boolean[4];
+	private ArrayList<Win> wins = new ArrayList<Win>();
 
 	/**
 	 * Initial regeneration rates for water lanes
@@ -60,9 +61,9 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 * Eating Zones
 	 */
 	public final static int FIRST_EATING_ZONE = 0;
-	public final static int SECOND_EATING_ZONE = 150;
-	public final static int THIRD_EATING_ZONE = 300;
-	public final static int FOURTH_EATING_ZONE = 450;
+	public final static int SECOND_EATING_ZONE = 1;
+	public final static int THIRD_EATING_ZONE = 2;
+	public final static int FOURTH_EATING_ZONE = 3;
 	
 
 	/**
@@ -165,6 +166,17 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	}
 
 	/**
+	 * Creates the win zones.
+	 */
+	private void createWinZones() {
+		for (int i = FIRST_EATING_ZONE; i<= FOURTH_EATING_ZONE; i++){
+			wins.add(new Win(i*150, 0));
+			wins.get(i).setConsumed(false);
+			wins.get(i).setImage("res/sprites/lane/fly.png");
+		}
+	}
+	
+	/**
 	 * Initializes the ArrayList of lanes
 	 */
 	private void createLanes() {
@@ -172,7 +184,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		for (int i = 0; i < NUMBER_OF_LANES; i++) {
 			lanes.add(new Lane(0, i * 50));
 		}
-
+		
 		// Add the image for each lane
 		lanes.get(LANE_WIN).setImage("res/sprites/lane/win.png");
 
@@ -334,18 +346,15 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 				player.kill();
 			}
 			} else {
-				if ( player.isEating()){
-					BufferedImage playerImage = null;
-					try {
-						playerImage = ImageIO.read(new File(
-								"res/sprites/player/player-idle.gif"));
-					} catch (IOException e) {
-						e.printStackTrace();
+				for (int i = 0; i<=wins.size(); i++){
+					if ( wins.get(i).hasCollidedWith(player)){
+						wins.get(i).setImage("res/sprites/player/player-forward.gif");
+						spawnPlayer(player.getLives());
+						break;
+					} else {
+						player.kill();
+						break;
 					}
-					g.drawImage(playerImage, Player.lunchLocation, 0, this);
-					spawnPlayer(player.getLives());
-				} else {
-					player.kill();
 				}
 			}
 		}
@@ -535,6 +544,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 */
 	public void start() {
 		createLanes();
+		createWinZones();
 		spawnPlayer(startingLives);
 		new Thread(this).start();
 	}
