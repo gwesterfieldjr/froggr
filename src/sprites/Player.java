@@ -38,33 +38,35 @@ public class Player extends Sprite {
 	@Override
 	public void tick(Input input) {
 		if (isAlive()) {
+			int horizontalMovementAmount = 25;
+			int verticalMovementAmount = 50;
 			if (input.buttons[Input.LEFT]) {
-				if (getXPos() - 50 != -50) {
-					setXPos(getXPos() - 50);
+				if (getXPos() - horizontalMovementAmount != -horizontalMovementAmount) {
+					setXPos(getXPos() - horizontalMovementAmount);
 					input.buttons[Input.LEFT] = false;
 					setImage("res/sprites/player/player-left.gif");
 					SoundEffect.play(SoundEffect.MOVE);
 				}
 			}
 			if (input.buttons[Input.RIGHT]) {
-				if (getXPos() + 50 != FroggrGame.GAME_WIDTH) {
-					setXPos(getXPos() + 50);
+				if (getXPos() + horizontalMovementAmount != FroggrGame.GAME_WIDTH) {
+					setXPos(getXPos() + horizontalMovementAmount);
 					input.buttons[Input.RIGHT] = false;
 					setImage("res/sprites/player/player-right.gif");
 					SoundEffect.play(SoundEffect.MOVE);
 				}
 			}
 			if (input.buttons[Input.UP]) {
-				if (getYPos() - 50 != -50) {
-					setYPos(getYPos() - 50);
+				if (getYPos() - verticalMovementAmount != -verticalMovementAmount) {
+					setYPos(getYPos() - verticalMovementAmount);
 					input.buttons[Input.UP] = false;
 					setImage("res/sprites/player/player-forward.gif");
 					SoundEffect.play(SoundEffect.MOVE);
 				}
 			}
 			if (input.buttons[Input.DOWN]) {
-				if (getYPos() + 50 != FroggrGame.GAME_HEIGHT - 50) {
-					setYPos(getYPos() + 50);
+				if (getYPos() + verticalMovementAmount != FroggrGame.GAME_HEIGHT - verticalMovementAmount) {
+					setYPos(getYPos() + verticalMovementAmount);
 					input.buttons[Input.DOWN] = false;
 					setImage("res/sprites/player/player-back.gif");
 					SoundEffect.play(SoundEffect.MOVE);
