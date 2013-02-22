@@ -9,7 +9,7 @@ public class Win extends Sprite{
 	
 	public Win(int xPos, int yPos) {
 		super(xPos, yPos);
-		setImage("res/sprites/lane/fly.png");
+		//setImage("res/sprites/lane/fly.png");
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class Win extends Sprite{
 	
 	public boolean hasCollidedWith(Sprite sprite){
 		int buffer = 15;
-		int position = getXPos();
+		int position = sprite.getXPos();
 
 		if ( ( Math.abs( getXPos() - position) <= buffer ) && getYPos() == 0 ){
 			return true;

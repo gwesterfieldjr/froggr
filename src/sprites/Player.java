@@ -16,12 +16,6 @@ public class Player extends Sprite {
 
 	private int lives;
 	private boolean alive;
-	private boolean snack = false;
-	private boolean breakfast = false;
-	private boolean lunch = false;
-	private boolean dinner = false;
-	public static int lunchLocation;
-	
 
 	public Player(int x, int y, int lives) {
 		super(x, y);
