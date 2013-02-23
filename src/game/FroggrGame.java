@@ -366,7 +366,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 				for (int i = 0; i<wins.size(); i++){
 					check++;
 					if ( wins.get(i).hasCollidedWith(player) && wins.get(i).isConsumed() == false){
-						wins.get(i).setImage("res/sprites/player/player-forward.gif");
+						wins.get(i).setImage("res/sprites/lane/fly-consumed.png");
 						wins.get(i).setConsumed(true);
 						spawnPlayer(player.getLives());
 						check=0;
