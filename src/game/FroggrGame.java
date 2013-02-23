@@ -19,7 +19,7 @@ import sprites.MovingObject;
 import sprites.Platform;
 import sprites.Player;
 import sprites.Vehicle;
-import sprites.Win;
+import sprites.Fly;
 
 /**
  * 
@@ -40,7 +40,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private ArrayList<Lane> lanes = new ArrayList<Lane>();
 	private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
 	private ArrayList<Platform> platforms = new ArrayList<Platform>();
-	private ArrayList<Win> wins = new ArrayList<Win>();
+	private ArrayList<Fly> flys = new ArrayList<Fly>();
 
 	/**
 	 * Initial regeneration rates for water lanes
@@ -164,7 +164,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 */
 	private void createWinZones() {
 		for (int i = 0; i< 4; i++){
-			wins.add(new Win(i*150, 0));
+			flys.add(new Fly(i*150, 0));
 		}
 	}
 	
@@ -240,8 +240,8 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 * @param g
 	 */
 	private void processWinZones(Graphics g) {
-		for (int i = 0; i<wins.size(); i++) {
-			g.drawImage(wins.get(i).getImage(), wins.get(i).getXPos(), wins.get(i).getYPos(), this);
+		for (int i = 0; i<flys.size(); i++) {
+			g.drawImage(flys.get(i).getImage(), flys.get(i).getXPos(), flys.get(i).getYPos(), this);
 		}
 	}
 
@@ -324,7 +324,6 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		for (int i = 0; i < vehicles.size(); i++) {
 			if (player.hasCollidedWith(vehicles.get(i))) {
 				player.kill();
-				score = score - 50;
 				g.drawImage(player.getImage(), player.getXPos(),
 						player.getYPos(), this);
 				break;
@@ -349,16 +348,15 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 				// While sailing on the platform this checks if the player jumps off a platform into water
 				if (!player.isOnPlatform(platforms.get(currentPlatform))) {
 					player.kill();
-					score = score - 50;
 				}
 			} else {
 				int check=0;
-				for (int i = 0; i<wins.size(); i++){
+				for (int i = 0; i<flys.size(); i++){
 					check++;
 					// Checks if the player has reached an accessible win zone. If not, he dies.
-					if ( wins.get(i).hasCollidedWith(player) && wins.get(i).isConsumed() == false){
-						wins.get(i).setImage("res/sprites/lane/fly-consumed.png");
-						wins.get(i).setConsumed(true);
+					if ( flys.get(i).hasCollidedWith(player) && flys.get(i).isConsumed() == false){
+						flys.get(i).setImage("res/sprites/lane/fly-consumed.png");
+						flys.get(i).setConsumed(true);
 						score = score + 100;
 						victory++;
 						spawnPlayer(player.getLives());
@@ -367,7 +365,6 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 					} else {
 						if (check==4){
 						player.kill();
-						score = score - 50;
 						}
 					}
 				}
