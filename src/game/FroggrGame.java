@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 
 import sprites.Lane;
 import sprites.MovingObject;
@@ -46,19 +45,20 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	/**
 	 * Initial regeneration rates for water lanes
 	 */
-	private final int FIRST_WATER_LANE_REGENERATION = 325;
-	private final int SECOND_WATER_LANE_REGENERATION = 225;
-	private final int THIRD_WATER_LANE_REGENERATION = 225;
-	private final int FOURTH_WATER_LANE_REGENERATION = 325;
-	private final int FIFTH_WATER_LANE_REGENERATION = 225;
+	private final static int FIRST_WATER_LANE_REGENERATION = 325;
+	private final static int SECOND_WATER_LANE_REGENERATION = 225;
+	private final static int THIRD_WATER_LANE_REGENERATION = 225;
+	private final static int FOURTH_WATER_LANE_REGENERATION = 325;
+	private final static int FIFTH_WATER_LANE_REGENERATION = 225;
 
 	/**
 	 * Initial regeneration rates for road lanes
 	 */
-	private final int FIRST_ROAD_LANE_REGENERATION = 175;
-	private final int SECOND_ROAD_LANE_REGENERATION = 225;
-	private final int THIRD_ROAD_LANE_REGENERATION = 350;
-	private final int FOURTH_ROAD_LANE_REGENERATION = 250;
+
+	private final static int FIRST_ROAD_LANE_REGENERATION = 175;
+	private final static int SECOND_ROAD_LANE_REGENERATION = 225;
+	private final static int THIRD_ROAD_LANE_REGENERATION = 350;
+	private final static int FOURTH_ROAD_LANE_REGENERATION = 250;
 
 	/**
 	 * Width of the game canvas in pixels.

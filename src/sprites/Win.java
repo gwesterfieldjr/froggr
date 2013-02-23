@@ -9,12 +9,15 @@ public class Win extends Sprite{
 	
 	public Win(int xPos, int yPos) {
 		super(xPos, yPos);
-		//setImage("res/sprites/lane/fly.png");
+		setImage("res/sprites/lane/fly.png");
+		this.consumed = false;
 	}
 
 	@Override
 	public void tick(Input input) {
-		
+		if (isConsumed()) {
+			setImage("res/sprites/lane/fly-consumed.png");
+		}
 	}
 
 	public boolean isConsumed() {
