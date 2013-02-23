@@ -484,6 +484,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 	private void quit() {
 		FroggrGameApplication.quitGame();
+		System.exit(0);
 	}
 
 	private void showMainMenu() {
