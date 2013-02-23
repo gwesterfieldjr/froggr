@@ -34,6 +34,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private Input input = new Input();
 	private int victory = 0;
 	private int score = 0;
+	private boolean paused;
 
 	/**
 	 * Lists of lanes, vehicles, wins, and platforms.
@@ -159,7 +160,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		setForeground(FOREGROUND_COLOR);
 		setSize(GAME_WIDTH, GAME_HEIGHT);
 	}
-
+	
 	/**
 	 * Creates the win zones.
 	 */
@@ -473,13 +474,23 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	}
 
 	private void showMainMenu() {
-		// TODO Auto-generated method stub
-
+		// TODO Pause the game, then show the main menu.
+		setPaused(true);
+		
 	}
 
 	private void restartGame() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	/**
+	 * Resume the game from a paused state
+	 */
+	public void resumeGame() {
+		if (isPaused()) {
+			setPaused(false);
+		}
 	}
 
 	/**
@@ -636,7 +647,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 	@Override
 	public void run() {
-		while (true) {
+		while (!isPaused()) {
 			render();
 		}
 	}
@@ -645,6 +656,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 * This method starts the game loop and thread
 	 */
 	public void start() {
+		setPaused(false);
 		createLanes();
 		createWinZones();
 		spawnPlayer(startingLives);
@@ -663,6 +675,20 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		input.set(e.getKeyCode(), true);
+	}
+
+	/**
+	 * @return the paused
+	 */
+	public boolean isPaused() {
+		return paused;
+	}
+
+	/**
+	 * @param paused the paused to set
+	 */
+	public void setPaused(boolean paused) {
+		this.paused = paused;
 	}
 
 }
