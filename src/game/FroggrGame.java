@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 import sprites.Lane;
 import sprites.MovingObject;
@@ -31,6 +32,8 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private Player player;
 	private int startingLives = 3;
 	private Input input = new Input();
+	private int victory = 0;
+	private int score = 0;
 
 	/**
 	 * Lists of lanes, vehicles, wins, and platforms.
@@ -56,15 +59,6 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private final int SECOND_ROAD_LANE_REGENERATION = 225;
 	private final int THIRD_ROAD_LANE_REGENERATION = 350;
 	private final int FOURTH_ROAD_LANE_REGENERATION = 250;
-	
-	/**
-	 * Win Zones
-	 */
-	private final int FIRST_WIN_ZONE = 0;
-	private final int SECOND_WIN_ZONE = 1;
-	private final int THIRD_WIN_ZONE = 2;
-	private final int FOURTH_WIN_ZONE = 3;
-	
 
 	/**
 	 * Width of the game canvas in pixels.
@@ -169,17 +163,11 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 * Creates the win zones.
 	 */
 	private void createWinZones() {
-		for (int i = FIRST_WIN_ZONE; i<= FOURTH_WIN_ZONE; i++){
+		for (int i = 0; i< 4; i++){
 			wins.add(new Win(i*150, 0));
+			wins.get(i).setImage("res/sprites/lane/fly.png");
+			wins.get(i).setConsumed(false);
 		}
-		wins.get(FIRST_WIN_ZONE).setImage("res/sprites/lane/fly.png");
-		wins.get(FIRST_WIN_ZONE).setConsumed(false);
-		wins.get(SECOND_WIN_ZONE).setImage("res/sprites/lane/fly.png");
-		wins.get(SECOND_WIN_ZONE).setConsumed(false);
-		wins.get(THIRD_WIN_ZONE).setImage("res/sprites/lane/fly.png");
-		wins.get(THIRD_WIN_ZONE).setConsumed(false);
-		wins.get(FOURTH_WIN_ZONE).setImage("res/sprites/lane/fly.png");
-		wins.get(FOURTH_WIN_ZONE).setConsumed(false);
 	}
 	
 	/**
@@ -331,13 +319,14 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private void processPlayer(Graphics g) {
 		player.tick(input);
 		g.drawImage(player.getImage(), player.getXPos(), player.getYPos(), this);
-
+		
 		/*
 		 * Check if player has collided with a vehicle
 		 */
 		for (int i = 0; i < vehicles.size(); i++) {
 			if (player.hasCollidedWith(vehicles.get(i))) {
 				player.kill();
+				score = score - 50;
 				g.drawImage(player.getImage(), player.getXPos(),
 						player.getYPos(), this);
 				break;
@@ -350,6 +339,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		if (player.getYPos() < lanes.get(LANE_WATER_FIRST + 1).getYPos()) {
 			int currentPlatform = -1;
 			for (int i = 0; i < platforms.size(); i++) {
+				// Checks if player lands on platform, if so he will sail on it.
 				if (player.hasCollidedWith(platforms.get(i))) {
 					player.sail(input, platforms.get(i));
 					currentPlatform = i;
@@ -358,22 +348,28 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 			}
 
 			if ( currentPlatform != -1 ){
+				// While sailing on the platform this checks if the player jumps off a platform into water
 				if (!player.isOnPlatform(platforms.get(currentPlatform))) {
 					player.kill();
+					score = score - 50;
 				}
 			} else {
 				int check=0;
 				for (int i = 0; i<wins.size(); i++){
 					check++;
+					// Checks if the player has reached an accessible win zone. If not, he dies.
 					if ( wins.get(i).hasCollidedWith(player) && wins.get(i).isConsumed() == false){
 						wins.get(i).setImage("res/sprites/lane/fly-consumed.png");
 						wins.get(i).setConsumed(true);
+						score = score + 100;
+						victory++;
 						spawnPlayer(player.getLives());
 						check=0;
 						break;
 					} else {
 						if (check==4){
 						player.kill();
+						score = score - 50;
 						}
 					}
 				}
@@ -389,17 +385,23 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 * This method processes the game and the graphics that display game status.
 	 */
 	private void processGameplay(Graphics g) {
-		if (player.getLives() == 0) {
-			g.setColor(Color.RED);
-			g.drawString("GAME OVER", 225, GAME_HEIGHT - 25);
-			// TODO i need a way to prompt the user to quit, play again, or
-			// return to title screen
-			// JOPTIONPANE???
-		}
-
 		if (!player.isAlive() && player.getLives() > 0) {
 			spawnPlayer(player.getLives());
 		}
+		
+		// Checks if the game is over
+		if (player.getLives() == 0) {
+			g.drawString("GAME OVER", 225, GAME_HEIGHT - 25);			
+		}
+		
+		// Checks if the player wins the game.
+		if (victory == 4){
+			g.drawString("YOU WIN!", 225, GAME_HEIGHT - 25);
+		}
+		
+		// Keeps track of the score
+		g.drawString("SCORE: " + score, 425, GAME_HEIGHT - 25);
+		
 	}
 
 	/**
@@ -537,8 +539,8 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		processPlatforms(g);
 		processPlayer(g);
 		processVehicles(g);
-		processGameplay(g);
 		processPlayerLives(g);
+		processGameplay(g);
 
 		g.dispose();
 		bs.show();

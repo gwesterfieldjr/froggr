@@ -4,6 +4,9 @@ import game.Input;
 
 /**
  * 
+ * This is the moving object class for the FroggrGame class. This class separates sprite's that move from those
+ * that do not.
+ * 
  * @author Raj Ramsaroop
  * 		   Greg Westerfield, Jr.
  * 
@@ -49,6 +52,10 @@ public class MovingObject extends Sprite {
 		}
 	}
 	
+	/**
+	 * Returns the off screen position of the moving object.
+	 * @return offScreenPosition
+	 */
 	public int getOffScreenXPosition() {
 		if (getDirection() == MovingObject.DIRECTION_LEFT) {
 			return 0 - calculatePixelWidth();
