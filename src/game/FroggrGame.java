@@ -172,14 +172,6 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		for (int i = FIRST_WIN_ZONE; i<= FOURTH_WIN_ZONE; i++){
 			wins.add(new Win(i*150, 0));
 		}
-		wins.get(FIRST_WIN_ZONE).setImage("res/sprites/lane/fly.png");
-		wins.get(FIRST_WIN_ZONE).setConsumed(false);
-		wins.get(SECOND_WIN_ZONE).setImage("res/sprites/lane/fly.png");
-		wins.get(SECOND_WIN_ZONE).setConsumed(false);
-		wins.get(THIRD_WIN_ZONE).setImage("res/sprites/lane/fly.png");
-		wins.get(THIRD_WIN_ZONE).setConsumed(false);
-		wins.get(FOURTH_WIN_ZONE).setImage("res/sprites/lane/fly.png");
-		wins.get(FOURTH_WIN_ZONE).setConsumed(false);
 	}
 	
 	/**
