@@ -54,8 +54,4 @@ public class Lane extends Sprite {
 	public void setTime(int time) {
 		this.time = time;
 	}
-	
-	
-	
-
 }

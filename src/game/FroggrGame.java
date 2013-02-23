@@ -32,9 +32,31 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private Player player;
 	private int startingLives = 3;
 	private Input input = new Input();
-	public static int victory = 0;
+	
+	/**
+	 * 
+	 */
+	public static int flysConsumed = 0;
+	
+	/**
+	 * The users score
+	 */
 	private int score = 0;
+	
+	/**
+	 * The nextPointsPosition keeps track of the next YPos the user must reach to gain NEW_LANE_POINTS 
+	 */
+	private int nextPointsPosition = 600;
 
+	/**
+	 * Points that can be earned.
+	 */
+	// If user enters a win zone and eats a fly.
+	private final int CONSUME_FLY_BONUS = 100;
+	// If user enters a new lane.
+	private final int NEW_LANE_POINTS = 25;
+	
+	
 	/**
 	 * Lists of lanes, vehicles, wins, and platforms.
 	 */
@@ -318,19 +340,24 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private void processPlayer(Graphics g) {
 		player.tick(input);
 		g.drawImage(player.getImage(), player.getXPos(), player.getYPos(), this);
+
+		/*
+		 * Keeps track of the next position the player must reach to gain points. 
+		 * If player dies he must reach the last nextPointsPosition to gain NEW_LANE_POINTS
+		 */
+		if (player.getYPos() < nextPointsPosition ){
+			score = score + NEW_LANE_POINTS;
+			nextPointsPosition = nextPointsPosition - LANE_HEIGHT;
+		}
 		
 		/*
 		 * Check if player has collided with a vehicle
 		 */
 		for (int i = 0; i < vehicles.size(); i++) {
-			if (player.hasCollidedWith(vehicles.get(i))) {
-				if (player.isAlive()){
+			if (player.hasCollidedWith(vehicles.get(i)) && player.isAlive()) {
 				SoundEffect.play(SoundEffect.COLLISION);
-				}
 				player.kill();
-				g.drawImage(player.getImage(), player.getXPos(),
-						player.getYPos(), this);
-				break;
+				g.drawImage(player.getImage(), player.getXPos(),player.getYPos(), this);
 			}
 		}
 
@@ -344,40 +371,37 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 				if (player.hasCollidedWith(platforms.get(i))) {
 					player.sail(input, platforms.get(i));
 					currentPlatform = i;
-					break;
 				}
 			}
 
 			if ( currentPlatform != -1 ){
 				// While sailing on the platform this checks if the player jumps off a platform into water
-				if (!player.isOnPlatform(platforms.get(currentPlatform))) {
-					if (player.isAlive()){
-						SoundEffect.play(SoundEffect.SPLASH);
-					}
-					player.kill();
-						
+				if (!player.isOnPlatform(platforms.get(currentPlatform)) && player.isAlive()) {
+					SoundEffect.play(SoundEffect.SPLASH);
+					player.kill();		
 				}
 			} else {
-				int check=0;
+				
+				int check=0; // This check variable is ensuring that the loop completes before killing the player
 				for (int i = 0; i<flys.size(); i++){
 					check++;
 					// Checks if the player has reached an accessible win zone. If not, he dies.
 					if ( flys.get(i).hasCollidedWith(player) && flys.get(i).isConsumed() == false){
 						flys.get(i).setImage("res/sprites/lane/fly-consumed.png");
-						flys.get(i).setConsumed(true);
-						score = score + 100;
-						victory++;
-						SoundEffect.play(SoundEffect.VICTORY);
+						flys.get(i).setConsumed(true); // set fly to consumed
+						score = score + CONSUME_FLY_BONUS; // add bonus points to player score for consuming a fly.
+						nextPointsPosition = 600; // reset the position at which the frog can gain more points
+						flysConsumed++; // Increment the number of fly's consumed by Froggr
+						SoundEffect.play(SoundEffect.VICTORY); //Play victory sound
 						spawnPlayer(player.getLives());
 						check=0;
-						//break;
-					} else {
-						if (check==4){
+					} else { 
+						if (check==4){ // Checking if player is alive to play sound so the sound does not repeat.
 							if (player.isAlive()){
 								if (player.getYPos() == 0){
-								SoundEffect.play(SoundEffect.COLLISION);
+								SoundEffect.play(SoundEffect.COLLISION); // Plays if player collides with the grass
 								} else {
-								SoundEffect.play(SoundEffect.SPLASH);
+								SoundEffect.play(SoundEffect.SPLASH); // Plays if the player falls in the water.
 								}
 							} 
 						player.kill();
@@ -406,12 +430,12 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		}
 		
 		// Checks if the player wins the game.
-		if (victory == 4){
+		if (flysConsumed == 4){
 			g.drawString("YOU WIN!", 225, GAME_HEIGHT - 25);
 		}
 		
 		// Keeps track of the score
-		g.drawString("SCORE: " + score, 425, GAME_HEIGHT - 25);
+		g.drawString("SCORE: " + score, 400, GAME_HEIGHT - 25);
 		
 	}
 
