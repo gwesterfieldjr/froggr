@@ -19,6 +19,7 @@ import sprites.MovingObject;
 import sprites.Platform;
 import sprites.Player;
 import sprites.Vehicle;
+import sprites.Win;
 
 /**
  * 
@@ -32,12 +33,12 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private Input input = new Input();
 
 	/**
-	 * Lists of lanes, vehicles, and platforms.
+	 * Lists of lanes, vehicles, wins, and platforms.
 	 */
 	private ArrayList<Lane> lanes = new ArrayList<Lane>();
 	private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
 	private ArrayList<Platform> platforms = new ArrayList<Platform>();
-	private boolean[] food = new boolean[4];
+	private ArrayList<Win> wins = new ArrayList<Win>();
 
 	/**
 	 * Initial regeneration rates for water lanes
@@ -57,12 +58,12 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private final int FOURTH_ROAD_LANE_REGENERATION = 250;
 	
 	/**
-	 * Eating Zones
+	 * Win Zones
 	 */
-	public final static int FIRST_EATING_ZONE = 0;
-	public final static int SECOND_EATING_ZONE = 150;
-	public final static int THIRD_EATING_ZONE = 300;
-	public final static int FOURTH_EATING_ZONE = 450;
+	private final int FIRST_WIN_ZONE = 0;
+	private final int SECOND_WIN_ZONE = 1;
+	private final int THIRD_WIN_ZONE = 2;
+	private final int FOURTH_WIN_ZONE = 3;
 	
 
 	/**
@@ -165,6 +166,23 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	}
 
 	/**
+	 * Creates the win zones.
+	 */
+	private void createWinZones() {
+		for (int i = FIRST_WIN_ZONE; i<= FOURTH_WIN_ZONE; i++){
+			wins.add(new Win(i*150, 0));
+		}
+		wins.get(FIRST_WIN_ZONE).setImage("res/sprites/lane/fly.png");
+		wins.get(FIRST_WIN_ZONE).setConsumed(false);
+		wins.get(SECOND_WIN_ZONE).setImage("res/sprites/lane/fly.png");
+		wins.get(SECOND_WIN_ZONE).setConsumed(false);
+		wins.get(THIRD_WIN_ZONE).setImage("res/sprites/lane/fly.png");
+		wins.get(THIRD_WIN_ZONE).setConsumed(false);
+		wins.get(FOURTH_WIN_ZONE).setImage("res/sprites/lane/fly.png");
+		wins.get(FOURTH_WIN_ZONE).setConsumed(false);
+	}
+	
+	/**
 	 * Initializes the ArrayList of lanes
 	 */
 	private void createLanes() {
@@ -172,7 +190,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		for (int i = 0; i < NUMBER_OF_LANES; i++) {
 			lanes.add(new Lane(0, i * 50));
 		}
-
+		
 		// Add the image for each lane
 		lanes.get(LANE_WIN).setImage("res/sprites/lane/win.png");
 
@@ -228,6 +246,16 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private void processLanes(Graphics g) {
 		for (Lane l : lanes) {
 			g.drawImage(l.getImage(), l.getXPos(), l.getYPos(), this);
+		}
+	}
+	
+	/**
+	 * Draws the win zone images on the canvas.
+	 * @param g
+	 */
+	private void processWinZones(Graphics g) {
+		for (int i = 0; i<wins.size(); i++) {
+			g.drawImage(wins.get(i).getImage(), wins.get(i).getXPos(), wins.get(i).getYPos(), this);
 		}
 	}
 
@@ -305,7 +333,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		g.drawImage(player.getImage(), player.getXPos(), player.getYPos(), this);
 
 		/*
-		 * Only runs if player is in the road lanes
+		 * Check if player has collided with a vehicle
 		 */
 		for (int i = 0; i < vehicles.size(); i++) {
 			if (player.hasCollidedWith(vehicles.get(i))) {
@@ -330,22 +358,24 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 			}
 
 			if ( currentPlatform != -1 ){
-			if (!player.isOnPlatform(platforms.get(currentPlatform))) {
-				player.kill();
-			}
-			} else {
-				if ( player.isEating()){
-					BufferedImage playerImage = null;
-					try {
-						playerImage = ImageIO.read(new File(
-								"res/sprites/player/player-idle.gif"));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					g.drawImage(playerImage, Player.lunchLocation, 0, this);
-					spawnPlayer(player.getLives());
-				} else {
+				if (!player.isOnPlatform(platforms.get(currentPlatform))) {
 					player.kill();
+				}
+			} else {
+				int check=0;
+				for (int i = 0; i<wins.size(); i++){
+					check++;
+					if ( wins.get(i).hasCollidedWith(player) && wins.get(i).isConsumed() == false){
+						wins.get(i).setImage("res/sprites/player/player-forward.gif");
+						wins.get(i).setConsumed(true);
+						spawnPlayer(player.getLives());
+						check=0;
+						break;
+					} else {
+						if (check==4){
+						player.kill();
+						}
+					}
 				}
 			}
 		}
@@ -503,6 +533,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		addPlatformsToLanes();
 		addVehiclesToLanes();
 		processLanes(g);
+		processWinZones(g);
 		processPlatforms(g);
 		processPlayer(g);
 		processVehicles(g);
@@ -535,6 +566,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 */
 	public void start() {
 		createLanes();
+		createWinZones();
 		spawnPlayer(startingLives);
 		new Thread(this).start();
 	}
