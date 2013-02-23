@@ -469,8 +469,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	}
 
 	private void quit() {
-		// TODO Auto-generated method stub
-
+		FroggrGameApplication.quitGame();
 	}
 
 	private void showMainMenu() {

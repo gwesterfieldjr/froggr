@@ -27,11 +27,14 @@ import sprites.Player;
  * 		   Greg Westerfield, Jr.
  * 
  */
-public class FroggrGameApplication extends JFrame implements ActionListener {
+public class FroggrGameApplication implements ActionListener {
 
 	// Froggr game driver class
 	private FroggrGame game;
-
+	
+	// Frame
+	private static JFrame frame;
+	
 	// Application Panels
 	public static final JPanel pnlTitleScreen = new JPanel();
 	public static final JPanel pnlGameScreen = new JPanel();
@@ -63,20 +66,21 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 	 * The Constructor of the FroggrGameApplication Class
 	 */
 	public FroggrGameApplication() {
+		frame = new JFrame();
 		createTitleScreen();
 		createInstructionScreen();
 		createGameScreen();
 		setFrameIcon();
-		setTitle("Froggr");
-		setSize(FroggrGame.GAME_WIDTH + 6, FroggrGame.GAME_HEIGHT + 30);
-		setResizable(false);
+		frame.setTitle("Froggr");
+		frame.setSize(FroggrGame.GAME_WIDTH + 6, FroggrGame.GAME_HEIGHT + 30);
+		frame.setResizable(false);
 		programLayout = new CardLayout();
-		setLayout(programLayout);
-		add(pnlTitleScreen, "Title Screen");
-		add(pnlGameScreen, "Game Screen");
-		add(pnlInstructionsScreen, "Instruction's Screen");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setVisible(true);
+		frame.setLayout(programLayout);
+		frame.add(pnlTitleScreen, "Title Screen");
+		frame.add(pnlGameScreen, "Game Screen");
+		frame.add(pnlInstructionsScreen, "Instruction's Screen");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 	}
 
 	/**
@@ -86,7 +90,7 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 		try {
 			BufferedImage image = ImageIO.read(Player.class.getClassLoader().getResource( 
 					"res/sprites/player/player-idle.gif"));
-			setIconImage(image);
+			frame.setIconImage(image);
 		} catch (IOException e) {
 			System.out.println("ERROR: Could not load idle player sprite image.");
 		} 		
@@ -251,21 +255,21 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 	 * Displays the title screen
 	 */
 	private void showTitleScreen() {
-		programLayout.show(this.getContentPane(), "Title Screen");
+		programLayout.show(frame.getContentPane(), "Title Screen");
 	}
 
 	/**
 	 * Displays the Instructions Screen
 	 */
 	private void showInstructionsScreen() {
-		programLayout.show(this.getContentPane(), "Instruction's Screen");
+		programLayout.show(frame.getContentPane(), "Instruction's Screen");
 	}
 
 	/**
 	 * Displays the Game screen
 	 */
 	private void showGameScreen() {
-		programLayout.show(this.getContentPane(), "Game Screen");
+		programLayout.show(frame.getContentPane(), "Game Screen");
 	}
 
 	/**
@@ -273,6 +277,10 @@ public class FroggrGameApplication extends JFrame implements ActionListener {
 	 */
 	private void startGame() {
 		game.start();
+	}
+	
+	public static void quitGame() {
+		frame.dispose();
 	}
 
 	// MAIN
