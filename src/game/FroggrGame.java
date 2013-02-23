@@ -29,12 +29,23 @@ import util.SoundEffect;
  */
 public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
+	/**
+	 * The player 
+	 */
 	private Player player;
+	
+	/** 
+	 * The number of lives the player starts with.
+	 */
 	private int startingLives = 3;
+	
+	/**
+	 * The input class checks which keys the user is pressing on the keyboard.
+	 */
 	private Input input = new Input();
 	
 	/**
-	 * 
+	 *  Tracks how many fly's Froggr has consumed
 	 */
 	public static int flysConsumed = 0;
 	
@@ -333,6 +344,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 	/**
 	 * Draws the image for the player in the main game render loop.
+	 * Also, process all of the players activity in the game.
 	 * 
 	 * @param g
 	 *            The Graphics object used in the Canvas.
@@ -362,7 +374,8 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		}
 
 		/*
-		 * Only runs if the player has entered into the water lanes.
+		 * Only runs if the player has entered into the water lanes. 
+		 * This is set up so if the player is not on a platform he is going to die.
 		 */
 		if (player.getYPos() < lanes.get(LANE_WATER_FIRST + 1).getYPos()) {
 			int currentPlatform = -1;
