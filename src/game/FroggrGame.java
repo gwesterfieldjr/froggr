@@ -161,13 +161,13 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		setForeground(FOREGROUND_COLOR);
 		setSize(GAME_WIDTH, GAME_HEIGHT);
 	}
-	
+
 	/**
 	 * Creates the win zones.
 	 */
 	private void createWinZones() {
 		for (int i = 0; i < 4; i++) {
-			wins.add(new Win(i * 150, 0));
+			flys.add(new Fly(i * 150, 0));
 		}
 	}
 
@@ -240,11 +240,13 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 	/**
 	 * Draws the win zone images on the canvas.
+	 * 
 	 * @param g
 	 */
 	private void processWinZones(Graphics g) {
-		for (int i = 0; i<flys.size(); i++) {
-			g.drawImage(flys.get(i).getImage(), flys.get(i).getXPos(), flys.get(i).getYPos(), this);
+		for (int i = 0; i < flys.size(); i++) {
+			g.drawImage(flys.get(i).getImage(), flys.get(i).getXPos(), flys
+					.get(i).getYPos(), this);
 		}
 	}
 
@@ -326,7 +328,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		 */
 		for (int i = 0; i < vehicles.size(); i++) {
 			if (player.hasCollidedWith(vehicles.get(i))) {
-				if (player.isAlive()){
+				if (player.isAlive()) {
 					SoundEffect.play(SoundEffect.COLLISION);
 				}
 				player.kill();
@@ -354,36 +356,40 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 				// While sailing on the platform this checks if the player jumps
 				// off a platform into water
 				if (!player.isOnPlatform(platforms.get(currentPlatform))) {
-					if (player.isAlive()){
+					if (player.isAlive()) {
 						SoundEffect.play(SoundEffect.SPLASH);
 					}
 					player.kill();
-						
+
 				}
 			} else {
 				int check = 0;
-				for (int i = 0; i < wins.size(); i++) {
+				for (int i = 0; i < flys.size(); i++) {
 					check++;
-					// Checks if the player has reached an accessible win zone. If not, he dies.
-					if ( flys.get(i).hasCollidedWith(player) && flys.get(i).isConsumed() == false){
-						flys.get(i).setImage("res/sprites/lane/fly-consumed.png");
+					// Checks if the player has reached an accessible win zone.
+					// If not, he dies.
+					if (flys.get(i).hasCollidedWith(player)
+							&& flys.get(i).isConsumed() == false) {
+						flys.get(i).setImage(
+								"res/sprites/lane/fly-consumed.png");
 						flys.get(i).setConsumed(true);
 						score = score + 100;
 						victory++;
 						SoundEffect.play(SoundEffect.VICTORY);
 						spawnPlayer(player.getLives());
 						check = 0;
-						//break;
+						// break;
 					} else {
-						if (check==4){
-							if (player.isAlive()){
-								if (player.getYPos() == 0){
-								SoundEffect.play(SoundEffect.COLLISION);
+						if (check == 4) {
+							if (player.isAlive()) {
+								if (player.getYPos() == 0) {
+									SoundEffect.play(SoundEffect.COLLISION);
 								} else {
-								SoundEffect.play(SoundEffect.SPLASH);
+									SoundEffect.play(SoundEffect.SPLASH);
 								}
-							} 
-						player.kill();
+							}
+							player.kill();
+						}
 					}
 				}
 			}
@@ -483,14 +489,14 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private void showMainMenu() {
 		// TODO Pause the game, then show the main menu.
 		setPaused(true);
-		
+
 	}
 
 	private void restartGame() {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	/**
 	 * Resume the game from a paused state
 	 */
@@ -692,7 +698,8 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	}
 
 	/**
-	 * @param paused the paused to set
+	 * @param paused
+	 *            the paused to set
 	 */
 	public void setPaused(boolean paused) {
 		this.paused = paused;
