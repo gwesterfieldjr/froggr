@@ -495,7 +495,25 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 	private void restartGame() {
 		// TODO Auto-generated method stub
-
+		// reset score and lives
+		score = 0;
+		victory = 0;
+		
+		// reset vehicles and platforms
+		vehicles.clear();
+		platforms.clear();
+		
+		// set flys to unconsumed
+		for (Fly f: flys) {
+			f.setConsumed(false);
+			f.setImage("res/sprites/lane/fly.png");
+		}
+		
+		// unpause game
+		setPaused(false);
+		
+		// spawn player
+		spawnPlayer(startingLives);
 	}
 
 	/**
