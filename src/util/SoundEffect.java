@@ -24,6 +24,11 @@ public class SoundEffect {
 	public static final File COLLISION = new File("res/sounds/sprite-collision.wav");
 	
 	/**
+	 * Sound for sprite splash
+	 */
+	public static final File SPLASH = new File("res/sounds/splash.wav");
+	
+	/**
 	 * Sound for victory
 	 */
 	public static final File VICTORY = new File("res/sounds/victory.wav");

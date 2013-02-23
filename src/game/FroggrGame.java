@@ -20,7 +20,8 @@ import sprites.MovingObject;
 import sprites.Platform;
 import sprites.Player;
 import sprites.Vehicle;
-import sprites.Win;
+import sprites.Fly;
+import util.SoundEffect;
 
 /**
  * 
@@ -32,7 +33,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private Player player;
 	private int startingLives = 3;
 	private Input input = new Input();
-	private int victory = 0;
+	public static int victory = 0;
 	private int score = 0;
 	private boolean paused;
 
@@ -42,7 +43,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private ArrayList<Lane> lanes = new ArrayList<Lane>();
 	private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
 	private ArrayList<Platform> platforms = new ArrayList<Platform>();
-	private ArrayList<Win> wins = new ArrayList<Win>();
+	private ArrayList<Fly> flys = new ArrayList<Fly>();
 
 	/**
 	 * Initial regeneration rates for water lanes
@@ -239,13 +240,11 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 	/**
 	 * Draws the win zone images on the canvas.
-	 * 
 	 * @param g
 	 */
 	private void processWinZones(Graphics g) {
-		for (int i = 0; i < wins.size(); i++) {
-			g.drawImage(wins.get(i).getImage(), wins.get(i).getXPos(), wins
-					.get(i).getYPos(), this);
+		for (int i = 0; i<flys.size(); i++) {
+			g.drawImage(flys.get(i).getImage(), flys.get(i).getXPos(), flys.get(i).getYPos(), this);
 		}
 	}
 
@@ -327,8 +326,10 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		 */
 		for (int i = 0; i < vehicles.size(); i++) {
 			if (player.hasCollidedWith(vehicles.get(i))) {
+				if (player.isAlive()){
+					SoundEffect.play(SoundEffect.COLLISION);
+				}
 				player.kill();
-				score = score - 50;
 				g.drawImage(player.getImage(), player.getXPos(),
 						player.getYPos(), this);
 				break;
@@ -353,30 +354,36 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 				// While sailing on the platform this checks if the player jumps
 				// off a platform into water
 				if (!player.isOnPlatform(platforms.get(currentPlatform))) {
+					if (player.isAlive()){
+						SoundEffect.play(SoundEffect.SPLASH);
+					}
 					player.kill();
-					score = score - 50;
+						
 				}
 			} else {
 				int check = 0;
 				for (int i = 0; i < wins.size(); i++) {
 					check++;
-					// Checks if the player has reached an accessible win zone.
-					// If not, he dies.
-					if (wins.get(i).hasCollidedWith(player)
-							&& wins.get(i).isConsumed() == false) {
-						wins.get(i).setImage(
-								"res/sprites/lane/fly-consumed.png");
-						wins.get(i).setConsumed(true);
+					// Checks if the player has reached an accessible win zone. If not, he dies.
+					if ( flys.get(i).hasCollidedWith(player) && flys.get(i).isConsumed() == false){
+						flys.get(i).setImage("res/sprites/lane/fly-consumed.png");
+						flys.get(i).setConsumed(true);
 						score = score + 100;
 						victory++;
+						SoundEffect.play(SoundEffect.VICTORY);
 						spawnPlayer(player.getLives());
 						check = 0;
-						break;
+						//break;
 					} else {
-						if (check == 4) {
-							player.kill();
-							score = score - 50;
-						}
+						if (check==4){
+							if (player.isAlive()){
+								if (player.getYPos() == 0){
+								SoundEffect.play(SoundEffect.COLLISION);
+								} else {
+								SoundEffect.play(SoundEffect.SPLASH);
+								}
+							} 
+						player.kill();
 					}
 				}
 			}

@@ -1,13 +1,12 @@
 package sprites;
 
-import game.FroggrGame;
 import game.Input;
 
-public class Win extends Sprite{
+public class Fly extends Sprite{
 
 	private boolean consumed;
 	
-	public Win(int xPos, int yPos) {
+	public Fly(int xPos, int yPos) {
 		super(xPos, yPos);
 		setImage("res/sprites/lane/fly.png");
 		this.consumed = false;
@@ -29,7 +28,7 @@ public class Win extends Sprite{
 		int buffer = 15;
 		int position = sprite.getXPos();
 
-		if ( ( Math.abs( getXPos() - position) <= buffer ) && getYPos() == 0 ){
+		if ( ( Math.abs( getXPos() - position) <= buffer ) && sprite.getYPos() == 0 ){
 			return true;
 		} else {
 			return false;

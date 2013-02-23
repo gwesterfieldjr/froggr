@@ -31,7 +31,7 @@ public class Player extends Sprite {
 
 	@Override
 	public void tick(Input input) {
-		if (isAlive()) {
+		if (isAlive() && FroggrGame.victory != 4) {
 			int horizontalMovementAmount = 25;
 			int verticalMovementAmount = 50;
 			if (input.buttons[Input.LEFT]) {
@@ -43,7 +43,7 @@ public class Player extends Sprite {
 				}
 			}
 			if (input.buttons[Input.RIGHT]) {
-				if (getXPos() + horizontalMovementAmount != FroggrGame.GAME_WIDTH) {
+				if (getXPos() + horizontalMovementAmount*2 != FroggrGame.GAME_WIDTH) {
 					setXPos(getXPos() + horizontalMovementAmount);
 					input.buttons[Input.RIGHT] = false;
 					setImage("res/sprites/player/player-right.gif");
@@ -110,7 +110,6 @@ public class Player extends Sprite {
 			if (getLives() == 1) {
 				setImage("res/sprites/player/player-death.gif");
 			}
-			SoundEffect.play(SoundEffect.COLLISION);
 			setLives(getLives() - 1);
 			setAlive(false);
 		}
