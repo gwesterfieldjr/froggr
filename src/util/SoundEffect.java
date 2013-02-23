@@ -33,6 +33,10 @@ public class SoundEffect {
 	 */
 	public static final File VICTORY = new File("res/sounds/victory.wav");
 	
+	/**
+	 * Plays the sound effect
+	 * @param fileName of sound
+	 */
 	public static void play(File fileName)
 	{
 	    try

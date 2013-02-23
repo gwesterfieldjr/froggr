@@ -3,7 +3,7 @@ package game;
 import java.awt.event.KeyEvent;
 
 /**
- * 
+ * This class keeps track of which keys the user is pressing from the keyboard
  * @author Raj Ramsaroop, Greg Westerfield, Jr.
  *
  */
@@ -16,6 +16,11 @@ public class Input {
 	public boolean[] buttons = new boolean[4];
 	public boolean[] oldButtons = new boolean[4];
 
+	/**
+	 * Keeps track of the keys being pressed
+	 * @param key
+	 * @param down
+	 */
 	public void set(int key, boolean down) {
 		int button = -1;
 		if (key == KeyEvent.VK_LEFT)

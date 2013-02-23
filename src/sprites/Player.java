@@ -9,7 +9,8 @@ import util.SoundEffect;
 
 /**
  * 
- * @author Raj
+ * @author Raj Ramsaroop
+ * 		   Greg Westerfield, Jr.
  * 
  */
 public class Player extends Sprite {
@@ -71,6 +72,7 @@ public class Player extends Sprite {
 	}
 
 	/**
+	 * Returns the number of lives the player has remaining.
 	 * @return the number of lives remaining
 	 */
 	public int getLives() {
@@ -78,6 +80,8 @@ public class Player extends Sprite {
 	}
 
 	/**
+	 * Sets the number of lives the player has remaining.
+	 * 
 	 * @param lives
 	 *            the number of lives player will have remaining
 	 */
@@ -86,6 +90,8 @@ public class Player extends Sprite {
 	}
 
 	/**
+	 * Returns whether or not the player is on a platform or not.
+	 * 
 	 * @return the isOnPlatform
 	 */
 	public boolean isOnPlatform(Platform platform) {
@@ -132,6 +138,7 @@ public class Player extends Sprite {
 	}
 
 	/**
+	 * Returns whether or not the player is alive.
 	 * @return the alive
 	 */
 	public boolean isAlive() {
@@ -139,6 +146,8 @@ public class Player extends Sprite {
 	}
 
 	/**
+	 * Sets whether or not the player is alive.
+	 * 
 	 * @param alive
 	 *            the alive to set
 	 */
