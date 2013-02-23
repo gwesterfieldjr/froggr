@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 import sprites.Lane;
 import sprites.MovingObject;
@@ -163,11 +164,11 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 * Creates the win zones.
 	 */
 	private void createWinZones() {
-		for (int i = 0; i< 4; i++){
-			wins.add(new Win(i*150, 0));
+		for (int i = 0; i < 4; i++) {
+			wins.add(new Win(i * 150, 0));
 		}
 	}
-	
+
 	/**
 	 * Initializes the ArrayList of lanes
 	 */
@@ -176,7 +177,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		for (int i = 0; i < NUMBER_OF_LANES; i++) {
 			lanes.add(new Lane(0, i * 50));
 		}
-		
+
 		// Add the image for each lane
 		lanes.get(LANE_WIN).setImage("res/sprites/lane/win.png");
 
@@ -234,14 +235,16 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 			g.drawImage(l.getImage(), l.getXPos(), l.getYPos(), this);
 		}
 	}
-	
+
 	/**
 	 * Draws the win zone images on the canvas.
+	 * 
 	 * @param g
 	 */
 	private void processWinZones(Graphics g) {
-		for (int i = 0; i<wins.size(); i++) {
-			g.drawImage(wins.get(i).getImage(), wins.get(i).getXPos(), wins.get(i).getYPos(), this);
+		for (int i = 0; i < wins.size(); i++) {
+			g.drawImage(wins.get(i).getImage(), wins.get(i).getXPos(), wins
+					.get(i).getYPos(), this);
 		}
 	}
 
@@ -317,7 +320,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private void processPlayer(Graphics g) {
 		player.tick(input);
 		g.drawImage(player.getImage(), player.getXPos(), player.getYPos(), this);
-		
+
 		/*
 		 * Check if player has collided with a vehicle
 		 */
@@ -345,38 +348,39 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 				}
 			}
 
-			if ( currentPlatform != -1 ){
-				// While sailing on the platform this checks if the player jumps off a platform into water
+			if (currentPlatform != -1) {
+				// While sailing on the platform this checks if the player jumps
+				// off a platform into water
 				if (!player.isOnPlatform(platforms.get(currentPlatform))) {
 					player.kill();
 					score = score - 50;
 				}
 			} else {
-				int check=0;
-				for (int i = 0; i<wins.size(); i++){
+				int check = 0;
+				for (int i = 0; i < wins.size(); i++) {
 					check++;
-					// Checks if the player has reached an accessible win zone. If not, he dies.
-					if ( wins.get(i).hasCollidedWith(player) && wins.get(i).isConsumed() == false){
-						wins.get(i).setImage("res/sprites/lane/fly-consumed.png");
+					// Checks if the player has reached an accessible win zone.
+					// If not, he dies.
+					if (wins.get(i).hasCollidedWith(player)
+							&& wins.get(i).isConsumed() == false) {
+						wins.get(i).setImage(
+								"res/sprites/lane/fly-consumed.png");
 						wins.get(i).setConsumed(true);
 						score = score + 100;
 						victory++;
 						spawnPlayer(player.getLives());
-						check=0;
+						check = 0;
 						break;
 					} else {
-						if (check==4){
-						player.kill();
-						score = score - 50;
+						if (check == 4) {
+							player.kill();
+							score = score - 50;
 						}
 					}
 				}
 			}
 		}
 
-		
-
-		
 	}
 
 	/**
@@ -386,20 +390,89 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		if (!player.isAlive() && player.getLives() > 0) {
 			spawnPlayer(player.getLives());
 		}
-		
+
 		// Checks if the game is over
 		if (player.getLives() == 0) {
-			g.drawString("GAME OVER", 225, GAME_HEIGHT - 25);			
+			g.drawString("GAME OVER", 225, GAME_HEIGHT - 25);
+			showLoseDialog();
 		}
-		
+
 		// Checks if the player wins the game.
-		if (victory == 4){
+		if (victory == 4) {
 			g.drawString("YOU WIN!", 225, GAME_HEIGHT - 25);
+			showWinDialog();
 		}
-		
+
 		// Keeps track of the score
 		g.drawString("SCORE: " + score, 425, GAME_HEIGHT - 25);
+
+	}
+	
+	private String[] createEndGameOptions() {
+		String[] options = { "Restart Game", "Back to Main Menu", "Quit Game" };
+		return options;
+	}
+
+	private void showWinDialog() {
+		// Custom button text
+		String[] options = createEndGameOptions();
+		int choice = JOptionPane.showOptionDialog(this,
+				"You just lost the game!", "Game Over",
+				JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+		runEndGameChoice(choice);
+	}
+
+	/**
+	 * This method is called when the player loses the game.
+	 */
+	private void showLoseDialog() {
+		// Custom button text
+		String[] options = createEndGameOptions();
+		int choice = JOptionPane.showOptionDialog(this,
+				"You just lost the game!"
+				+ "\nFinal Score: " + calculateFinalScore(), "Game Over",
+				JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+		runEndGameChoice(choice);
 		
+	}
+
+	/**
+	 * Calculates the final score when the game is over (win or lose)
+	 * @return
+	 */
+	private int calculateFinalScore() {
+		if (player.getLives() > 0) {
+			return score * player.getLives();
+		} else {
+			return score;
+		}
+	}
+
+	private void runEndGameChoice(int choice) {
+		if (choice == 0) {
+			restartGame();
+		} else if (choice == 1) {
+			showMainMenu();
+		} else if (choice == 2) {
+			quit();
+		}
+	}
+
+	private void quit() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void showMainMenu() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void restartGame() {
+		// TODO Auto-generated method stub
+
 	}
 
 	/**
@@ -452,7 +525,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 			}
 		}
 	}
-	
+
 	/**
 	 * Removes all sprite's from their corresponding lists.
 	 */
