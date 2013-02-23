@@ -165,8 +165,6 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private void createWinZones() {
 		for (int i = 0; i< 4; i++){
 			wins.add(new Win(i*150, 0));
-			wins.get(i).setImage("res/sprites/lane/fly.png");
-			wins.get(i).setConsumed(false);
 		}
 	}
 	

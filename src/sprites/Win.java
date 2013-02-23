@@ -15,9 +15,6 @@ public class Win extends Sprite{
 
 	@Override
 	public void tick(Input input) {
-		if (isConsumed()) {
-			setImage("res/sprites/lane/fly-consumed.png");
-		}
 	}
 
 	public boolean isConsumed() {
