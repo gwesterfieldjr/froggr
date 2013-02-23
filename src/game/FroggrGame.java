@@ -20,6 +20,7 @@ import sprites.Platform;
 import sprites.Player;
 import sprites.Vehicle;
 import sprites.Fly;
+import util.SoundEffect;
 
 /**
  * 
@@ -31,7 +32,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private Player player;
 	private int startingLives = 3;
 	private Input input = new Input();
-	private int victory = 0;
+	public static int victory = 0;
 	private int score = 0;
 
 	/**
@@ -323,6 +324,9 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		 */
 		for (int i = 0; i < vehicles.size(); i++) {
 			if (player.hasCollidedWith(vehicles.get(i))) {
+				if (player.isAlive()){
+				SoundEffect.play(SoundEffect.COLLISION);
+				}
 				player.kill();
 				g.drawImage(player.getImage(), player.getXPos(),
 						player.getYPos(), this);
@@ -347,7 +351,11 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 			if ( currentPlatform != -1 ){
 				// While sailing on the platform this checks if the player jumps off a platform into water
 				if (!player.isOnPlatform(platforms.get(currentPlatform))) {
+					if (player.isAlive()){
+						SoundEffect.play(SoundEffect.SPLASH);
+					}
 					player.kill();
+						
 				}
 			} else {
 				int check=0;
@@ -359,11 +367,19 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 						flys.get(i).setConsumed(true);
 						score = score + 100;
 						victory++;
+						SoundEffect.play(SoundEffect.VICTORY);
 						spawnPlayer(player.getLives());
 						check=0;
-						break;
+						//break;
 					} else {
 						if (check==4){
+							if (player.isAlive()){
+								if (player.getYPos() == 0){
+								SoundEffect.play(SoundEffect.COLLISION);
+								} else {
+								SoundEffect.play(SoundEffect.SPLASH);
+								}
+							} 
 						player.kill();
 						}
 					}

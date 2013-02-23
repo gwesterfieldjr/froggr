@@ -28,7 +28,7 @@ public class Fly extends Sprite{
 		int buffer = 15;
 		int position = sprite.getXPos();
 
-		if ( ( Math.abs( getXPos() - position) <= buffer ) && getYPos() == 0 ){
+		if ( ( Math.abs( getXPos() - position) <= buffer ) && sprite.getYPos() == 0 ){
 			return true;
 		} else {
 			return false;
