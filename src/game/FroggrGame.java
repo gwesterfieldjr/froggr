@@ -43,27 +43,27 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	/**
 	 * Initial regeneration rates for water lanes
 	 */
-	private final int FIRST_WATER_LANE_REGENERATION = 325;
-	private final int SECOND_WATER_LANE_REGENERATION = 225;
-	private final int THIRD_WATER_LANE_REGENERATION = 225;
-	private final int FOURTH_WATER_LANE_REGENERATION = 325;
-	private final int FIFTH_WATER_LANE_REGENERATION = 225;
+	private final static int FIRST_WATER_LANE_REGENERATION = 325;
+	private final static int SECOND_WATER_LANE_REGENERATION = 225;
+	private final static int THIRD_WATER_LANE_REGENERATION = 225;
+	private final static int FOURTH_WATER_LANE_REGENERATION = 325;
+	private final static int FIFTH_WATER_LANE_REGENERATION = 225;
 
 	/**
 	 * Initial regeneration rates for road lanes
 	 */
-	private final int FIRST_ROAD_LANE_REGENERATION = 175;
-	private final int SECOND_ROAD_LANE_REGENERATION = 225;
-	private final int THIRD_ROAD_LANE_REGENERATION = 350;
-	private final int FOURTH_ROAD_LANE_REGENERATION = 250;
+	private final static int FIRST_ROAD_LANE_REGENERATION = 175;
+	private final static int SECOND_ROAD_LANE_REGENERATION = 225;
+	private final static int THIRD_ROAD_LANE_REGENERATION = 350;
+	private final static int FOURTH_ROAD_LANE_REGENERATION = 250;
 	
 	/**
 	 * Win Zones
 	 */
-	private final int FIRST_WIN_ZONE = 0;
-	private final int SECOND_WIN_ZONE = 1;
-	private final int THIRD_WIN_ZONE = 2;
-	private final int FOURTH_WIN_ZONE = 3;
+	private final static int FIRST_WIN_ZONE = 0;
+	private final static int SECOND_WIN_ZONE = 1;
+	private final static int THIRD_WIN_ZONE = 2;
+	private final static int FOURTH_WIN_ZONE = 3;
 	
 
 	/**
