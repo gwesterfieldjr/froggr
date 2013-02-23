@@ -35,7 +35,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private Input input = new Input();
 	public static int victory = 0;
 	private int score = 0;
-	private boolean paused;
+	private static boolean paused = false;
 
 	/**
 	 * Lists of lanes, vehicles, wins, and platforms.
@@ -408,12 +408,14 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		// Checks if the game is over
 		if (player.getLives() == 0) {
 			g.drawString("GAME OVER", 225, GAME_HEIGHT - 25);
+			setPaused(true);
 			showLoseDialog();
 		}
 
 		// Checks if the player wins the game.
 		if (victory == 4) {
 			g.drawString("YOU WIN!", 225, GAME_HEIGHT - 25);
+			setPaused(true);
 			showWinDialog();
 		}
 
@@ -488,14 +490,12 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	}
 
 	private void showMainMenu() {
-		// TODO Pause the game, then show the main menu.
 		setPaused(true);
-
+		FroggrGameApplication.showTitleScreen();
 	}
 
 	private void restartGame() {
-		// TODO Auto-generated method stub
-		// reset score and lives
+		// reset score
 		score = 0;
 		victory = 0;
 		
@@ -712,7 +712,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	/**
 	 * @return the paused
 	 */
-	public boolean isPaused() {
+	public static boolean isPaused() {
 		return paused;
 	}
 
@@ -721,7 +721,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 *            the paused to set
 	 */
 	public void setPaused(boolean paused) {
-		this.paused = paused;
+		FroggrGame.paused = paused;
 	}
 
 }

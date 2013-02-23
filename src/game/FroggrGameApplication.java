@@ -60,7 +60,7 @@ public class FroggrGameApplication implements ActionListener {
 	private JButton btnBackToTitleScreen;
 
 	// Program Layout
-	private CardLayout programLayout;
+	private static CardLayout programLayout;
 
 	/**
 	 * The Constructor of the FroggrGameApplication Class
@@ -254,7 +254,7 @@ public class FroggrGameApplication implements ActionListener {
 	/**
 	 * Displays the title screen
 	 */
-	private void showTitleScreen() {
+	public static void showTitleScreen() {
 		programLayout.show(frame.getContentPane(), "Title Screen");
 	}
 

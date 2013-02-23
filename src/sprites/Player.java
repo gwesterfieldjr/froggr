@@ -31,7 +31,7 @@ public class Player extends Sprite {
 
 	@Override
 	public void tick(Input input) {
-		if (isAlive() && FroggrGame.victory != 4) {
+		if (isAlive() && FroggrGame.victory != 4 && !FroggrGame.isPaused()) {
 			int horizontalMovementAmount = 25;
 			int verticalMovementAmount = 50;
 			if (input.buttons[Input.LEFT]) {
