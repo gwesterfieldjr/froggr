@@ -407,19 +407,26 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		g.drawString("SCORE: " + score, 425, GAME_HEIGHT - 25);
 
 	}
-	
+
 	private String[] createEndGameOptions() {
 		String[] options = { "Restart Game", "Back to Main Menu", "Quit Game" };
 		return options;
 	}
 
+	/**
+	 * This is to be displayed if the player wins the game.
+	 */
 	private void showWinDialog() {
 		// Custom button text
 		String[] options = createEndGameOptions();
-		int choice = JOptionPane.showOptionDialog(this,
-				"You just lost the game!", "Game Over",
-				JOptionPane.YES_NO_CANCEL_OPTION,
-				JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+		int choice = JOptionPane
+				.showOptionDialog(
+						this,
+						"You won the game! You get an imaginary achievment that you can brag about to your friends!"
+								+ "\nFinal Score: " + calculateFinalScore(),
+						"You Win!", JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.INFORMATION_MESSAGE, null, options,
+						options[0]);
 		runEndGameChoice(choice);
 	}
 
@@ -430,16 +437,17 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		// Custom button text
 		String[] options = createEndGameOptions();
 		int choice = JOptionPane.showOptionDialog(this,
-				"You just lost the game!"
-				+ "\nFinal Score: " + calculateFinalScore(), "Game Over",
+				"You just lost the game!" + "\nFinal Score: "
+						+ calculateFinalScore(), "Game Over",
 				JOptionPane.YES_NO_CANCEL_OPTION,
 				JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 		runEndGameChoice(choice);
-		
+
 	}
 
 	/**
 	 * Calculates the final score when the game is over (win or lose)
+	 * 
 	 * @return
 	 */
 	private int calculateFinalScore() {
