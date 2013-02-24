@@ -3,8 +3,6 @@ package sprites;
 import game.FroggrGame;
 import game.Input;
 
-import java.util.Arrays;
-
 import util.SoundEffect;
 
 /**
@@ -32,7 +30,7 @@ public class Player extends Sprite {
 
 	@Override
 	public void tick(Input input) {
-		if (isAlive() && FroggrGame.flysConsumed != 4) {
+		if (isAlive() && !FroggrGame.isGameOver() && !FroggrGame.isGameWon()) {
 			int horizontalMovementAmount = 25;
 			int verticalMovementAmount = 50;
 			if (input.buttons[Input.LEFT]) {
