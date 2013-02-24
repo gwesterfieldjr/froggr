@@ -229,7 +229,6 @@ public class FroggrGameApplication implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnStartGame) {
 			startGame();
-			showGameScreen();
 		}
 		if (e.getSource() == btnInstructions) {
 			showInstructionsScreen();
@@ -276,6 +275,7 @@ public class FroggrGameApplication implements ActionListener {
 	 * Starts the game on the Game screen panel.
 	 */
 	private void startGame() {
+		showGameScreen();
 		game.start();
 	}
 	

@@ -27,6 +27,7 @@ public abstract class Sprite {
 	private int pixelUnitSize;
 	private Canvas canvas;
 	private boolean animated = false;
+	private int collisionBuffer;
 
 	public Sprite(int xPos, int yPos) {
 		this.xPos = xPos;
@@ -91,11 +92,9 @@ public abstract class Sprite {
 	 * @return true if collided, false otherwise
 	 */
 	public boolean hasCollidedWith(Sprite sprite) {
-		int buffer = 50;
 		int xMin = getXPos();
 		int xMax = getXPos() + calculatePixelWidth();
 		int yMin = getYPos();
-		int yMax = getYPos() + calculatePixelHeight();
 
 		if ( (xMax > sprite.getXPos() && xMin < sprite.getXPos() && yMin == sprite.getYPos() )
 				|| (xMax > sprite.getXPos() && xMin < (sprite.getXPos() + sprite.calculatePixelWidth() ) && yMin == sprite.getYPos()) ){

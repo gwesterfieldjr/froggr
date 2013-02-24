@@ -54,7 +54,16 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 * The users score
 	 */
 	private int score = 0;
-	private boolean paused = false;
+	
+	/**
+	 * If the game is in a paused state
+	 */
+	private boolean paused;
+	
+	/**
+	 * If the game has already been started (start method called)
+	 */
+	private boolean gameStarted;
 
 	/**
 	 * The nextPointsPosition keeps track of the next YPos the user must reach
@@ -193,6 +202,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		addKeyListener(this);
 		setForeground(FOREGROUND_COLOR);
 		setSize(GAME_WIDTH, GAME_HEIGHT);
+		setGameStarted(false);
 	}
 
 	/**
@@ -533,11 +543,12 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	}
 
 	private void showMainMenu() {
+		restartGame();
 		setPaused(true);
 		FroggrGameApplication.showTitleScreen();
 	}
 
-	private void restartGame() {
+	public void restartGame() {
 		// reset score
 		score = 0;
 		flysConsumed = 0;
@@ -732,6 +743,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 */
 	public void start() {
 		setPaused(false);
+		setGameStarted(true);
 		createLanes();
 		createWinZones();
 		spawnPlayer(startingLives);
@@ -765,6 +777,20 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 */
 	public void setPaused(boolean paused) {
 		this.paused = paused;
+	}
+
+	/**
+	 * @return the gameStarted
+	 */
+	public boolean isGameStarted() {
+		return gameStarted;
+	}
+
+	/**
+	 * @param gameStarted the gameStarted to set
+	 */
+	public void setGameStarted(boolean gameStarted) {
+		this.gameStarted = gameStarted;
 	}
 
 }
