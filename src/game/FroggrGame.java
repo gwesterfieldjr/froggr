@@ -14,7 +14,6 @@ import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
-
 import sprites.Lane;
 import sprites.MovingObject;
 import sprites.Platform;
@@ -551,7 +550,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		FroggrGameApplication.showTitleScreen();
 	}
 
-	public void restartGame() {
+	private void restartGame() {
 		// reset game over
 		gameOver = false;
 		gameWon = false;
@@ -576,15 +575,6 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 		// spawn player
 		spawnPlayer(startingLives);
-	}
-
-	/**
-	 * Resume the game from a paused state
-	 */
-	public void resumeGame() {
-		if (isPaused()) {
-			setPaused(false);
-		}
 	}
 
 	/**
