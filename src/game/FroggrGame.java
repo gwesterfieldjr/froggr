@@ -35,7 +35,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private Input input = new Input();
 	public static int victory = 0;
 	private int score = 0;
-	private static boolean paused = false;
+	private boolean paused = false;
 
 	/**
 	 * Lists of lanes, vehicles, wins, and platforms.
@@ -712,7 +712,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	/**
 	 * @return the paused
 	 */
-	public static boolean isPaused() {
+	public boolean isPaused() {
 		return paused;
 	}
 
@@ -721,7 +721,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 *            the paused to set
 	 */
 	public void setPaused(boolean paused) {
-		FroggrGame.paused = paused;
+		this.paused = paused;
 	}
 
 }
