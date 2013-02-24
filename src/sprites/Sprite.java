@@ -10,8 +10,9 @@ import javax.imageio.ImageIO;
 import game.Input;
 
 /**
- * 
- * @author Raj Ramsaroop Greg Westerfield, Jr.
+ * A Sprite is an object that needs to be tracked in the game.
+ * @author Raj Ramsaroop 
+ * 		   Greg Westerfield, Jr.
  * 
  */
 public abstract class Sprite {
@@ -34,26 +35,50 @@ public abstract class Sprite {
 		pixelUnitSize = 50;
 	}
 
+	/**
+	 * Returns the x position of the sprite.
+	 * @return
+	 */
 	public int getXPos() {
 		return xPos;
 	}
 
+	/**
+	 * Returns the y position of the sprite.
+	 * @return
+	 */
 	public int getYPos() {
 		return yPos;
 	}
 
+	/**
+	 * Sets the x position of the sprite.
+	 * @return
+	 */
 	public void setXPos(int x) {
 		this.xPos = x;
 	}
 
+	/**
+	 * Sets the y position of the sprite.
+	 * @return
+	 */
 	public void setYPos(int y) {
 		this.yPos = y;
 	}
 
+	/**
+	 * Checks if the sprite is removed
+	 * @return boolean removed
+	 */
 	public boolean isRemoved() {
 		return removed;
 	}
 
+	/**
+	 * Returns if the sprite is removed or not.
+	 * @return boolean
+	 */
 	public void remove() {
 		removed = true;
 	}
@@ -66,13 +91,13 @@ public abstract class Sprite {
 	 * @return true if collided, false otherwise
 	 */
 	public boolean hasCollidedWith(Sprite sprite) {
-		int buffer = 10;
+		int buffer = 50;
 		int xMin = getXPos();
 		int xMax = getXPos() + calculatePixelWidth();
 		int yMin = getYPos();
 		int yMax = getYPos() + calculatePixelHeight();
 
-		if ( (xMax > sprite.getXPos() && xMin < sprite.getXPos() + buffer && yMin == sprite.getYPos() )
+		if ( (xMax > sprite.getXPos() && xMin < sprite.getXPos() && yMin == sprite.getYPos() )
 				|| (xMax > sprite.getXPos() && xMin < (sprite.getXPos() + sprite.calculatePixelWidth() ) && yMin == sprite.getYPos()) ){
 			return true;
 		} else {
@@ -80,11 +105,15 @@ public abstract class Sprite {
 		}
 	}
 
-	/*
+	/**
 	 * Each sprite will change its state in every "tick"
 	 */
 	public abstract void tick(Input input);
 
+	/**
+	 * Sets the image of the sprite
+	 * @param imageLocation
+	 */
 	public void setImage(String imageLocation) {
 		try {
 			image = (BufferedImage) ImageIO.read(Sprite.class.getClassLoader()
@@ -95,6 +124,10 @@ public abstract class Sprite {
 		}
 	}
 
+	/**
+	 * Returns the image of the sprite
+	 * @return
+	 */
 	public Image getImage() {
 		return image;
 	}
@@ -129,18 +162,33 @@ public abstract class Sprite {
 		this.height = height;
 	}
 
+	/**
+	 * 
+	 * @return the pixel width of the sprite
+	 */
 	public int calculatePixelWidth() {
 		return length * pixelUnitSize;
 	}
 
+	/**
+	 * 
+	 * @return the pixel height of the sprite
+	 */
 	public int calculatePixelHeight() {
 		return height * pixelUnitSize;
 	}
 
+	/**
+	 * Set the pixel unit size of the sprite
+	 */
 	public void setPixelUnitSize(int pixelUnitSize) {
 		this.pixelUnitSize = pixelUnitSize;
 	}
 
+	/**
+	 * 
+	 * @return the pixel unit size of the sprite
+	 */
 	public int getPixelUnitSize() {
 		return pixelUnitSize;
 	}

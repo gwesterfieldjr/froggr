@@ -2,6 +2,12 @@ package sprites;
 
 import game.Input;
 
+/**
+ * A fly is the Froggr's lunch.
+ * @author Greg Westerfield, Jr.
+ * 		   Raj Ramsaroop
+ *
+ */
 public class Fly extends Sprite{
 
 	private boolean consumed;
@@ -16,14 +22,26 @@ public class Fly extends Sprite{
 	public void tick(Input input) {
 	}
 
+	/**
+	 * Returns whether or not the fly has been consumed by Froggr.
+	 * @return consumed
+	 */
 	public boolean isConsumed() {
 		return consumed;
 	}
 
+	/**
+	 * Sets whether or not the fly has been consumed by Froggr.
+	 * @return consumed
+	 */
 	public void setConsumed(boolean consumed) {
 		this.consumed = consumed;
 	}
 	
+	/**
+	 * Override of Sprite class. Checks if the player is within the plus or minus buffer. 
+	 * If so the method will return true;
+	 */
 	public boolean hasCollidedWith(Sprite sprite){
 		int buffer = 15;
 		int position = sprite.getXPos();

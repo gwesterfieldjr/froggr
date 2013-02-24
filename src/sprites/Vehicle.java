@@ -26,11 +26,18 @@ public class Vehicle extends MovingObject {
 		super(xPos, yPos, length, direction);
 	}
 
+	/**
+	 * Sets the vehicle type
+	 * @param vehicleType
+	 */
 	public void setVehicleType(int vehicleType) {
 		this.vehicleType = vehicleType;
 		setImageURLForVehicle();
 	}
 
+	/**
+	 * Sets the image URL
+	 */
 	private void setImageURLForVehicle() {
 		if (vehicleType == CAR) {
 			Random r = new Random();
@@ -42,6 +49,10 @@ public class Vehicle extends MovingObject {
 		}
 	}
 
+	/**
+	 * Returns the vehicle type
+	 * @return
+	 */
 	public int vehicleType() {
 		return this.vehicleType;
 	}
