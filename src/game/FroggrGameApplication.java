@@ -142,7 +142,7 @@ public class FroggrGameApplication implements ActionListener {
 				"     There are many different ways to lose a life in this game, including:\n\n " +
 				"        1) Being hit by a road vehicle.\n" +
 				"         2) Jumping into the river's water.\n" +
-				"         3) Staying on top of a diving turtle until it has completely submerged.\n" +
+				"         3) Staying on top of a platform as it goes of the screen.\n" +
 				"         4) Jumping into a home already occupied by a frog.\n" +
 				"         5) Jumping into the side of a frog home.\n\n" +
 				"     The only player controls are the arrow keys on the keyboard. The player must use\n" +
