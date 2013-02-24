@@ -779,7 +779,6 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 				"You just paused the game. What now?", "Paused",
 				JOptionPane.YES_NO_CANCEL_OPTION,
 				JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-		System.out.println(choice);
 		if (choice == 0 || choice == -1) {
 			setPaused(false);
 		} else {
