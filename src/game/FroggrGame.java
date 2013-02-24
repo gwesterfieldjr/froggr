@@ -720,6 +720,11 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		addVehiclesToLanes();
 		processLanes(g);
 		processWinZones(g);
+		
+		if (gameWon) {
+			showWinDialog();
+		}
+		
 		processPlatforms(g);
 		processPlayer(g);
 		processVehicles(g);
@@ -731,10 +736,9 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 		if (gameOver) {
 			showLoseDialog();
-		} else if (gameWon) {
-			showWinDialog();
-		}
-
+		} 
+		
+		
 		removeUnusedSpritesFromLists();
 
 		// game is too fast without this delay
