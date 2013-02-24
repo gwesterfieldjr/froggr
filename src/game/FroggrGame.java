@@ -54,16 +54,11 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 * The users score
 	 */
 	private int score = 0;
-	
+
 	/**
 	 * If the game is in a paused state
 	 */
 	private boolean paused;
-	
-	/**
-	 * If the game has already been started (start method called)
-	 */
-	private boolean gameStarted;
 
 	/**
 	 * The nextPointsPosition keeps track of the next YPos the user must reach
@@ -86,6 +81,10 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
 	private ArrayList<Platform> platforms = new ArrayList<Platform>();
 	private ArrayList<Fly> flys = new ArrayList<Fly>();
+
+	private static boolean gameOver = false;
+
+	private static boolean gameWon = false;
 
 	/**
 	 * Initial regeneration rates for water lanes
@@ -202,7 +201,14 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		addKeyListener(this);
 		setForeground(FOREGROUND_COLOR);
 		setSize(GAME_WIDTH, GAME_HEIGHT);
-		setGameStarted(false);
+	}
+	
+	public static boolean isGameOver() {
+		return gameOver;
+	}
+	
+	public static boolean isGameWon() {
+		return gameWon;
 	}
 
 	/**
@@ -406,7 +412,8 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 			}
 
 			if (currentPlatform != -1) {
-				// While sailing on the platform this checks if the player jumps off a platform into water
+				// While sailing on the platform this checks if the player jumps
+				// off a platform into water
 				if (!player.isOnPlatform(platforms.get(currentPlatform))
 						&& player.isAlive()) {
 					SoundEffect.play(SoundEffect.SPLASH);
@@ -416,7 +423,8 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 				int check = 0;
 				for (int i = 0; i < flys.size(); i++) {
 					check++;
-					// Checks if the player has reached an accessible win zone. If not, he dies.
+					// Checks if the player has reached an accessible win zone.
+					// If not, he dies.
 					if (flys.get(i).hasCollidedWith(player)
 							&& flys.get(i).isConsumed() == false) {
 						flys.get(i).setImage(
@@ -458,15 +466,13 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		// Checks if the game is over
 		if (player.getLives() == 0) {
 			g.drawString("GAME OVER", 225, GAME_HEIGHT - 25);
-			setPaused(true);
-			showLoseDialog();
+			gameOver = true;
 		}
 
 		// Checks if the player wins the game.
 		if (flysConsumed == 4) {
 			g.drawString("YOU WIN!", 225, GAME_HEIGHT - 25);
-			setPaused(true);
-			showWinDialog();
+			gameWon = true;
 		}
 
 		// Keeps track of the score
@@ -525,7 +531,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	}
 
 	private void runEndGameChoice(int choice) {
-		if (choice == 0) {
+		if (choice == 0 || choice == -1) {
 			restartGame();
 		} else if (choice == 1) {
 			showMainMenu();
@@ -546,9 +552,14 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	}
 
 	public void restartGame() {
+		// reset game over
+		gameOver = false;
+		gameWon = false;
+
 		// reset score
 		score = 0;
 		flysConsumed = 0;
+		nextPointsPosition = 600;
 
 		// reset vehicles and platforms
 		vehicles.clear();
@@ -628,9 +639,10 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	}
 
 	/**
-	 * Removes all sprite's from their corresponding lists.
+	 * Removes all sprite's from their corresponding lists that aren't being
+	 * used
 	 */
-	private void removeSpritesFromLists() {
+	private void removeUnusedSpritesFromLists() {
 		Iterator<Vehicle> vehicleIterator = vehicles.iterator();
 		while (vehicleIterator.hasNext()) {
 			Vehicle v = vehicleIterator.next();
@@ -717,7 +729,13 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		g.dispose();
 		bs.show();
 
-		removeSpritesFromLists();
+		if (gameOver) {
+			showLoseDialog();
+		} else if (gameWon) {
+			showWinDialog();
+		}
+
+		removeUnusedSpritesFromLists();
 
 		// game is too fast without this delay
 		try {
@@ -740,10 +758,9 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 */
 	public void start() {
 		setPaused(false);
-		setGameStarted(true);
 		createLanes();
 		createWinZones();
-		spawnPlayer(startingLives);
+		restartGame();
 		new Thread(this).start();
 	}
 
@@ -759,6 +776,25 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		input.set(e.getKeyCode(), true);
+		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			showPauseMenu();
+		}
+	}
+
+	private void showPauseMenu() {
+		setPaused(true);
+		// Custom button text
+		String[] options = { "Resume Game", "Quit Game" };
+		int choice = JOptionPane.showOptionDialog(this,
+				"You just paused the game. What now?", "Paused",
+				JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+		System.out.println(choice);
+		if (choice == 0 || choice == -1) {
+			setPaused(false);
+		} else {
+			quit();
+		}
 	}
 
 	/**
@@ -774,20 +810,6 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	 */
 	public void setPaused(boolean paused) {
 		this.paused = paused;
-	}
-
-	/**
-	 * @return the gameStarted
-	 */
-	public boolean isGameStarted() {
-		return gameStarted;
-	}
-
-	/**
-	 * @param gameStarted the gameStarted to set
-	 */
-	public void setGameStarted(boolean gameStarted) {
-		this.gameStarted = gameStarted;
 	}
 
 }
