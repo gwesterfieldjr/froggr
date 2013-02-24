@@ -398,8 +398,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		if (player.getYPos() < lanes.get(LANE_WATER_FIRST + 1).getYPos()) {
 			int currentPlatform = -1;
 			for (int i = 0; i < platforms.size(); i++) {
-				// Checks if player lands on platform, if so he will sail on
-				// it.
+				// Checks if player lands on platform, if so he will sail on it.
 				if (player.hasCollidedWith(platforms.get(i))) {
 					player.sail(input, platforms.get(i));
 					currentPlatform = i;
@@ -425,14 +424,12 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 						flys.get(i).setConsumed(true);
 						// add bonus points to player score for consuming a fly.
 						score = score + CONSUME_FLY_BONUS;
-						// reset the position at which the frog can gain more
-						// points
+						// reset the position at which the frog can gain more points
 						nextPointsPosition = 600;
 						flysConsumed++;
 						SoundEffect.play(SoundEffect.VICTORY);
 						spawnPlayer(player.getLives());
 						check = 0;
-						// break;
 					} else {
 						if (check == 4) {
 							if (player.isAlive()) {
