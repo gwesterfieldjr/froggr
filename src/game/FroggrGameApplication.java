@@ -145,12 +145,15 @@ public class FroggrGameApplication implements ActionListener {
 				"         3) Staying on top of a platform as it goes of the screen.\n" +
 				"         4) Jumping into a home already occupied by a frog.\n" +
 				"         5) Jumping into the side of a frog home.\n\n" +
-				"     The only player controls are the arrow keys on the keyboard. The player must use\n" +
-				" them to navigate the frog through oncoming traffic and moving logs, turtles, and lilies.");
+				"   LEFT ARROW  ::  Move left\n" +
+				"   RIGHT ARROM  :: Move Right\n" +
+				"   UP ARROW  ::  Move forward\n" +
+				"   DOWN ARROW  ::  Move backward\n" +
+				"   ESC  ::  Pause the game");
 		txtAreaInstructions.setFont(new Font("Arial", Font.BOLD, 12));
 		txtAreaInstructions.setBackground(Color.BLACK);
 		txtAreaInstructions.setForeground(Color.WHITE);
-		txtAreaInstructions.setBounds(0, 85, 500, 335);
+		txtAreaInstructions.setBounds(0, 85, 500, 375);
 		
 		// Set Arrow Keys Graphic
 		lblArrowKeysGraphic = new JLabel(new ImageIcon("res/images/arrowkeys.png"));
