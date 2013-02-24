@@ -85,6 +85,7 @@ public abstract class Sprite {
 
 	/**
 	 * Checks if another sprite has collided with this sprite
+	 * Will override as needed
 	 * 
 	 * @param sprite
 	 *            the other sprite to check against

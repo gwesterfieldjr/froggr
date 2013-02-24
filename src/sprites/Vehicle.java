@@ -57,4 +57,22 @@ public class Vehicle extends MovingObject {
 		return this.vehicleType;
 	}
 	
+	/**
+	 * Returns whether or not the vehicle has collided with the player.
+	 */
+	@Override
+	public boolean hasCollidedWith(Sprite sprite) {
+		int buffer = 10;
+		int xMin = getXPos();
+		int xMax = getXPos() + calculatePixelWidth();
+		int yMin = getYPos();
+
+		if ( (xMax > sprite.getXPos() + buffer && xMin < sprite.getXPos() && yMin == sprite.getYPos() )
+				|| (xMax > (sprite.getXPos() + sprite.calculatePixelWidth()) && xMin < (sprite.getXPos() + sprite.calculatePixelWidth() - buffer ) && yMin == sprite.getYPos()) ){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 }

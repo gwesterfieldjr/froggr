@@ -54,6 +54,10 @@ public class Platform extends MovingObject {
 		}
 	}
 	
+	/**
+	 * Returns whether or not the platform has collided with the player
+	 */
+	@Override
 	public boolean hasCollidedWith(Sprite sprite) {
 		int xMin = getXPos();
 		int xMax = getXPos() + calculatePixelWidth();

@@ -381,7 +381,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		 * Check if player has collided with a vehicle
 		 */
 		for (int i = 0; i < vehicles.size(); i++) {
-			if (player.hasCollidedWith(vehicles.get(i))) {
+			if (vehicles.get(i).hasCollidedWith(player)) {
 				if (player.isAlive()) {
 					SoundEffect.play(SoundEffect.COLLISION);
 					player.kill();
@@ -400,7 +400,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 			for (int i = 0; i < platforms.size(); i++) {
 				// Checks if player lands on platform, if so he will sail on
 				// it.
-				if (player.hasCollidedWith(platforms.get(i))) {
+				if (platforms.get(i).hasCollidedWith(player)) {
 					player.sail(input, platforms.get(i));
 					currentPlatform = i;
 				}
