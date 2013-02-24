@@ -42,6 +42,7 @@ public class Fly extends Sprite{
 	 * Override of Sprite class. Checks if the player is within the plus or minus buffer. 
 	 * If so the method will return true;
 	 */
+	@Override 
 	public boolean hasCollidedWith(Sprite sprite){
 		int buffer = 15;
 		int position = sprite.getXPos();

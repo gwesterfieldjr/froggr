@@ -85,23 +85,14 @@ public abstract class Sprite {
 
 	/**
 	 * Checks if another sprite has collided with this sprite
+	 * Will override as needed
 	 * 
 	 * @param sprite
 	 *            the other sprite to check against
 	 * @return true if collided, false otherwise
 	 */
 	public boolean hasCollidedWith(Sprite sprite) {
-		int buffer = 10;
-		int xMin = getXPos();
-		int xMax = getXPos() + calculatePixelWidth();
-		int yMin = getYPos();
-
-		if ( (xMax > sprite.getXPos() + buffer && xMin < sprite.getXPos() && yMin == sprite.getYPos() )
-				|| (xMax > (sprite.getXPos() + sprite.calculatePixelWidth()) && xMin < (sprite.getXPos() + sprite.calculatePixelWidth() - buffer ) && yMin == sprite.getYPos()) ){
-			return true;
-		} else {
-			return false;
-		}
+		return false;
 	}
 
 	/**

@@ -53,5 +53,22 @@ public class Platform extends MovingObject {
 					+ getLength() + ".gif");
 		}
 	}
+	
+	/**
+	 * Returns whether or not the platform has collided with the player
+	 */
+	@Override
+	public boolean hasCollidedWith(Sprite sprite) {
+		int xMin = getXPos();
+		int xMax = getXPos() + calculatePixelWidth();
+		int yMin = getYPos();
+
+		if ( (xMax > sprite.getXPos() && xMin < sprite.getXPos() && yMin == sprite.getYPos() )
+				|| (xMax > sprite.getXPos() && xMin < (sprite.getXPos() + sprite.calculatePixelWidth() ) && yMin == sprite.getYPos()) ){
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 }
