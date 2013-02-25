@@ -18,6 +18,7 @@ import sprites.Lane;
 import sprites.MovingObject;
 import sprites.Platform;
 import sprites.Player;
+import sprites.Sprite;
 import sprites.Vehicle;
 import sprites.Fly;
 import util.SoundEffect;
@@ -201,11 +202,11 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		setForeground(FOREGROUND_COLOR);
 		setSize(GAME_WIDTH, GAME_HEIGHT);
 	}
-	
+
 	public static boolean isGameOver() {
 		return gameOver;
 	}
-	
+
 	public static boolean isGameWon() {
 		return gameWon;
 	}
@@ -431,7 +432,8 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 						flys.get(i).setConsumed(true);
 						// add bonus points to player score for consuming a fly.
 						score = score + CONSUME_FLY_BONUS;
-						// reset the position at which the frog can gain more points
+						// reset the position at which the frog can gain more
+						// points
 						nextPointsPosition = 600;
 						flysConsumed++;
 						SoundEffect.play(SoundEffect.VICTORY);
@@ -587,8 +589,8 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 	private void processPlayerLives(Graphics g) {
 		BufferedImage playerImage = null;
 		try {
-			playerImage = ImageIO.read(new File(
-					"res/sprites/player/player-idle.gif"));
+			playerImage = ImageIO.read(Sprite.class.getClassLoader()
+					.getResource("res/sprites/player/player-idle.gif"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -724,8 +726,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 		} else if (gameWon) {
 			showWinDialog();
 		}
-		
-		
+
 		removeUnusedSpritesFromLists();
 
 		// game is too fast without this delay
