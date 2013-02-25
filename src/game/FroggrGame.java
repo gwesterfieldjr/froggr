@@ -697,7 +697,7 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 
 		Graphics g = bs.getDrawGraphics();
 		g.fillRect(0, 0, getWidth(), getHeight());
-		g.setColor(Color.RED);
+		g.setColor(Color.GREEN);
 
 		/*
 		 * Show the sprite's here. Make sure the method to add vehicles and
