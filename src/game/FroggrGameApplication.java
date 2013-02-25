@@ -80,6 +80,7 @@ public class FroggrGameApplication implements ActionListener {
 		frame.add(pnlGameScreen, "Game Screen");
 		frame.add(pnlInstructionsScreen, "Instruction's Screen");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 
@@ -123,9 +124,9 @@ public class FroggrGameApplication implements ActionListener {
 		pnlInstructionsScreen.setBackground(BACKGROUND_COLOR);
 
 		// Set Instructions Header label
-		lblInstructionsHeader = new JLabel("INSTRUCTIONS", JLabel.CENTER);
+		lblInstructionsHeader = new JLabel("Instructions", JLabel.CENTER);
 		lblInstructionsHeader.setFont(new Font("Arial", Font.BOLD, 50));
-		lblInstructionsHeader.setForeground(Color.RED);
+		lblInstructionsHeader.setForeground(Color.GREEN);
 		lblInstructionsHeader.setBounds(0, 25, 500, 50);
 		
 		// Set Instructions label
