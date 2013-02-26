@@ -25,6 +25,8 @@ import util.SoundEffect;
 
 /**
  * This is a demo for a clone of the classic game "Frogger".
+ * This is the main game class that processes the graphics, sound
+ * and logic.
  * 
  * @author Raj Ramsaroop, Greg Westerfield, Jr.
  * @version 0.1

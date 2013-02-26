@@ -23,47 +23,83 @@ import sprites.Player;
 import sprites.Sprite;
 
 /**
+ * This is the application class that displays the initial menu
+ * when the game is first loaded.
  * 
- * @author Raj Ramsaroop Greg Westerfield, Jr.
+ * @author Raj Ramsaroop, Greg Westerfield, Jr.
+ * @version 0.1
  * 
  */
 public class FroggrGameApplication implements ActionListener {
 
-	// Froggr game driver class
+	/**
+	 * The game class.
+	 */
 	private FroggrGame game;
 
-	// Frame
+	/**
+	 * The JFrame that contains the game Canvas.
+	 */
 	private static JFrame frame;
 
-	// Application Panels
-	public static final JPanel pnlTitleScreen = new JPanel();
-	public static final JPanel pnlGameScreen = new JPanel();
-	public static final JPanel pnlInstructionsScreen = new JPanel();
+	/**
+	 * The title screen panel.
+	 */
+	private JPanel pnlTitleScreen = new JPanel();
+	
+	/**
+	 * The game screen panel (holds the Canvas)
+	 */
+	private JPanel pnlGameScreen = new JPanel();
+	
+	/**
+	 * The instructions screen panel.
+	 */
+	private JPanel pnlInstructionsScreen = new JPanel();
 
-	// Panel Background Color
-	public static final Color BACKGROUND_COLOR = Color.BLACK;
+	/**
+	 * Panel background color.
+	 */
+	private Color backgroundColor = Color.BLACK;
 
-	// Title Screen Buttons
+	/**
+	 * Title screen buttons
+	 */
 	private JButton btnStartGame, btnInstructions, btnCredits;
 
-	// Label graphics
+	/**
+	 * Title screen graphic label.
+	 */
 	private JLabel lblTitleScreenGraphic;
+	
+	/**
+	 * Arrow keys on instructions screen graphic label.
+	 */
 	private JLabel lblArrowKeysGraphic;
 
-	// Instructions Screen Header
+	/**
+	 * Instructions screen header.
+	 */
 	private JLabel lblInstructionsHeader;
 
-	// Instructions Screen TextArea
+	/**
+	 * Instructions Screen TextArea.
+	 */
 	private JTextArea txtAreaInstructions;
 
-	// Instructions Screen Buttons
+	/**
+	 * Instructions Screen Buttons.
+	 */
 	private JButton btnBackToTitleScreen;
 
-	// Program Layout
+	/**
+	 * JFrame layout.
+	 */
 	private static CardLayout programLayout;
 
 	/**
-	 * The Constructor of the FroggrGameApplication Class
+	 * The Constructor of the FroggrGameApplication Class.
+	 * Creates the GUI elements and shows the JFrame.
 	 */
 	public FroggrGameApplication() {
 		frame = new JFrame();
@@ -107,7 +143,7 @@ public class FroggrGameApplication implements ActionListener {
 		pnlGameScreen.setLayout(null);
 		pnlGameScreen.setPreferredSize(new Dimension(FroggrGame.GAME_WIDTH + 9,
 				FroggrGame.GAME_HEIGHT + 30));
-		pnlGameScreen.setBackground(BACKGROUND_COLOR);
+		pnlGameScreen.setBackground(backgroundColor);
 
 		// Initialize the Froggr Game Driver Class
 		game = new FroggrGame();
@@ -124,7 +160,7 @@ public class FroggrGameApplication implements ActionListener {
 		pnlInstructionsScreen.setLayout(null);
 		pnlInstructionsScreen.setPreferredSize(new Dimension(
 				FroggrGame.GAME_WIDTH + 9, FroggrGame.GAME_HEIGHT + 30));
-		pnlInstructionsScreen.setBackground(BACKGROUND_COLOR);
+		pnlInstructionsScreen.setBackground(backgroundColor);
 
 		// Set Instructions Header label
 		lblInstructionsHeader = new JLabel("Instructions", JLabel.CENTER);
@@ -192,7 +228,7 @@ public class FroggrGameApplication implements ActionListener {
 		pnlTitleScreen.setLayout(null);
 		pnlTitleScreen.setPreferredSize(new Dimension(
 				FroggrGame.GAME_WIDTH + 9, FroggrGame.GAME_HEIGHT + 30));
-		pnlTitleScreen.setBackground(BACKGROUND_COLOR);
+		pnlTitleScreen.setBackground(backgroundColor);
 
 		// Set Title Screen Graphic
 		try {
