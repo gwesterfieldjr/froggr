@@ -121,7 +121,7 @@ public class FroggrGameApplication implements ActionListener {
 	}
 
 	/**
-	 * Set the Frame Icon to Froggr
+	 * Set up the Frame Icon image.
 	 */
 	private void setFrameIcon() {
 		try {
@@ -313,9 +313,6 @@ public class FroggrGameApplication implements ActionListener {
 
 	}
 
-	/*
-	 * This sections contains the methods for the ActionListener.
-	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnStartGame) {
@@ -345,21 +342,21 @@ public class FroggrGameApplication implements ActionListener {
 	}
 
 	/**
-	 * Displays the title screen
+	 * Displays the title screen.
 	 */
 	public static void showTitleScreen() {
 		programLayout.show(frame.getContentPane(), "Title Screen");
 	}
 
 	/**
-	 * Displays the Instructions Screen
+	 * Displays the Instructions Screen.
 	 */
 	private void showInstructionsScreen() {
 		programLayout.show(frame.getContentPane(), "Instruction's Screen");
 	}
 
 	/**
-	 * Displays the Game screen
+	 * Displays the Game screen.
 	 */
 	private void showGameScreen() {
 		programLayout.show(frame.getContentPane(), "Game Screen");
@@ -373,11 +370,13 @@ public class FroggrGameApplication implements ActionListener {
 		game.start();
 	}
 
+	/**
+	 * Closes the game Frame.
+	 */
 	public static void quitGame() {
 		frame.dispose();
 	}
 
-	// MAIN
 	public static void main(String[] args) {
 		new FroggrGameApplication();
 	}

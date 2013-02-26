@@ -13,21 +13,35 @@ import util.SoundEffect;
  */
 public class Player extends Sprite {
 
+	/**
+	 * The current number of lives.
+	 */
 	private int lives;
+	
+	/**
+	 * Whether the player is alive or not.
+	 */
 	private boolean alive;
 
+	/**
+	 * Consutructs a new Player sprite at the specified location with
+	 * a certain amount of lives.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param lives The number of lives to start with.
+	 */
 	public Player(int x, int y, int lives) {
 		super(x, y);
 		this.lives = lives;
-
 		setImage("res/sprites/player/player-idle.gif");
-
 		this.setAlive(true);
-
 		setLength(1);
 		setHeight(1);
 	}
 
+	/**
+	 * Processes the movement and actions of the player.
+	 */
 	@Override
 	public void tick(Input input) {
 		if (isAlive() && !FroggrGame.isGameOver() && !FroggrGame.isGameWon()) {
@@ -71,7 +85,7 @@ public class Player extends Sprite {
 
 	/**
 	 * Returns the number of lives the player has remaining.
-	 * @return the number of lives remaining
+	 * @return The number of lives remaining.
 	 */
 	public int getLives() {
 		return lives;
@@ -81,7 +95,7 @@ public class Player extends Sprite {
 	 * Sets the number of lives the player has remaining.
 	 * 
 	 * @param lives
-	 *            the number of lives player will have remaining
+	 *            The number of lives player will have remaining.
 	 */
 	public void setLives(int lives) {
 		this.lives = lives;
@@ -90,7 +104,8 @@ public class Player extends Sprite {
 	/**
 	 * Returns whether or not the player is on a platform or not.
 	 * 
-	 * @return the isOnPlatform
+	 * @param The Platform to check against.
+	 * @return True if the player is on the platform.
 	 */
 	public boolean isOnPlatform(Platform platform) {
 		int buffer = 25; // Half of the player.
@@ -101,12 +116,10 @@ public class Player extends Sprite {
 		} else {
 			return false;
 		}
-
-		// return isOnPlatform;
 	}
 
 	/**
-	 * Kills the player
+	 * Kill the Player. *evil laugh*
 	 */
 	public void kill() {
 		if (isAlive()) {
@@ -122,8 +135,8 @@ public class Player extends Sprite {
 	/**
 	 * Sails the frog on whichever platform he jumps on.
 	 * 
-	 * @param input
-	 * @param platform
+	 * @param input The Player input.
+	 * @param platform The Platform to sail on.
 	 */
 	public void sail(Input input, Platform platform) {
 		if (platform.getDirection() == MovingObject.DIRECTION_LEFT) {
@@ -139,7 +152,7 @@ public class Player extends Sprite {
 
 	/**
 	 * Returns whether or not the player is alive.
-	 * @return the alive
+	 * @return True if the player is alive.
 	 */
 	public boolean isAlive() {
 		return alive;
@@ -149,7 +162,7 @@ public class Player extends Sprite {
 	 * Sets whether or not the player is alive.
 	 * 
 	 * @param alive
-	 *            the alive to set
+	 *            Set to true to make Player in alive state.
 	 */
 	public void setAlive(boolean alive) {
 		this.alive = alive;

@@ -10,34 +10,81 @@ import javax.imageio.ImageIO;
 import game.Input;
 
 /**
- * A Sprite is an object that needs to be tracked in the game.
+ * A Sprite is an object that needs to be tracked in the game. Sprites
+ * are drawn on a Canvas and usually have an image associated with them.
  * @author Raj Ramsaroop 
  * 		   Greg Westerfield, Jr.
  * 
  */
 public abstract class Sprite {
 
+	/**
+	 * The x coordinate.
+	 */
 	private int xPos;
+	
+	/**
+	 * The y coordinate.
+	 */
 	private int yPos;
+	
+	/**
+	 * Whether the Sprite is removed from the Canvas.
+	 */
 	private boolean removed;
+	
+	/**
+	 * The Sprite's image.
+	 */
 	private Image image;
+	
+	/**
+	 * Relative location of the image file.
+	 */
 	private String imageLocation;
+	
+	/**
+	 * Unit length of the Sprite.
+	 */
 	private int length;
+	
+	/**
+	 * Unit height of the Sprite.
+	 */
 	private int height;
+	
+	/**
+	 * Used to convert length and width dimensions between 
+	 * pixels and unit dimensions.
+	 */
 	private int pixelUnitSize;
+	
+	/**
+	 * The Canvas the Sprite is drawn on.
+	 */
 	private Canvas canvas;
+	
+	/**
+	 * Whether the Sprite is animated or not.
+	 */
 	private boolean animated = false;
 
+	/**
+	 * Constructs a Sprite and the specified coordinates.
+	 * @param xPos The x coordinate.
+	 * @param yPos The y coordinate.
+	 */
 	public Sprite(int xPos, int yPos) {
 		this.xPos = xPos;
 		this.yPos = yPos;
 		removed = false;
+		// Default pixel size for one unit.
 		pixelUnitSize = 50;
 	}
 
 	/**
 	 * Returns the x position of the sprite.
-	 * @return
+	 * @return The x coordinate.
 	 */
 	public int getXPos() {
 		return xPos;
@@ -45,7 +92,7 @@ public abstract class Sprite {
 
 	/**
 	 * Returns the y position of the sprite.
-	 * @return
+	 * @return The y coordinate.
 	 */
 	public int getYPos() {
 		return yPos;
@@ -53,7 +100,7 @@ public abstract class Sprite {
 
 	/**
 	 * Sets the x position of the sprite.
-	 * @return
+	 * @return The x coordinate to set.
 	 */
 	public void setXPos(int x) {
 		this.xPos = x;
@@ -61,23 +108,22 @@ public abstract class Sprite {
 
 	/**
 	 * Sets the y position of the sprite.
-	 * @return
+	 * @return The y coordinate to set.
 	 */
 	public void setYPos(int y) {
 		this.yPos = y;
 	}
 
 	/**
-	 * Checks if the sprite is removed
-	 * @return boolean removed
+	 * Checks if the sprite is removed.
+	 * @return boolean True if the removed.
 	 */
 	public boolean isRemoved() {
 		return removed;
 	}
 
 	/**
-	 * Returns if the sprite is removed or not.
-	 * @return boolean
+	 * Removes the Sprite.
 	 */
 	public void remove() {
 		removed = true;
@@ -85,24 +131,25 @@ public abstract class Sprite {
 
 	/**
 	 * Checks if another sprite has collided with this sprite
-	 * Will override as needed
+	 * Will override as needed.
 	 * 
 	 * @param sprite
-	 *            the other sprite to check against
-	 * @return true if collided, false otherwise
+	 *            The other sprite to check against
+	 * @return True if collided.
 	 */
 	public boolean hasCollidedWith(Sprite sprite) {
 		return false;
 	}
 
 	/**
-	 * Each sprite will change its state in every "tick"
+	 * Each Sprite changes its state in every "tick".
+	 * @param input The input from the Player.
 	 */
 	public abstract void tick(Input input);
 
 	/**
-	 * Sets the image of the sprite
-	 * @param imageLocation
+	 * Sets the image of the sprite.
+	 * @param imageLocation The relative location of the image.
 	 */
 	public void setImage(String imageLocation) {
 		try {
@@ -115,106 +162,115 @@ public abstract class Sprite {
 	}
 
 	/**
-	 * Returns the image of the sprite
-	 * @return
+	 * Returns the image of the sprite.
+	 * @return The Image object.
 	 */
 	public Image getImage() {
 		return image;
 	}
 
 	/**
-	 * @return the length
+	 * Returns the unit length of the Sprite.
+	 * @return The length.
 	 */
 	public int getLength() {
 		return length;
 	}
 
 	/**
+	 * Sets the unit length of the Sprite.
 	 * @param length
-	 *            the length to set
+	 *            The unit length to set.
 	 */
 	public void setLength(int length) {
 		this.length = length;
 	}
 
 	/**
-	 * @return the height
+	 * The unit height.
+	 * @return The unit height.
 	 */
 	public int getHeight() {
 		return height;
 	}
 
 	/**
+	 * Sets the unit height of the Sprite.
 	 * @param height
-	 *            the height to set
+	 *            The height to set.
 	 */
 	public void setHeight(int height) {
 		this.height = height;
 	}
 
 	/**
-	 * 
-	 * @return the pixel width of the sprite
+	 * Calculates the width of the Sprite in pixels.
+	 * @return The pixel width of the sprite.
 	 */
 	public int calculatePixelWidth() {
 		return length * pixelUnitSize;
 	}
 
 	/**
-	 * 
-	 * @return the pixel height of the sprite
+	 * Calculates and returns the height of the Sprite in pixels.
+	 * @return The pixel height of the sprite.
 	 */
 	public int calculatePixelHeight() {
 		return height * pixelUnitSize;
 	}
 
 	/**
-	 * Set the pixel unit size of the sprite
+	 * Set the pixel unit size of the sprite.
 	 */
 	public void setPixelUnitSize(int pixelUnitSize) {
 		this.pixelUnitSize = pixelUnitSize;
 	}
 
 	/**
-	 * 
-	 * @return the pixel unit size of the sprite
+	 * Pixel unit size of the Sprite.
+	 * @return The pixel unit size of the sprite.
 	 */
 	public int getPixelUnitSize() {
 		return pixelUnitSize;
 	}
 
 	/**
-	 * @return the canvas
+	 * The Canvas the Graphics are being drawn on.
+	 * @return The Canvas.
 	 */
 	public Canvas getCanvas() {
 		return canvas;
 	}
 
 	/**
+	 * Set the Canvas for the Graphics to be drawn on.
 	 * @param canvas
-	 *            the canvas to set
+	 *            The Canvas object.
 	 */
 	public void setCanvas(Canvas canvas) {
 		this.canvas = canvas;
 	}
 
 	/**
-	 * @return the imageLocation
+	 * The relative location of the image file.
+	 * @return The image location.
 	 */
 	public String getImageLocation() {
 		return imageLocation;
 	}
 
 	/**
-	 * @return the animated
+	 * Returns whether the sprite is animated or not.
+	 * @return true if animated.
 	 */
 	public boolean isAnimated() {
 		return animated;
 	}
 
 	/**
+	 * Set this sprite to be animated or not.
 	 * @param animated
-	 *            the animated to set
+	 *            True for animated.
 	 */
 	public void setAnimated(boolean animated) {
 		this.animated = animated;

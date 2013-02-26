@@ -4,8 +4,8 @@ import game.Input;
 
 /**
  * 
- * This is the moving object class for the FroggrGame class. This class separates sprite's that move from those
- * that do not.
+ * This is the moving object class for the FroggrGame class. This class 
+ * separates sprite's that move from those that do not.
  * 
  * @author Raj Ramsaroop
  * 		   Greg Westerfield, Jr.
@@ -13,11 +13,29 @@ import game.Input;
  */
 public class MovingObject extends Sprite {
 	
+	/**
+	 * The direction the Sprite moves in.
+	 */
 	private int direction;
 
+	/**
+	 * Value for moving left.
+	 */
 	public static final int DIRECTION_LEFT = 0;
+	
+	/**
+	 * Value for moving right.
+	 */
 	public static final int DIRECTION_RIGHT = 1;
 
+	/**
+	 * Default constructor creates a new Sprite and sets the length, direction
+	 * and height.
+	 * @param xPos The x coordinate.
+	 * @param yPos The y coordinate.
+	 * @param length The length of the Sprite.
+	 * @param direction The direction of the Sprite.
+	 */
 	public MovingObject(int xPos, int yPos, int length, int direction) {
 		super(xPos, yPos);
 		setLength(length);
@@ -26,19 +44,25 @@ public class MovingObject extends Sprite {
 	}
 
 	/**
-	 * @return whether the object is moving left or right
+	 * @return whether the object is moving left or right.
+	 * @return The direction value.
 	 */
 	public int getDirection() {
 		return direction;
 	}
 
 	/**
-	 * @param direction which direction the object will be moving
+	 * Sets which direction the object is moving.
+	 * @param direction The direction value.
 	 */
 	public void setDirection(int direction) {
 		this.direction = direction;
 	}
 
+	/**
+	 * Moves the Sprite left or right. Removes the Sprite if it 
+	 * goes off screen.
+	 */
 	@Override
 	public void tick(Input input) {
 		if (getDirection() == DIRECTION_LEFT) {
@@ -54,7 +78,7 @@ public class MovingObject extends Sprite {
 	
 	/**
 	 * Returns the off screen position of the moving object.
-	 * @return offScreenPosition
+	 * @return offScreenPosition The x coordinate of an offscreen Sprite.
 	 */
 	public int getOffScreenXPosition() {
 		if (getDirection() == MovingObject.DIRECTION_LEFT) {

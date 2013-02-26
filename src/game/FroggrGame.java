@@ -560,8 +560,6 @@ public class FroggrGame extends Canvas implements Runnable, KeyListener {
 					// If not, he dies.
 					if (flys.get(i).hasCollidedWith(player)
 							&& flys.get(i).isConsumed() == false) {
-						flys.get(i).setImage(
-								"res/sprites/lane/fly-consumed.png");
 						flys.get(i).setConsumed(true);
 						// add bonus points to player score for consuming a fly.
 						score = score + CONSUME_FLY_BONUS;
