@@ -23,8 +23,8 @@ import sprites.Player;
 import sprites.Sprite;
 
 /**
- * This is the application class that displays the initial menu
- * when the game is first loaded.
+ * This is the application class that displays the initial menu when the game is
+ * first loaded.
  * 
  * @author Raj Ramsaroop, Greg Westerfield, Jr.
  * @version 0.1
@@ -46,12 +46,12 @@ public class FroggrGameApplication implements ActionListener {
 	 * The title screen panel.
 	 */
 	private JPanel pnlTitleScreen = new JPanel();
-	
+
 	/**
 	 * The game screen panel (holds the Canvas)
 	 */
 	private JPanel pnlGameScreen = new JPanel();
-	
+
 	/**
 	 * The instructions screen panel.
 	 */
@@ -71,7 +71,7 @@ public class FroggrGameApplication implements ActionListener {
 	 * Title screen graphic label.
 	 */
 	private JLabel lblTitleScreenGraphic;
-	
+
 	/**
 	 * Arrow keys on instructions screen graphic label.
 	 */
@@ -98,8 +98,8 @@ public class FroggrGameApplication implements ActionListener {
 	private static CardLayout programLayout;
 
 	/**
-	 * The Constructor of the FroggrGameApplication Class.
-	 * Creates the GUI elements and shows the JFrame.
+	 * The Constructor of the FroggrGameApplication Class. Creates the GUI
+	 * elements and shows the JFrame.
 	 */
 	public FroggrGameApplication() {
 		frame = new JFrame();
@@ -197,17 +197,30 @@ public class FroggrGameApplication implements ActionListener {
 		txtAreaInstructions.setBounds(0, 85, 500, 375);
 
 		// Set Arrow Keys Graphic
-		lblArrowKeysGraphic = new JLabel(new ImageIcon(
-				"res/images/arrowkeys.png"));
+		try {
+			lblArrowKeysGraphic = new JLabel(new ImageIcon(
+					ImageIO.read(Sprite.class.getClassLoader().getResource(
+							"res/images/arrowkeys.png"))));
+		} catch (IOException e) {
+			System.out.println("Could not load array key graphic.");
+		}
 		lblArrowKeysGraphic.setBorder(BorderFactory.createEmptyBorder());
 		lblArrowKeysGraphic.setBounds(75, 425, 356, 287);
 
 		// Set the back to the title screen button
-		btnBackToTitleScreen = new JButton(new ImageIcon(
-				"res/images/menu/back.png")); // Temporary images
+		try {
+			btnBackToTitleScreen = new JButton(new ImageIcon(ImageIO.read(Sprite.class.getClassLoader().getResource(
+					"res/images/menu/back.png"))));
+		} catch (IOException e) {
+			System.out.println("Could not load back to title screen button.");
+		}
 		btnBackToTitleScreen.setRolloverEnabled(true);
-		btnBackToTitleScreen.setRolloverIcon(new ImageIcon(
-				"res/images/menu/back-hover.png"));
+		try {
+			btnBackToTitleScreen.setRolloverIcon(new ImageIcon(ImageIO.read(Sprite.class.getClassLoader().getResource(
+					"res/images/menu/back-hover.png"))));
+		} catch (IOException e) {
+			System.out.println("Could not load back to title screen hover image button.");
+		}
 		btnBackToTitleScreen.addActionListener(this);
 		btnBackToTitleScreen.setBorder(BorderFactory.createEmptyBorder());
 		btnBackToTitleScreen.setContentAreaFilled(false);
